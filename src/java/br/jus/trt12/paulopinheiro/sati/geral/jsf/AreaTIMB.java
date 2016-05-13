@@ -2,78 +2,44 @@ package br.jus.trt12.paulopinheiro.sati.geral.jsf;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.AreaTIFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.MunicipioFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.ProgintFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaMB;
 import br.jus.trt12.paulopinheiro.sati.geral.model.AreaTI;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Progint;
-import br.jus.trt12.paulopinheiro.sati.util.ContextoJSF;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @ViewScoped
-public class AreaTIMB implements Serializable {
+public class AreaTIMB extends AbListaMB<AreaTI> implements Serializable {
     @EJB private AreaTIFacade areaTIFacade;
     @EJB private ProgintFacade progintFacade;
     @EJB private MunicipioFacade municipioFacade;
-
-    private List<AreaTI> listaAreasTI;
-    private AreaTI areaTI;
 
     private List<Progint> progints;
     private List<Municipio> municipiosArea;
 
     public AreaTIMB() {}
 
-    public void salvar(ActionEvent event) {
-        try {
-            areaTIFacade.salvar(getAreaTI());
-            setAreaTI(null);
-            setListaAreasTI(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
-    public void novo(ActionEvent event) {
-        setAreaTI(null);
-    }
-
-    public void excluir(ActionEvent event) {
-        try {
-            areaTIFacade.remove(getAreaTI());
-            setAreaTI(null);
-            setListaAreasTI(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
-    public int getQuantAreasTI() {
-        return getListaAreasTI().size();
-    }
-
     public AreaTI getAreaTI() {
-        if (this.areaTI==null) this.areaTI = new AreaTI();
-        return areaTI;
+        return this.getElemento();
     }
 
     public void setAreaTI(AreaTI areaTI) {
-        this.areaTI = areaTI;
+        this.setElemento(areaTI);
     }
 
     public List<AreaTI> getListaAreasTI() {
-        if (this.listaAreasTI==null) this.listaAreasTI = areaTIFacade.findAll();
-        return listaAreasTI;
+        return this.getLista();
     }
 
     public void setListaAreasTI(List<AreaTI> listaAreasTI) {
-        this.listaAreasTI = listaAreasTI;
+        this.setLista(listaAreasTI);
     }
 
     public List<Progint> getProgints() {
@@ -95,7 +61,18 @@ public class AreaTIMB implements Serializable {
         this.municipiosArea = municipiosArea;
     }
 
-    private void mensagemErro(String mensagem) {
-        ContextoJSF.getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,mensagem,null));
+    @Override
+    protected AbstractFacade getFacade() {
+        return this.areaTIFacade;
+    }
+
+    @Override
+    public boolean isNovoElemento() {
+        return (this.getAreaTI().getCodigo()==null)||(this.getAreaTI().getCodigo()==0);
+    }
+
+    @Override
+    protected AreaTI novainstanciaElemento() {
+        return new AreaTI();
     }
 }

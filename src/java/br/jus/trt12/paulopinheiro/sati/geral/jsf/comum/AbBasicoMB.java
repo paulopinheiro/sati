@@ -3,6 +3,8 @@ package br.jus.trt12.paulopinheiro.sati.geral.jsf.comum;
 import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
 import br.jus.trt12.paulopinheiro.sati.util.ContextoJSF;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.event.ActionEvent;
 
@@ -19,6 +21,9 @@ public abstract class AbBasicoMB<T> {
             mensagemSucesso("Registro salvo com sucesso");
         } catch (SatiLogicalException ex) {
             mensagemErro(ex.getMessage());
+        } catch (Exception ex) {
+            mensagemErro(ex.getMessage());
+            Logger.getLogger("AbListaMB.java").log(Level.SEVERE, "Erro ao salvar", ex);
         }
     }
 
@@ -31,8 +36,11 @@ public abstract class AbBasicoMB<T> {
             getFacade().excluir(this.getElemento());
             mensagemSucesso("Registro removido com sucesso");
             setElemento(null);
+        } catch (SatiLogicalException ex) {
+            mensagemErro(ex.getMessage());
         } catch (Exception ex) {
-            mensagemErro(ex.getLocalizedMessage());
+            mensagemErro(ex.getMessage());
+            Logger.getLogger("AbListaMB.java").log(Level.SEVERE, "Erro ao excluir", ex);
         }
     }
 
@@ -47,7 +55,6 @@ public abstract class AbBasicoMB<T> {
 
     protected void mensagemErro(String mensagem) {
         ContextoJSF.getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,mensagem,null));
-        System.out.println(mensagem);
     }
 
     protected void mensagemSucesso(String mensagem) {

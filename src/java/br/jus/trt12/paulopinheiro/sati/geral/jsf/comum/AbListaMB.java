@@ -2,6 +2,8 @@ package br.jus.trt12.paulopinheiro.sati.geral.jsf.comum;
 
 import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.event.ActionEvent;
 
 public abstract class AbListaMB<T> extends AbBasicoMB<T> {
@@ -16,6 +18,9 @@ public abstract class AbListaMB<T> extends AbBasicoMB<T> {
             mensagemSucesso("Registro salvo com sucesso");
         } catch (SatiLogicalException ex) {
             mensagemErro(ex.getMessage());
+        } catch (Exception ex) {
+            mensagemErro(ex.getMessage());
+            Logger.getLogger("AbListaMB.java").log(Level.SEVERE, "Erro ao salvar", ex);
         }
     }
 
@@ -26,8 +31,11 @@ public abstract class AbListaMB<T> extends AbBasicoMB<T> {
             setElemento(null);
             setLista(null);
             mensagemSucesso("Registro removido com sucesso");
+        } catch (SatiLogicalException ex) {
+            mensagemErro(ex.getMessage());
         } catch (Exception ex) {
-            mensagemErro(ex.getLocalizedMessage());
+            mensagemErro(ex.getMessage());
+            Logger.getLogger("AbListaMB.java").log(Level.SEVERE, "Erro ao excluir", ex);
         }
     }
 

@@ -29,7 +29,7 @@
                     <h:commandButton id="btNovo" actionListener="#{modeloMB.limparElemento}" value="Novo">
                         <f:ajax execute="@form" render="@form :mensagem" />
                     </h:commandButton>
-                    <h:commandButton id="btExcluir" actionListener="#{modeloMB.excluir}" value="Excluir" disabled="#{modeloMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este modelo?'))
+                    <h:commandButton id="btExcluir" actionListener="#{modeloMB.excluir}" value="Excluir" disabled="#{modeloMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este modelo?')return false;">
                                 return false;">
                         <f:ajax execute="@form" render="@form :tabModelo :mensagem" />
                     </h:commandButton>

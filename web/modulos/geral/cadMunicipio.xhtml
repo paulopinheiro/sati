@@ -21,34 +21,35 @@
                 -->
                 <ui:define name="content">
                     <h:form id="formMunicipio">
-                        <h:panelGrid id="gridFormMunicipio" columns="2">
+                        <p:panelGrid id="gridFormMunicipio" columns="2">
                             <f:facet name="header"><b>Dados do Município</b></f:facet>
-                            <h:outputLabel id="labelNome" for="nome" value="Nome" />
-                            <h:inputText id="nome" value="#{municipioMB.municipio.nome}" size="80" onkeydown="limitText(this,100)" onkeyup="limitText(this,100)" />
-                            <h:outputLabel id="labelAreaTI" for="areaTI" value="Área de TI" />
-                            <h:selectOneMenu id="areaTI" value="#{municipioMB.municipio.areaTI}" converter="converteAreaTI">
+                            <p:outputLabel id="labelNome" for="nome" value="Nome" />
+                            <p:inputText id="nome" value="#{municipioMB.municipio.nome}" size="80" onkeydown="limitText(this,100)" onkeyup="limitText(this,100)" />
+                            <p:outputLabel id="labelAreaTI" for="areaTI" value="Área de TI" />
+                            <p:selectOneMenu id="areaTI" value="#{municipioMB.municipio.areaTI}" converter="converteAreaTI">
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione a área ---" />
                                 <f:selectItems id="sgiAreaTI" value="#{municipioMB.areasTI}" var="areaTI" itemValue="#{areaTI}" itemLabel="#{areaTI}" />
-                            </h:selectOneMenu>
-                            <h:outputLabel id="labelDtFundacaoUnidade" for="dtFundacaoUnidade" value="Data Fundação Unidade" />
+                            </p:selectOneMenu>
+                            <p:outputLabel id="labelDtFundacaoUnidade" for="dtFundacaoUnidade" value="Data Fundação Unidade" />
                             <p:calendar id="dtFundacaoUnidade" value="#{municipioMB.municipio.dtFundacaoUnidade}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
-                            <h:outputLabel id="labelObservacao" for="observacao" value="Observação:" />
-                            <h:inputTextarea id="observacao" value="#{municipioMB.municipio.observacao}" cols="50" rows="5" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
-                        </h:panelGrid>
-                        <h:panelGrid id="gridBotoes" columns="3">
-                            <h:commandButton value="Salvar" actionListener="#{municipioMB.salvar}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabMunicipios" />
-                            </h:commandButton>
-                            <h:commandButton value="Novo" actionListener="#{municipioMB.novo}">
-                                <f:ajax execute="@form" render="@form :msgerro" />
-                            </h:commandButton>
-                            <h:commandButton disabled="#{empty municipioMB.municipio.codigo}" value="Excluir" actionListener="#{municipioMB.excluir}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabMunicipios" />
-                            </h:commandButton>
-                        </h:panelGrid>
+                            <p:outputLabel id="labelObservacao" for="observacao" value="Observação:" />
+                            <p:inputTextarea id="observacao" value="#{municipioMB.municipio.observacao}" cols="50" rows="5" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                        </p:panelGrid>
+                        <p:panelGrid id="gridBotoes" columns="3">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{municipioMB.salvar}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabMunicipios" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{municipioMB.limparElemento}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" disabled="#{empty municipioMB.municipio.codigo}" value="Excluir" actionListener="#{municipioMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta área?') return false;">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabMunicipios" />
+                            </p:commandButton>
+                        </p:panelGrid>
                         <br />
                     </h:form>
-                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                     <h:form id="tabMunicipios">
                         <p:dataTable rows="10" paginator="true" id="tabelaMunicipios" var="municipio" value="#{municipioMB.listaMunicipios}">
                             <f:facet name="header"><h:outputText id="headerDtMunicipios" value="Municípios cadastrados" /></f:facet>
@@ -56,7 +57,7 @@
                                 <f:facet name="header"><h:outputText style="text-align: center;" id="textoNome" value="Nome" /></f:facet>
                                 <p:commandLink ajax="false" value="#{municipio.nome}">
                                     <f:setPropertyActionListener value="#{municipio}" target="#{municipioMB.municipio}" />
-                                    <f:ajax execute="@form" render=":formMunicipio :msgerro" />
+                                    <f:ajax execute="@form" render=":formMunicipio :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column id="colunaAreaTI">
@@ -75,7 +76,7 @@
                                     <f:param name="municipioCod" value="#{municipio.codigo}" />
                                 </p:link>
                             </p:column>
-                            <f:facet name="footer"><h:outputText id="footerDtMunicipios" value="Total: #{municipioMB.quantMunicipios}" /></f:facet>
+                            <f:facet name="footer"><h:outputText id="footerDtMunicipios" value="Total: #{municipioMB.quantLista}" /></f:facet>
                         </p:dataTable>
                     </h:form>
                 </ui:define>
