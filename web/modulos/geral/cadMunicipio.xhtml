@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <body>
+            <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+                <ui:define name="titulo">Cadastro de Municípios</ui:define>
+                <ui:define name="top">Cadastro de Municípios</ui:define>
+                <!--
+                <ui:define name="left">
+                    <h:form id="formMenu">
+                        <h:panelGrid styleClass="menu" id="menuCadMunicipio" columns="1">
+                            <h:commandLink value="Voltar" action="/modulos/geral/homeGeral.xhtml" />
+                        </h:panelGrid>
+                    </h:form>
+                </ui:define>
+                -->
+                <ui:define name="content">
+                    <h:form id="formMunicipio">
+                        <h:panelGrid id="gridFormMunicipio" columns="2">
+                            <f:facet name="header"><b>Dados do Município</b></f:facet>
+                            <h:outputLabel id="labelNome" for="nome" value="Nome" />
+                            <h:inputText id="nome" value="#{municipioMB.municipio.nome}" size="80" onkeydown="limitText(this,100)" onkeyup="limitText(this,100)" />
+                            <h:outputLabel id="labelAreaTI" for="areaTI" value="Área de TI" />
+                            <h:selectOneMenu id="areaTI" value="#{municipioMB.municipio.areaTI}" converter="converteAreaTI">
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione a área ---" />
+                                <f:selectItems id="sgiAreaTI" value="#{municipioMB.areasTI}" var="areaTI" itemValue="#{areaTI}" itemLabel="#{areaTI}" />
+                            </h:selectOneMenu>
+                            <h:outputLabel id="labelDtFundacaoUnidade" for="dtFundacaoUnidade" value="Data Fundação Unidade" />
+                            <p:calendar id="dtFundacaoUnidade" value="#{municipioMB.municipio.dtFundacaoUnidade}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
+                            <h:outputLabel id="labelObservacao" for="observacao" value="Observação:" />
+                            <h:inputTextarea id="observacao" value="#{municipioMB.municipio.observacao}" cols="50" rows="5" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                        </h:panelGrid>
+                        <h:panelGrid id="gridBotoes" columns="3">
+                            <h:commandButton value="Salvar" actionListener="#{municipioMB.salvar}">
+                                <f:ajax execute="@form" render="@form :msgerro :tabMunicipios" />
+                            </h:commandButton>
+                            <h:commandButton value="Novo" actionListener="#{municipioMB.novo}">
+                                <f:ajax execute="@form" render="@form :msgerro" />
+                            </h:commandButton>
+                            <h:commandButton disabled="#{empty municipioMB.municipio.codigo}" value="Excluir" actionListener="#{municipioMB.excluir}">
+                                <f:ajax execute="@form" render="@form :msgerro :tabMunicipios" />
+                            </h:commandButton>
+                        </h:panelGrid>
+                        <br />
+                    </h:form>
+                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <h:form id="tabMunicipios">
+                        <p:dataTable rows="10" paginator="true" id="tabelaMunicipios" var="municipio" value="#{municipioMB.listaMunicipios}">
+                            <f:facet name="header"><h:outputText id="headerDtMunicipios" value="Municípios cadastrados" /></f:facet>
+                            <p:column id="colunaNome">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoNome" value="Nome" /></f:facet>
+                                <p:commandLink ajax="false" value="#{municipio.nome}">
+                                    <f:setPropertyActionListener value="#{municipio}" target="#{municipioMB.municipio}" />
+                                    <f:ajax execute="@form" render=":formMunicipio :msgerro" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column id="colunaAreaTI">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoAreaTI" value="Área" /></f:facet>
+                                <h:outputText id="labelAreaTI"  value="#{municipio.areaTI}" />
+                            </p:column>
+                            <p:column id="colunaDtFundacaoUnidade">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoDtFundacaoUnidade" value="Data Fundação da Unidade" /></f:facet>
+                                <h:outputText id="labelDtFundacaoUnidade"  value="#{municipio.dtFundacaoUnidade}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column id="columnEditaUnidades">
+                                <f:facet name="header"><h:outputText id="textoEditarUnidades" value="Unidades" /></f:facet>
+                                <p:link id="linkUnidades" value="Editar" outcome="/modulos/geral/cadUnidade">
+                                    <f:param name="municipioCod" value="#{municipio.codigo}" />
+                                </p:link>
+                            </p:column>
+                            <f:facet name="footer"><h:outputText id="footerDtMunicipios" value="Total: #{municipioMB.quantMunicipios}" /></f:facet>
+                        </p:dataTable>
+                    </h:form>
+                </ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
+</html>

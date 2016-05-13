@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:viewParam id="equipamentoCod" name="equipamentoCod" value="#{historicoMB.equipamento}" converter="#{equipamentoConverterMB}" required="false" />
+        <f:viewParam id="historicoCod" name="historicoCod" value="#{historicoMB.historico}" converter="#{historicoConverterMB}" required="false" />
+    </f:metadata>
+
+    <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+        <ui:define name="titulo">Histórico de #{historicoMB.equipamento}</ui:define>
+        <ui:define name="top">Histórico de #{historicoMB.equipamento}</ui:define>
+
+        <ui:define name="content">
+            <h:form id="formHistorico">
+                <h:panelGrid id="gridHistorico" columns="2">
+                    <f:facet name="header"><b>Histórico</b></f:facet>
+                    <h:outputLabel id="labelDataHistorico" for="dataHistorico" value="Data" />
+                    <p:calendar id="dataHistorico" value="#{historicoMB.historico.dataHistorico}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
+                    <h:outputLabel id="labelDescricaoHistorico" for="descricaoHistorico" value="Descrição" />
+                    <h:inputTextarea id="descricaoHistorico" cols="80" rows="8" value="#{historicoMB.historico.descricao}" onkeydown="limitText(this, 600);" onkeyup="limitText(this, 600);" />
+                    <h:outputLabel id="labelObservacaoHistorico" for="observacaoHistorico" value="Observação" />
+                    <h:inputTextarea id="observacaoHistorico" cols="60" rows="5" value="#{historicoMB.historico.observacao}" onkeydown="limitText(this, 255);" onkeyup="limitText(this, 255);"/>
+                    <h:outputLabel id="labelIncidenteRitmHistorico" for="incidenteRitmHistorico" value="Incidente" />
+                    <h:inputText id="incidenteRitmHistorico" value="#{historicoMB.historico.incidenteRitm}" size="25" onkeydown="limitText(this, 10);" onkeyup="limitText(this, 10);" />
+                </h:panelGrid>
+                <h:panelGrid id="gridBotoesHistorico" columns="4">
+                    <h:commandButton value="Salvar" actionListener="#{historicoMB.salvar}">
+                        <f:ajax execute="@form" render="@form :mensagem" />
+                    </h:commandButton>
+                    <h:commandButton value="Novo" actionListener="#{historicoMB.limparElemento}">
+                        <f:ajax execute="@form" render="@form :mensagem" />
+                    </h:commandButton>
+                    <h:commandButton disabled="#{historicoMB.novoElemento}" value="Excluir" actionListener="#{historicoMB.excluir}">
+                        <f:ajax execute="@form" render="@form :mensagem" />
+                    </h:commandButton>
+                    <h:button value="Voltar" outcome="cadEquipamento.xhtml">
+                        <f:param name="equipamentoCod" value="#{historicoMB.equipamento.codigo}" />
+                    </h:button>
+                </h:panelGrid>
+            </h:form>
+            <p:messages id="mensagem" globalOnly="true" showDetail="false" showSummary="true"/>
+        </ui:define>
+    </ui:composition>
+</html>

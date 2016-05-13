@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <body>
+            <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+                <ui:define name="titulo">Cadastro de áreas de atuação dos TI</ui:define>
+                <ui:define name="top">Cadastro de áreas de atuação dos TI</ui:define>
+                <!--
+                <ui:define name="left">
+                    <h:form id="formMenu">
+                        <h:commandLink value="Voltar" action="/modulos/geral/homeGeral.xhtml" />
+                    </h:form>
+                </ui:define>
+                -->
+                <ui:define name="content">
+                    <h:form id="formAreaTI">
+                        <h:panelGrid id="gridFormAreaTI" columns="2">
+                            <f:facet name="header"><b>Dados da Área</b></f:facet>
+                            <h:outputLabel id="labelNome" for="nome" value="Nome" />
+                            <h:inputText id="nome" value="#{areaTIMB.areaTI.nome}" size="15" onkeydown="limitText(this,15)" onkeyup="limitText(this,15)" />
+                            <h:outputLabel id="labelProgint" for="progint" value="Técnico:" />
+                            <h:selectOneMenu id="progint" value="#{areaTIMB.areaTI.progint}" converter="converteProgint">
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o técnico ---" />
+                                <f:selectItems id="sgiProgint" value="#{areaTIMB.progints}" var="progint" itemValue="#{progint}" itemLabel="#{progint.nome}" />
+                            </h:selectOneMenu>
+                            <h:outputLabel id="labelMunicipioSede" for="municipioSede" value="Sede:" />
+                            <h:selectOneMenu id="municipioSede" value="#{areaTIMB.areaTI.municipioSede}" converter="converteMunicipio">
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o município ---" />
+                                <f:selectItems id="sgiMunicipioSede" value="#{areaTIMB.municipiosArea}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
+                            </h:selectOneMenu>
+                        </h:panelGrid>
+                        <h:panelGrid id="gridBotoes" columns="3">
+                            <h:commandButton value="Salvar" actionListener="#{areaTIMB.salvar}">
+                                <f:ajax execute="@form" render="@form :msgerro :tabAreaTI" />
+                            </h:commandButton>
+                            <h:commandButton value="Novo" actionListener="#{areaTIMB.novo}">
+                                <f:ajax execute="@form" render="@form :msgerro" />
+                            </h:commandButton>
+                            <h:commandButton disabled="#{empty areaTIMB.areaTI.codigo}" value="Excluir" actionListener="#{areaTIMB.excluir}">
+                                <f:ajax execute="@form" render="@form :msgerro :tabAreaTI" />
+                            </h:commandButton>
+                        </h:panelGrid>
+                        <br />
+                    </h:form>
+                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <h:form id="tabAreaTI">
+                        <p:dataTable paginator="true" rows="10" id="tabelaAreaTI" var="areaTI" value="#{areaTIMB.listaAreasTI}">
+                            <f:facet name="header"><h:outputText id="headerDtAreaTI" value="Áreas cadastradas" /></f:facet>
+                            <p:column id="colunaNome">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoNome" value="Nome" /></f:facet>
+                                <p:commandLink ajax="false" value="#{areaTI.nome}">
+                                    <f:setPropertyActionListener value="#{areaTI}" target="#{areaTIMB.areaTI}" />
+                                    <f:ajax execute="@form" render=":formAreaTI :msgerro" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column id="colunaProgint">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoProgint" value="Progint" /></f:facet>
+                                <h:outputText id="labelProgint"  value="#{areaTI.progint.nome}" />
+                            </p:column>
+                            <p:column id="colunaMunicipioSede">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoMunicipioSede" value="Sede" /></f:facet>
+                                <h:outputText id="labelMunicipioSede"  value="#{areaTI.municipioSede}" />
+                            </p:column>
+                            <f:facet name="footer"><h:outputText id="footerDtAreaTI" value="Total: #{areaTIMB.quantAreasTI}" /></f:facet>
+                        </p:dataTable>
+                    </h:form>
+                </ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
+</html>

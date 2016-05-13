@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="cssLayout.css" />
+        <h:outputScript name="calendar_pt.js" library="js" /> 
+        <script language="javascript" type="text/javascript">
+            function limitText(limitField, limitNum) {
+                if (limitField.value.length > limitNum) {
+                    limitField.value = limitField.value.substring(0, limitNum);
+                }
+            }
+            function doCheckNatural(field) {
+                try {
+                    if (isNaN(field.value)) {
+                        if (field.value.length === 1) {
+                            field.value = 0;
+                        } else {
+                            var fieldLength = field.value.length;
+                            field.value = field.value.substring(0, fieldLength - 1);
+                        }
+                    }
+                } catch (err) {
+                    alert(err.message);
+                }
+            }
+            function doCheckInteger(field) {
+                try {
+                    if (isNaN(field.value)) {
+                        if ((field.value.length !== 1) || (field.value !== "-")) {
+                            if (field.value.length === 1) {
+                                field.value = 0;
+                            } else {
+                                var fieldLength = field.value.length;
+                                field.value = field.value.substring(0, fieldLength - 1);
+                            }
+                        }
+                    }
+                } catch (err) {
+                    alert(err.message);
+                }
+            }
+        </script>
+
+        <h:outputScript name="jsf.js" library="javax.faces"/>
+        <title><ui:insert name="titulo">Título</ui:insert></title>
+    </h:head>
+    <h:body>
+        <div align="center" id="top">
+            <h2><ui:insert name="top">Top</ui:insert></h2>
+        </div>
+
+        <div id="barramenu">
+            <div id="combo">
+                <h:form>
+                    <h:outputLabel for="municipioSessao" id="labelMunicipioSessao" value="Município:" />
+                    <h:selectOneMenu id="municipioSessao" value="#{geralMB.municipioSessao}" converter="converteMunicipio">
+                        <f:selectItems id="sgiMunicipio" value="#{geralMB.listaMunicipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
+                        <f:ajax immediate="true" />
+                    </h:selectOneMenu>
+                </h:form>
+            </div>
+            <div id="menu">
+                <ui:insert name="menu">
+                    <h:form id="formMenu">
+                        <p:menubar id="menubarGeral">
+                            <p:submenu id="submenuSistema" label="Sistema">
+                                <p:menuitem id="menuHome">
+                                    <h:link outcome="/home.xhtml" value="Home SATI" />
+                                </p:menuitem>
+                                <p:menuitem id="sessao">
+                                    <h:link outcome="/sessao.xhtml" value="Dados da Sessão" />
+                                </p:menuitem>
+                                <p:separator />
+                                <p:menuitem id="menuitemSair" value="Sair" action="#{geralMB.desconectar()}" />
+                            </p:submenu>
+                            <p:submenu id="menuGeral" label="Cadastros gerais">
+                                <p:menuitem id="cadProgint">
+                                    <h:link outcome="/modulos/geral/cadProgint.xhtml" value="Técnicos" />
+                                </p:menuitem>
+                                <p:menuitem id="cadAreaTI">
+                                    <h:link outcome="/modulos/geral/cadAreaTI.xhtml" value="Áreas de atendimento" />
+                                </p:menuitem>
+                                <p:menuitem id="cadMunicipio">
+                                    <h:link outcome="/modulos/geral/cadMunicipio.xhtml" value="Municípios/Unidades" />
+                                </p:menuitem>
+                            </p:submenu>
+                            <p:submenu id="menuModulosSistema" label="Módulos do Sistema">
+                                <p:submenu id="modRedes" label="Redes">
+                                    <p:menuitem id="menuRacks">
+                                        <h:link outcome="/modulos/rede/cadRack" value="Racks/Painéis" />
+                                    </p:menuitem>
+                                    <p:menuitem id="menuModulos">
+                                        <h:link outcome="/modulos/rede/cadModulo" value="Módulos/Tomadas" />
+                                    </p:menuitem>
+                                </p:submenu>
+                                <p:menuitem id="modViagens">
+                                    <h:link outcome="/modulos/viagem/lisViagens" value="Viagens" />
+                                </p:menuitem>
+                                <p:submenu id="modCalendario" label="Calendário">
+                                    <p:menuitem id="modCalendarioFeriadosMoveis">
+                                        <h:link outcome="/modulos/calendario/cadFeriadoMovel" value="Feriados Móveis" />
+                                    </p:menuitem>
+                                    <p:menuitem id="modCalendarioFeriadosFixos">
+                                        <h:link outcome="/modulos/calendario/cadFeriadoFixo" value="Feriados Fixos" />
+                                    </p:menuitem>
+                                    <p:menuitem id="modCalendarioTransferencias">
+                                        <h:link outcome="/modulos/calendario/cadTransferencia" value="Transferências" />
+                                    </p:menuitem>
+                                </p:submenu>
+                                <p:submenu id="moduloEquipamentos" label="Equipamentos">
+                                    <p:menuitem id="cadMicrocomputadores">
+                                        <h:link outcome="/modulos/equipamentos/listaMicrocomputadores.xhtml" value="Microcomputadores" />
+                                    </p:menuitem>
+                                    <p:separator />
+                                    <p:menuitem id="cadModelo">
+                                        <h:link outcome="/modulos/equipamentos/cadModelo.xhtml" value="Modelos/Lotes" />
+                                    </p:menuitem>
+                                    <p:menuitem id="movimentaEquipamento">
+                                        <h:link outcome="/modulos/equipamentos/movimentaEquipamentos.xhtml" value="Movimentação" />
+                                    </p:menuitem>
+                                </p:submenu>
+                            </p:submenu>
+                        </p:menubar>
+                    </h:form>
+                </ui:insert>
+            </div>
+        </div>
+        <div align="center" id="content" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+        <div align="center" id="bottom">
+            <ui:insert name="bottom">
+                <ui:insert name="bottom">Usuário conectado: #{geralMB.progint}</ui:insert>
+            </ui:insert>
+        </div>
+    </h:body>
+</html>

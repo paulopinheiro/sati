@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <body>
+            <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+                <ui:define name="titulo">Cadastro de técnicos de informática</ui:define>
+                <ui:define name="top">Cadastro de técnicos de informática</ui:define>
+                <!--
+                <ui:define name="left">
+                    <h:form id="formMenu">
+                        <h:commandLink value="Voltar" action="/modulos/geral/homeGeral.xhtml" />
+                    </h:form>
+                </ui:define>
+                -->
+                <ui:define name="content">
+                    <h:form id="formProgint">
+                        <h:panelGrid id="gridFormProgint" columns="2">
+                            <f:facet name="header"><b>Dados do Técnico</b></f:facet>
+                            <h:outputLabel id="labelNome" for="nome" value="Nome" />
+                            <h:inputText id="nome" value="#{progintMB.progint.nome}" size="80" onkeydown="limitText(this,100)" onkeyup="limitText(this,100)" />
+                            <h:outputLabel id="labelMatricula" for="matricula" value="Matrícula" />
+                            <h:inputText id="matricula" value="#{progintMB.progint.matricula}" size="5" onkeydown="limitText(this,5)" onkeyup="limitText(this,5)" />
+                            <h:outputLabel id="labelEmail" for="email" value="e-mail" />
+                            <h:inputText id="email" value="#{progintMB.progint.email}" size="60" onkeydown="limitText(this,60)" onkeyup="limitText(this,60)" />
+                            <h:outputLabel id="labelFonecontato" for="fonecontato" value="Fone" />
+                            <h:inputText id="fonecontato" value="#{progintMB.progint.fonecontato}" size="20" onkeydown="limitText(this,20)" onkeyup="limitText(this,20)" />
+                            <h:outputLabel id="labelObservacao" for="observacao" value="Observação:" />
+                            <h:inputTextarea id="observacao" value="#{progintMB.progint.observacao}" cols="50" rows="5" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <h:selectBooleanCheckbox id="ativo" title="Ativo" label="Ativo" value="#{progintMB.progint.ativo}" />
+                            <h:outputLabel id="labelAtivo" for="ativo" value="Ativo" />                            
+                        </h:panelGrid>
+                        <h:panelGrid columns="3">
+                            <h:commandButton value="Salvar" actionListener="#{progintMB.salvar}">
+                                <f:ajax execute="@form" render="@form :msgerro :tabProgints" />
+                            </h:commandButton>
+                            <h:commandButton value="Novo" actionListener="#{progintMB.novo}">
+                                <f:ajax execute="@form" render="@form :msgerro" />
+                            </h:commandButton>
+                            <h:commandButton disabled="#{empty progintMB.progint.codigo}" value="Excluir" actionListener="#{progintMB.excluir}">
+                                <f:ajax execute="@form" render="@form :msgerro :tabProgints" />
+                            </h:commandButton>
+                        </h:panelGrid>
+                        <br />
+                    </h:form>
+                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <h:form id="tabProgints">
+                        <p:dataTable rows="10" paginator="true" id="tabelaProgints" var="progint" value="#{progintMB.progints}">
+                            <f:facet name="header"><h:outputText id="headerDtProgints" value="Técnicos cadastrados" /></f:facet>
+                            <p:column id="colunaNome">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoNome" value="Nome" /></f:facet>
+                                <p:commandLink ajax="false" value="#{progint.nome}">
+                                    <f:setPropertyActionListener value="#{progint}" target="#{progintMB.progint}" />
+                                    <f:ajax execute="@form" render=":formProgint :msgerro" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column id="colunaMatricula">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoMatricula" value="Matrícula" /></f:facet>
+                                <h:outputText id="labelMatricula"  value="#{progint.matricula}" />
+                            </p:column>
+                            <p:column id="colunaEmail">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoEmail" value="e-mail" /></f:facet>
+                                <h:outputText id="labelEmail"  value="#{progint.email}" />
+                            </p:column>
+                            <p:column id="colunaAtivo">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoAtivo" value="Ativo?" /></f:facet>
+                                <h:selectBooleanCheckbox id="labelAtivo"  value="#{progint.ativo}" disabled="true" />
+                            </p:column>
+                            <f:facet name="footer"><h:outputText id="footerDtProgints" value="Total: #{progintMB.quantProgints}" /></f:facet>
+                        </p:dataTable>
+                    </h:form>
+                </ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
+</html>

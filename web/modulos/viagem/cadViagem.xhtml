@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <f:metadata>
+            <f:viewParam id="viagemCod" name="viagemCod" value="#{viagemMB.viagem}" converter="#{viagemConverterMB}" required="false" />
+        </f:metadata>
+        <body>
+            <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+                <ui:define name="titulo">Cadastro de Viagem do TI #{geralMB.progint}</ui:define>
+                <ui:define name="top">Cadastro de Viagem do TI #{geralMB.progint}</ui:define>
+                <!--
+                <ui:define name="left">
+                    <h:form id="formMenu">
+                        <h:panelGrid styleClass="menu" id="menuCadRack" columns="1">
+                            <h:commandLink rendered="#{!empty viagemMB.viagem.dataViagem}" id="linkEventos" value="Pedido Ressarcimento" action="/modulos/viagem/cadEventoReqViagem">
+                                <f:setPropertyActionListener target="#{eventoReqViagemMB.viagem}" value="#{viagemMB.viagem}" />
+                            </h:commandLink>
+                            <h:commandLink id="linkVoltar" value="Voltar" action="/modulos/viagem/lisViagens" />
+                        </h:panelGrid>
+                    </h:form>
+                </ui:define>
+                -->
+                <ui:define name="content">
+                    <h:form id="formViagem">
+                        <h:panelGrid id="gridViagem" columns="4">
+                            <f:facet name="header"><b>Dados da Viagem</b></f:facet>
+                            <h:outputLabel id="labelDataProgramada" for="calendDataProgramada" value="Data Programada" />
+                            <p:calendar id="calendDataProgramada" value="#{viagemMB.viagem.dataProgramada}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
+                            <h:outputLabel id="labelDataViagem" for="calendDataViagem" value="Data Viagem" />
+                            <p:calendar id="calendDataViagem" value="#{viagemMB.viagem.dataViagem}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
+                            <h:outputLabel id="labelMunicipio" for="listaMunicipios" value="Município de Destino" />
+                            <h:selectOneMenu id="listaMunicipios" label="Municipios" value="#{viagemMB.viagem.municipioDestino}" converter="converteMunicipio" >
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Selecione um município --" />
+                                <f:selectItems value="#{viagemMB.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
+                            </h:selectOneMenu>
+                        </h:panelGrid>
+                        <h:panelGrid id="gridBotoesViagem" columns="4">
+                            <h:commandButton value="Salvar" actionListener="#{viagemMB.salvar}">
+                                <f:ajax execute="@form" render="@form :formTarefa :msgerro" />
+                            </h:commandButton>
+                            <h:commandButton value="Nova" actionListener="#{viagemMB.nova}">
+                                <f:ajax execute="@form" render="@form :formTarefa :msgerro" />
+                            </h:commandButton>
+                            <h:commandButton disabled="#{empty viagemMB.viagem.codigo}" value="Excluir" actionListener="#{viagemMB.excluir}">
+                                <f:ajax execute="@form" render="@form :formTarefa :msgerro" />
+                            </h:commandButton>
+                            <h:commandButton value="Voltar" action="/modulos/viagem/lisViagens" />
+                        </h:panelGrid>
+                        <h:panelGroup id="grpOutrasFuncoes" rendered="#{!empty viagemMB.viagem.dataViagem}">
+                            <br />
+                            <h:panelGrid  border="1" id="outrasFuncoes" columns="1">
+                                <p:link id="linkEventos" outcome="/modulos/viagem/cadEventoReqViagem" value="Pedido Ressarcimento">
+                                    <f:param name="viagemCod" value="#{viagemMB.viagem.codigo}" />
+                                </p:link>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                        <br />
+                    </h:form>
+                    <h:form id="formTarefa">
+                        <h:panelGrid id="gridTarefa" columns="2" rendered="#{!viagemMB.novaViagem}">
+                            <f:facet name="header"><b>Tarefa</b></f:facet>
+                            <h:outputLabel id="labelDescricaoTarefa" for="descricaoTarefa" value="Descrição" />
+                            <h:inputTextarea id="descricaoTarefa" cols="60" rows="4" value="#{viagemMB.tarefa.descricao}" onkeydown="limitText(this, 255);" onkeyup="limitText(this, 255);" />
+                            <h:outputLabel id="labelTomboequipTarefa" for="tomboequipTarefa" value="Tombo Equipamento" />
+                            <h:inputText id="tomboequipTarefa" value="#{viagemMB.tarefa.tomboequip}" onkeydown="limitText(this, 6);" onkeyup="limitText(this, 6);" />
+                            <h:outputLabel id="labelNroTarefaRITM" for="nroTarefaRITM" value="Número da tarefa no RITM" />
+                            <h:inputText id="nroTarefaRITM" value="#{viagemMB.tarefa.nroTarefaRITM}" onkeydown="limitText(this, 9);" onkeyup="limitText(this, 9);"/>
+                        </h:panelGrid>
+                        <h:panelGrid id="gridBotoesTarefa" columns="3" rendered="#{!viagemMB.novaViagem}">
+                            <h:commandButton id="botaoSalvarTarefa" value="Salvar" actionListener="#{viagemMB.salvarTarefa}" >
+                                <f:ajax execute="@form" render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :formTarefa:tabTarefas :msgerro"/>
+                            </h:commandButton>
+                            <h:commandButton id="botaoNovaTarefa" value="Nova" actionListener="#{viagemMB.novaTarefa}">
+                                <f:ajax render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :msgerro" />
+                            </h:commandButton>
+                            <h:commandButton id="botaoExcluirTarefa" disabled="#{empty viagemMB.tarefa.codigo}" value="Excluir" actionListener="#{viagemMB.excluirTarefa}">
+                                <f:ajax execute="@form" render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :formTarefa:tabTarefas :msgerro" />
+                            </h:commandButton>
+                        </h:panelGrid>
+                        <p:dataTable id="tabTarefas" var="tarefa" value="#{viagemMB.viagem.tarefas}" rendered="#{!viagemMB.novaViagem}">
+                            <f:facet name="header"><h:outputText id="headerDtTarefas" value="Tarefas cadastradas" /></f:facet>
+                            <p:column id="colDescricaoTarefa" ><f:facet name="header"><h:outputText id="headerDescricaoTarefa" value="Descrição" /></f:facet>
+                                <p:commandLink ajax="false" id="clinkTarefa" value="#{tarefa.descricao}">
+                                    <f:setPropertyActionListener value="#{tarefa}" target="#{viagemMB.tarefa}" />
+                                    <f:ajax render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :msgerro" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column id="colunaEquipamento" ><f:facet name="header"><h:outputText id="headerEquipamento" value="Equipamento" /></f:facet>
+                                <h:outputText id="DtEquipamento"  value="#{tarefa.tomboequip}"  />
+                            </p:column>
+                            <p:column id="colRITM"><f:facet name="header"><h:outputText id="headerRITM" value="RITM" /></f:facet>
+                                <h:outputText id="dtRITM" value="#{tarefa.nroTarefaRITM}" />
+                            </p:column>
+                            <f:facet name="footer"><h:outputText id="footerDtTarefas" value="Total: #{viagemMB.quantTarefas}" /></f:facet>
+                        </p:dataTable>
+                    </h:form>
+                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                </ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
+</html>

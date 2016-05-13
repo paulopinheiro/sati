@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <body>
+            <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+                <ui:define name="titulo">Cadastro de módulos de tomadas instalados no Foro de #{geralMB.municipioSessao}</ui:define>
+                <ui:define name="top">Cadastro de módulos de tomadas instalados no Foro de #{geralMB.municipioSessao}</ui:define>
+                <!--
+                <ui:define name="left">
+                    <h:form id="formMenu">
+                        <h:panelGrid styleClass="menu" id="menuCadModulo" columns="1">
+                            <h:commandLink id="linkVoltar" value="Voltar" action="/modulos/rede/homeRede" />
+                        </h:panelGrid>
+                    </h:form>
+                </ui:define>
+                -->
+                <ui:define name="content">
+                    <h:form id="formModulo">
+                        <h:panelGrid columns="2">
+                            <f:facet name="header"><b>Dados do Módulo</b></f:facet>
+                            <h:outputLabel for="identificacao" value="Identificação" />
+                            <h:inputText id="identificacao" value="#{moduloMB.modulo.identificacao}" size="10" onkeydown="limitText(this,10)" onkeyup="limitText(this,10)" />
+                            <h:outputLabel for="tipo" value="Tipo" />
+                            <h:selectOneRadio id="tipo" label="Tipo" value="#{moduloMB.modulo.tipoModulo}" converter="converteTipoModulo">
+                                <f:selectItems id="sgiTipoModulo" value="#{moduloMB.tiposModulo}" var="tipoModulo" itemValue="#{tipoModulo}" itemLabel="#{tipoModulo}" />
+                            </h:selectOneRadio>
+                            <h:outputLabel for="unidade" value="Unidade" />
+                            <h:selectOneMenu id="unidade" label="Unidade" value="#{moduloMB.modulo.unidade}" converter="converteUnidade" >
+                                <f:selectItem itemValue="-1" itemLabel="-- Selecione uma unidade --" />
+                                <f:selectItems id="sgiUnidade" value="#{moduloMB.unidades}" var="unidade" itemValue="#{unidade}" itemLabel="#{unidade}" />
+                            </h:selectOneMenu>
+                            <h:outputLabel for="descricao" value="Descrição" />
+                            <h:inputTextarea id="descricao" rows="4"  cols="50" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" value="#{moduloMB.modulo.descricao}" />
+                            <h:outputLabel for="localizacao" value="Localização" />
+                            <h:inputTextarea id="localizacao" rows="4"  cols="50" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" value="#{moduloMB.modulo.localizacao}" />
+                            <h:outputLabel for="observacao" value="Observação" />
+                            <h:inputTextarea id="observacao" rows="4"  cols="50" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" value="#{moduloMB.modulo.observacao}" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="3">
+                            <h:commandButton value="Salvar" actionListener="#{moduloMB.salvar}">
+                                <f:ajax execute="@form" render="@form :msgerro :tabModulos" />
+                            </h:commandButton>
+                            <h:commandButton value="Novo" actionListener="#{moduloMB.novo}">
+                                <f:ajax execute="@form" render="@form :msgerro" />
+                            </h:commandButton>
+                            <h:commandButton disabled="#{empty moduloMB.modulo.codigo}" value="Excluir" actionListener="#{moduloMB.excluir}">
+                                <f:ajax execute="@form" render="@form :msgerro :tabModulos" />
+                            </h:commandButton>
+                        </h:panelGrid>
+                        <br />
+                    </h:form>
+                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <h:form id="tabModulos">
+                        <p:dataTable paginator="true" rows="5" id="tabelaModulos" var="modulo" value="#{moduloMB.listaModulos}">
+                            <f:facet name="header"><h:outputText id="headerDtModulos" value="Módulos cadastrados" /></f:facet>
+                            <p:column id="colunaNome">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoIdentificacao" value="Identificação" /></f:facet>
+                                <p:commandLink ajax="false" value="#{modulo.identificacao}">
+                                    <f:setPropertyActionListener value="#{modulo}" target="#{moduloMB.modulo}" />
+                                    <f:ajax execute="@form" render=":formModulo :msgerro" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column id="colunaUnidade">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoUnidade" value="Unidade" /></f:facet>
+                                <h:outputText id="labelUnidade"  value="#{modulo.unidade}" />
+                            </p:column>
+                            <p:column><f:facet name="header"><h:outputText value="Localização" /></f:facet>
+                                <h:outputText  value="#{modulo.localizacao}"  />
+                            </p:column>
+                            <p:column><f:facet name="header"><h:outputText value="Tipo" /></f:facet>
+                                <h:outputText  value="#{modulo.tipoModulo}"  />
+                            </p:column>
+                            <p:column id="columnEditaTomadas">
+                                <f:facet name="header"><h:outputText id="textoEditarTomadas" value="Tomadas" /></f:facet>
+                                <p:link id="linkPanels" value="Ver" outcome="/modulos/rede/cadTomadaRemota">
+                                    <f:param name="moduloCod" value="#{modulo.codigo}" />
+                                </p:link>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
+</html>

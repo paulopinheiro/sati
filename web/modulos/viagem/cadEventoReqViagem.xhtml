@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <f:metadata>
+            <f:viewParam id="viagemCod" name="viagemCod" value="#{eventoReqViagemMB.viagem}" converter="#{viagemConverterMB}" required="true" />
+        </f:metadata>
+        <body>
+            <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+                <ui:define name="titulo">Eventos do pedido de ressarcimento da viagem #{eventoReqViagemMB.viagem}</ui:define>
+                <ui:define name="top">Eventos do pedido de ressarcimento da viagem <u>#{eventoReqViagemMB.viagem}</u></ui:define>
+                <!--
+                <ui:define name="left">
+                    <h:form id="formMenu">
+                        <h:panelGrid styleClass="menu" id="menuCadRack" columns="1">
+                            <h:commandLink id="linkVoltar" value="Voltar" action="/modulos/viagem/cadViagem">
+                                <f:setPropertyActionListener target="#{viagemMB.viagem}" value="#{eventoReqViagemMB.viagem}" />
+                            </h:commandLink>
+                        </h:panelGrid>
+                    </h:form>
+                </ui:define>
+                -->
+                <ui:define name="content">
+                    <h:form id="formEvento">
+                        <h:panelGrid id="dadosEvento" columns="2">
+                            <f:facet name="header"><b>Dados do Evento</b></f:facet>
+                            <h:outputLabel for="dataEvento" value="Data Evento:" />
+                            <p:calendar id="dataEvento" value="#{eventoReqViagemMB.eventoReqViagem.dataEvento}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
+                            <h:outputLabel for="tipo" value="Tipo:" />
+                            <h:selectOneMenu id="tipo" label="Tipos" value="#{eventoReqViagemMB.eventoReqViagem.tipoEvento}" converter="converteTipoEventoReqViagem" >
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Selecione um tipo de evento --" />
+                                <f:selectItems id="siTipoEvento" value="#{eventoReqViagemMB.tiposEvento}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo}"  />
+                            </h:selectOneMenu>
+                            <h:outputLabel for="observacao" value="Observação:" />
+                            <h:inputTextarea id="observacao" cols="60" rows="4" value="#{eventoReqViagemMB.eventoReqViagem.observacao}" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="4">
+                            <h:commandButton value="Salvar" actionListener="#{eventoReqViagemMB.salvar}">
+                                <f:ajax execute="@form" render="@form :tabEventos :msgerro" />
+                            </h:commandButton>
+                            <h:commandButton value="Novo" actionListener="#{eventoReqViagemMB.novo}">
+                                <f:ajax render="@form :msgerro" />
+                            </h:commandButton>
+                            <h:commandButton disabled="#{empty eventoReqViagemMB.eventoReqViagem.codigo}" value="Excluir" actionListener="#{eventoReqViagemMB.excluir}">
+                                <f:ajax execute="@form" render="@form :tabEventos :msgerro" />
+                            </h:commandButton>
+                            <p:link value="Voltar" outcome="/modulos/viagem/cadViagem">
+                                <f:param name="viagemCod" value="#{eventoReqViagemMB.viagem.codigo}" />
+                            </p:link>
+                        </h:panelGrid>
+                        <br />
+                    </h:form>
+                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <h:form id="tabEventos">
+                        <p:dataTable id="tabelaEventos" var="evento" value="#{eventoReqViagemMB.listaEventos}">
+                            <f:facet name="header"><h:outputText id="headerDtEventos" value="Eventos cadastrados" /></f:facet>
+                            <p:column><f:facet name="header"><h:outputText value="Evento" /></f:facet>
+                                <p:commandLink ajax="false" id="clinkEvento" value="#{evento.tipoEvento}">
+                                    <f:setPropertyActionListener value="#{evento}" target="#{eventoReqViagemMB.eventoReqViagem}" />
+                                    <f:ajax render=":formEvento :msgerro" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column><f:facet name="header"><h:outputText value="Data evento" /></f:facet>
+                                <h:outputText  value="#{evento.dataEvento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column><f:facet name="header"><h:outputText value="Observação" /></f:facet>
+                                <h:outputText  value="#{evento.observacao}"  />
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
+</html>

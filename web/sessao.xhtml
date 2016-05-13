@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/resources/templates/menuSuperior.xhtml">
+        <ui:define name="titulo">SATI - Dados da Sessão</ui:define>
+        <ui:define name="top">SATI - Dados da Sessão</ui:define>
+
+        <ui:define name="content">
+            <h:form id="formSessao">
+                <h:panelGrid id="gridSessao" columns="2">
+                    <h:outputLabel id="labelUsuario" for="usuario" value="Usuário" />
+                    <h:outputText id="usuario" value="#{geralMB.progint}" />
+                    <h:outputLabel id="labelAreaAtuacaoUsuario" for="areaAtuacaoUsuario" value="Área de Atuação do Usuário" />
+                    <h:outputText id="areaAtuacaoUsuario" value="#{geralMB.progint.areaAtuacao}" />
+                    <h:outputLabel id="labelMunicipioSedeUsuario" for="municipioSedeUsuario" value="Município sede" />
+                    <h:outputText id="municipioSedeUsuario" value="#{geralMB.progint.areaAtuacao.municipioSede}" />
+                </h:panelGrid>
+            </h:form>
+            <p:messages id="mensagem" globalOnly="true" showDetail="false" showSummary="true"/>
+        </ui:define>
+    </ui:composition>
+</html>

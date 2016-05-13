@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <f:view>
+        <body>
+            <ui:composition template="./resources/templates/semMenu.xhtml">
+                <ui:define name="titulo">Sistema de Apoio ao Técnico do Interior - SATI</ui:define>
+                <ui:define name="top">Sistema de Apoio ao Técnico do Interior - SATI</ui:define>
+                <ui:define name="content">
+                    <h:form id="formLogin">
+                        <h:panelGrid id="gridLogin" columns="2">
+                            <h:outputLabel id="labelProgint" for="progint" value="Usuário:" />
+                            <h:selectOneMenu id="progint" value="#{geralMB.progint}" converter="converteProgint">
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o usuário ---" />
+                                <f:selectItems id="sgiProgint" value="#{geralMB.listaProgints}" var="progint" itemValue="#{progint}" itemLabel="#{progint}" />
+                            </h:selectOneMenu>
+                            <h:outputLabel id="labelSenha" for="senhaProgint" value="Senha" />
+                            <h:inputSecret id="senhaProgint" value="#{geralMB.senha}" />
+                        </h:panelGrid>
+                        <h:panelGrid id="gridBotoes" columns="1">
+                            <h:commandButton value="Conectar" action="#{geralMB.conectar}" />
+                        </h:panelGrid>
+                        <h:messages id="msgErro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    </h:form>
+                </ui:define>
+                <ui:define name="bottom">Desenvolvido por Paulo Pinheiro</ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
+</html>

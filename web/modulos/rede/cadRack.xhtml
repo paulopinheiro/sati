@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <body>
+            <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+                <ui:define name="titulo">Cadastro de Racks do Município de #{geralMB.municipioSessao}</ui:define>
+                <ui:define name="top">Cadastro de Racks do Município de #{geralMB.municipioSessao}</ui:define>
+                <!--
+                <ui:define name="left">
+                    <h:form id="formMenu">
+                        <h:panelGrid styleClass="menu" id="menuCadRack" columns="1">
+                            <h:commandLink id="linkVoltar" value="Voltar" action="/modulos/rede/homeRede" />
+                        </h:panelGrid>
+                    </h:form>
+                </ui:define>
+                -->
+                <ui:define name="content">
+                    <h:form id="formRack">
+                        <h:panelGrid id="gridFormRack" columns="2">
+                            <f:facet name="header"><b>Dados do Rack</b></f:facet>
+                            <h:outputLabel for="identificacao" value="Identificação:" />
+                            <h:inputText id="identificacao" size="50" value="#{rackMB.rack.identificacao}" onkeydown="limitText(this,50)" onkeyup="limitText(this,50)" />
+                            <h:outputLabel for="descricao" value="Descrição:" />
+                            <h:inputTextarea id="descricao" cols="50" onkeydown="limitText(this,50)" onkeyup="limitText(this,50)" value="#{rackMB.rack.descricao}" />
+                            <h:outputLabel for="localizacao" value="Localização:" />
+                            <h:inputTextarea id="localizacao" cols="50" onkeydown="limitText(this,50)" onkeyup="limitText(this,50)" value="#{rackMB.rack.localizacao}" />
+                            <h:outputLabel for="observacao" value="Observação:" />
+                            <h:inputTextarea id="observacao" cols="50" onkeydown="limitText(this,50)" onkeyup="limitText(this,50)" value="#{rackMB.rack.observacao}" />
+                        </h:panelGrid>
+                        <h:panelGrid id="gridBotoes" columns="3">
+                            <h:commandButton value="Salvar" actionListener="#{rackMB.salvar}">
+                                <f:ajax execute="@form" render="@form :msgerro :tabRacks" />
+                            </h:commandButton>
+                            <h:commandButton value="Novo" actionListener="#{rackMB.novo}">
+                                <f:ajax execute="@form" render="@form :msgerro" />
+                            </h:commandButton>
+                            <h:commandButton disabled="#{empty rackMB.rack.codigo}" value="Excluir" actionListener="#{rackMB.excluir}">
+                                <f:ajax execute="@form" render="@form :msgerro :tabRacks" />
+                            </h:commandButton>
+                        </h:panelGrid>
+                        <br />
+                    </h:form>
+                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <h:form id="tabRacks">
+                        <p:dataTable id="tabelaRacks" var="rack" value="#{rackMB.listaRacks}">
+                            <f:facet name="header"><h:outputText id="headerDtRacks" value="Racks cadastrados" /></f:facet>
+                            <p:column><f:facet name="header"><h:outputText value="Identificação" /></f:facet>
+                                <p:commandLink ajax="false" value="#{rack.identificacao}">
+                                    <f:setPropertyActionListener value="#{rack}" target="#{rackMB.rack}" />
+                                    <f:ajax execute="@form" render=":formRack :msgerro" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column><f:facet name="header"><h:outputText value="Descrição" /></f:facet>
+                                <h:outputText  value="#{rack.descricao}"  />
+                            </p:column>
+                            <p:column><f:facet name="header"><h:outputText value="Localização" /></f:facet>
+                                <h:outputText  value="#{rack.localizacao}"  />
+                            </p:column>
+                            <p:column id="columnEditaPanels">
+                                <f:facet name="header"><h:outputText id="textoEditarPanels" value="Painéis" /></f:facet>
+                                <p:link id="linkPanels" value="Ver" outcome="/modulos/rede/cadPanel">
+                                    <f:param name="rackCod" value="#{rack.codigo}" />
+                                </p:link>
+                            </p:column>
+                            <f:facet name="footer"><h:outputText id="footerDtRacks" value="Total: #{rackMB.quantRacks}" /></f:facet>
+                        </p:dataTable>
+                    </h:form>
+                </ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
+</html>

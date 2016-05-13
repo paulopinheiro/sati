@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:viewParam id="modeloCod" name="modeloCod" value="#{loteMB.modelo}" converter="#{modeloConverterMB}" required="false" />
+    </f:metadata>
+    <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+        <ui:define name="titulo">Cadastro de Lotes de Equipamentos do Modelo #{loteMB.modelo}</ui:define>
+        <ui:define name="top">Cadastro de Lotes de Equipamentos do Modelo #{loteMB.modelo}</ui:define>
+
+        <ui:define name="content">
+            <h:form id="formLote">
+                <h:panelGrid id="gridLote" columns="2">
+                    <h:outputLabel id="labelNome" for="nome" value="Nome" />
+                    <h:inputText id="nome" value="#{loteMB.lote.nome}" size="100" onkeydown="limitText(this, 100);" onkeyup="limitText(this, 100);"/>
+                    <h:outputLabel id="labelDataFimGarantia" for="datafimgarantia" value="Garantia até" />
+                    <p:calendar id="datafimgarantia" value="#{loteMB.lote.dataFimGarantia}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
+                    <h:outputLabel id="labelModelo" for="modelo" value="Modelo equipamento:" />
+                    <h:outputText id="modelo" value="#{loteMB.lote.modelo}" />
+                </h:panelGrid>
+                <h:panelGrid id="botoesLote" columns="5">
+                    <h:commandButton id="btSalvar" actionListener="#{loteMB.salvar}" value="Salvar">
+                        <f:ajax execute="@form" render="@form :tabLote :mensagem" />
+                    </h:commandButton>
+                    <h:commandButton id="btNovo" actionListener="#{loteMB.limparElemento}" value="Novo">
+                        <f:ajax execute="@form" render="@form :mensagem" />
+                    </h:commandButton>
+                    <h:commandButton id="btExcluir" actionListener="#{loteMB.excluir}" value="Excluir" disabled="#{loteMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este lote?'))
+                                return false;">
+                        <f:ajax execute="@form" render="@form :tabLote :mensagem" />
+                    </h:commandButton>
+                    <h:commandButton id="btFiltrar" actionListener="#{loteMB.filtrar}" value="Filtrar" disabled="#{!loteMB.novoElemento}">
+                        <f:ajax execute="@form" render="@form :tabLote :mensagem" />
+                    </h:commandButton>
+                    <h:commandButton id="btVoltar" action="cadModelo.xhtml" value="Voltar" />
+                </h:panelGrid>
+            </h:form>
+            <h:form id="tabLote">
+                <p:dataTable id="tabelaLote" var="lote" value="#{loteMB.listaLotes}">
+                    <f:facet name="header"><h:outputText value="Lotes cadastrados" /></f:facet>
+                    <p:column style="white-space: normal" id="colunaNome"><f:facet name="header"><h:outputText id="textoNome" value="Nome" /></f:facet>
+                        <h:commandLink id="linkNome" value="#{lote.nome}">
+                            <f:setPropertyActionListener value="#{lote}" target="#{loteMB.lote}" />
+                            <f:ajax execute="@this" render=":formLote :mensagem" />
+                        </h:commandLink>
+                    </p:column>
+                    <p:column id="colunaDtfimgarantia"><f:facet name="header"><h:outputText id="textoDtfimgarantia" value="Garantia até" /></f:facet>
+                        <h:outputText id="campoDtfimgarantia" value="#{lote.dataFimGarantia}">
+                            <f:convertDateTime parent="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <f:facet name="footer"><h:outputText value="Total: #{loteMB.quantLista}" /></f:facet>
+                </p:dataTable>
+            </h:form>
+            <p:messages id="mensagem" globalOnly="true" showDetail="false" showSummary="true"/>
+        </ui:define>
+    </ui:composition>
+</html>

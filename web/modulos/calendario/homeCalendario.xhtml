@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <f:view>
+        <body>
+            <ui:composition template="./../../resources/templates/comMenu.xhtml">
+                <ui:define name="titulo">Módulo de Controle de Calendário</ui:define>
+                <ui:define name="top">Módulo de Controle de Calendário</ui:define>
+                <ui:define name="left">
+                    <h:form id="formMenu">
+                        <h:panelGrid id="gridMenu" columns="1">
+                            <h:commandLink value="Feriados Móveis" action="/modulos/calendario/cadFeriadoMovel" />
+                            <h:commandLink value="Feriados Fixos" action="/modulos/calendario/cadFeriadoFixo" />
+                            <h:commandLink value="Transferencias" action="/modulos/calendario/cadTransferencia" />
+                            <h:commandLink value="Voltar" action="/modulos/home" />
+                        </h:panelGrid>
+                    </h:form>
+                </ui:define>
+                <ui:define name="content">
+                    <br />
+                    <h2>Selecione um cadastro no menu ao lado</h2>
+                    <br />
+                </ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
+</html>

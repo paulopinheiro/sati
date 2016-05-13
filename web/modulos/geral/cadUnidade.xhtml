@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <f:metadata>
+            <f:viewParam id="municipioCod" name="municipioCod" value="#{unidadeMB.municipio}" converter="#{municipioConverterMB}" required="true" />
+        </f:metadata>
+        <body>
+            <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+                <ui:define name="titulo">Cadastro de unidades judiciárias do município: #{unidadeMB.municipio}</ui:define>
+                <ui:define name="top">Cadastro de unidades judiciárias do município: #{unidadeMB.municipio}</ui:define>
+                <!--
+                <ui:define name="left">
+                    <h:form id="formMenu">
+                        <h:commandLink value="Voltar" action="/modulos/geral/cadMunicipio.xhtml" />
+                    </h:form>
+                </ui:define>
+                -->
+                <ui:define name="content">
+                    <h:form id="formUnidade">
+                        <h:panelGrid id="gridFormUnidade" columns="2">
+                            <f:facet name="header"><b>Dados da Unidade</b></f:facet>
+                            <h:outputLabel id="labelNome" for="nome" value="Nome" />
+                            <h:inputText id="nome" value="#{unidadeMB.unidade.nome}" size="50" onkeydown="limitText(this,50)" onkeyup="limitText(this,50)" />
+                            <h:outputLabel id="labelSigla" for="sigla" value="Sigla" />
+                            <h:inputText id="sigla" value="#{unidadeMB.unidade.sigla}" size="10" onkeydown="limitText(this,10)" onkeyup="limitText(this,10)" />
+                            <h:outputLabel id="labelPrefixo" for="prefixo" value="Prefixo" />
+                            <h:inputText id="prefixo" value="#{unidadeMB.unidade.prefixo}" size="3" onkeydown="limitText(this,3)" onkeyup="limitText(this,3)" />
+                            <h:outputLabel id="labelLocalizacao" for="localizacao" value="Localização:" />
+                            <h:inputTextarea id="localizacao" value="#{unidadeMB.unidade.localizacao}" cols="50" rows="5" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <h:outputLabel id="labelObservacao" for="observacao" value="Observação:" />
+                            <h:inputTextarea id="observacao" value="#{unidadeMB.unidade.observacao}" cols="50" rows="5" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                        </h:panelGrid>
+                        <h:panelGrid id="gridBotoes" columns="4">
+                            <h:commandButton value="Salvar" actionListener="#{unidadeMB.salvar}">
+                                <f:ajax execute="@form" render="@form :msgerro :tabUnidades" />
+                            </h:commandButton>
+                            <h:commandButton value="Novo" actionListener="#{unidadeMB.novo}">
+                                <f:ajax execute="@form" render="@form :msgerro" />
+                            </h:commandButton>
+                            <h:commandButton disabled="#{empty unidadeMB.unidade.codigo}" value="Excluir" actionListener="#{unidadeMB.excluir}">
+                                <f:ajax execute="@form" render="@form :msgerro :tabUnidades" />
+                            </h:commandButton>
+                            <h:commandButton value="Voltar" action="/modulos/geral/cadMunicipio.xhtml" />
+                        </h:panelGrid>
+                        <br />
+                    </h:form>
+                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <h:form id="tabUnidades">
+                        <p:dataTable id="tabelaUnidades" var="unidade" value="#{unidadeMB.listaUnidades}">
+                            <f:facet name="header"><h:outputText id="headerDtUnidade" value="Unidades cadastradas" /></f:facet>
+                            <p:column id="colunaNome">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoNome" value="Nome" /></f:facet>
+                                <p:commandLink value="#{unidade.nome}">
+                                    <f:setPropertyActionListener value="#{unidade}" target="#{unidadeMB.unidade}" />
+                                    <f:ajax execute="@form" render=":formUnidade :msgerro" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column id="colunaSigla">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoSigla" value="Sigla" /></f:facet>
+                                <h:outputText id="labelSigla"  value="#{unidade.sigla}" />
+                            </p:column>
+                            <p:column id="colunaPrefixo">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoPrefixo" value="Prefixo" /></f:facet>
+                                <h:outputText id="labelPrefixo"  value="#{unidade.prefixo}" />
+                            </p:column>
+                            <f:facet name="footer"><h:outputText id="footerDtUnidades" value="Total: #{unidadeMB.quantUnidades}" /></f:facet>
+                        </p:dataTable>
+                    </h:form>
+                </ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
+</html>

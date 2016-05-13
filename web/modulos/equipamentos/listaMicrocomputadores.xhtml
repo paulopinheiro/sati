@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <body>
+        <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+            <ui:define name="titulo">Lista de Microcomputadores Cadastrados - #{listaMicrocomputadoresMB.municipioSessao}</ui:define>
+            <ui:define name="top">Lista de Microcomputadores Cadastrados - #{listaMicrocomputadoresMB.municipioSessao}</ui:define>
+            <ui:define name="content">
+                <h:form id="formFiltraLista">
+                <h:panelGrid id="gridFiltros" columns="4">
+                    <f:facet name="header"><h:outputText value="Filtrar Lista" /></f:facet>
+                    <h:outputLabel id="labelModelo" for="filtroModelo" value="Modelo" />
+                    <h:selectOneMenu id="filtroModelo" label="Modelo" value="#{listaMicrocomputadoresMB.filtroModelo}" converter="converteModelo" >
+                        <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Todos os modelos --" />
+                        <f:selectItems value="#{listaMicrocomputadoresMB.listaModelos}" var="modelo" itemValue="#{modelo}" itemLabel="#{modelo}" />
+                        <f:ajax event="change" listener="#{listaMicrocomputadoresMB.alteracaoModelo}" execute="@this" render="formFiltraLista:filtroLote" />
+                    </h:selectOneMenu>
+                    <h:outputLabel id="labelFiltroLote" for="filtroLote" value="Lote" />
+                    <h:selectOneMenu id="filtroLote" label="Lotes" value="#{listaMicrocomputadoresMB.filtroLote}" converter="converteLote" >
+                        <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Todos os lotes --" />
+                        <f:selectItems value="#{listaMicrocomputadoresMB.listaLotes}" var="lote" itemValue="#{lote}" itemLabel="#{lote.nome}" />
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:panelGrid id="gridFiltros2" columns="3">
+                    <h:outputLabel id="labelTombo" for="filtroTombo" value="Tombo" />
+                    <h:inputText id="filtroTombo" value="#{listaMicrocomputadoresMB.filtroTombo}" size="10" onkeydown="limitText(this, 6);" onkeyup="limitText(this, 6);"/>
+                    <h:commandButton value="Filtrar" actionListener="#{listaMicrocomputadoresMB.filtrar}">
+                        <f:ajax execute="@form" render=":tabMicrocomputadores :msgerro" />
+                    </h:commandButton>
+                </h:panelGrid>
+                <br />
+                <h:panelGrid id="outrasFuncoes" columns="1" border="1">
+                    <h:commandLink id="linkNovaEquipamento" value="Novo Microcomputador" action="cadEquipamento.xhtml" />
+                </h:panelGrid>
+            </h:form>
+            <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
+            <h:form id="tabMicrocomputadores">
+                <p:dataTable id="tabelaEquipamentos" var="equipamento" value="#{listaMicrocomputadoresMB.listaMicrocomputadores}" paginator="true" rows="10" paginatorPosition="bottom">
+                    <f:facet name="header"><h:outputText value="Equipamentos cadastrados" /></f:facet>
+                    <p:column id="colunaNome"><f:facet name="header"><h:outputText id="textoNome" value="Tombo" /></f:facet>
+                        <h:link id="linkTombo" outcome="cadEquipamento" value="#{equipamento.tombo}">
+                            <f:param name="equipamentoCod" value="#{equipamento.codigo}" />
+                        </h:link>
+                    </p:column>
+                    <p:column style="white-space: normal" id="colunaUnidade"><f:facet name="header"><h:outputText id="textoUnidade" value="Unidade" /></f:facet>
+                        <h:outputText id="campoUnidade" value="#{equipamento.unidade.sigla}" />
+                    </p:column>
+                    <p:column style="white-space: normal" id="colunaUsuario"><f:facet name="header"><h:outputText id="textoUsuario" value="Usuário" /></f:facet>
+                        <h:outputText id="campoUsuario" value="#{equipamento.usuario}" />
+                    </p:column>
+                    <p:column style="white-space: normal" id="colunaModelo"><f:facet name="header"><h:outputText id="textoModelo" value="Marca/modelo" /></f:facet>
+                        <h:outputText id="campoModelo" value=" #{equipamento.lote.modelo.tipoEquipamento} #{equipamento.lote.modelo}" />
+                    </p:column>                    
+                    <p:column id="colunaGarantia"><f:facet name="header"><h:outputText id="textoGarantia" value="Garantia até" /></f:facet>
+                        <h:outputText id="campoGarantia" value="#{equipamento.lote.dataFimGarantia}">
+                            <f:convertDateTime parent="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <f:facet name="footer"><h:outputText value="Total: #{listaMicrocomputadoresMB.quantLista}" /></f:facet>
+                </p:dataTable>
+            </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

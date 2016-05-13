@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+        <ui:define name="titulo">Cadastro de Equipamentos</ui:define>
+        <ui:define name="top">Cadastro de Equipamentos</ui:define>
+
+        <ui:define name="content">
+            <h:form id="formMovimenta">
+                <h:panelGrid id="gridMovimenta" columns="3">
+                    <h:outputLabel id="labelTipoEquipamento" for="tipoEquipamento" value="Tipo Equipamento" />
+                    <h:selectOneMenu id="tipoEquipamento" value="#{movEquipamentoMB.tipoEquipamento}" converter="converteTipoEquipamento">
+                        <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o tipo ---" />
+                        <f:selectItems id="sgiTipoEquipamento" value="#{movEquipamentoMB.tiposEquipamento}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo}" />
+                        <f:ajax execute="@this" render="btFiltrar :msgerro" />
+                    </h:selectOneMenu>
+                    <h:commandButton id="btFiltrar" value="Filtrar" actionListener="#{movEquipamentoMB.filtrar}" disabled="#{!movEquipamentoMB.listaLiberada}">
+                        <f:ajax execute="@form" render=":formPickList :msgerro" />
+                    </h:commandButton>
+                    <h:outputLabel id="labelCircular" for="circular" value="Circular" />
+                    <h:selectBooleanCheckbox id="circular" label="Circular" value="#{movEquipamentoMB.circular}" />
+                </h:panelGrid>
+            </h:form>
+            <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
+            <h:form id="formPickList">
+                <h:panelGrid id="gridPickList" columns="1" rendered="#{movEquipamentoMB.listaLiberada}">
+                    <p:pickList id="plEquipamentos"  value="#{movEquipamentoMB.dlmEquipamentos}" var="equipamento"
+                                itemValue="#{equipamento}" itemLabel="#{equipamento}" showSourceControls="false" showTargetControls="true"
+                                showSourceFilter="true" showTargetFilter="true" converter="converteEquipamentoPL">
+                        <f:facet name="sourceCaption">Equipamentos</f:facet>
+                        <f:facet name="targetCaption">Movimentar na ordem</f:facet>
+                        <p:column>
+                            <h:outputText value="#{equipamento}" />
+                        </p:column>
+                        <p:ajax event="transfer" update="btMovimentar" />
+                    </p:pickList>
+                    <h:commandButton id="btMovimentar" value="Movimentar" actionListener="#{movEquipamentoMB.movimentar}" disabled="#{!movEquipamentoMB.prontoMovimentar}">
+                        <f:ajax execute="@this" render=":formPickList :msgerro" />
+                    </h:commandButton>
+                </h:panelGrid>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
