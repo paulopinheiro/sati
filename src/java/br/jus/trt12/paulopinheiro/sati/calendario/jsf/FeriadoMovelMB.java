@@ -3,19 +3,19 @@ package br.jus.trt12.paulopinheiro.sati.calendario.jsf;
 import br.jus.trt12.paulopinheiro.sati.calendario.ejb.FeriadoFacade;
 import br.jus.trt12.paulopinheiro.sati.calendario.model.FeriadoMovel;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.MunicipioFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaRestritaMB;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
-import br.jus.trt12.paulopinheiro.sati.util.ContextoJSF;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @ViewScoped
-public class FeriadoMovelMB implements Serializable {
+public class FeriadoMovelMB extends AbListaRestritaMB<FeriadoMovel> implements Serializable {
     @EJB private FeriadoFacade feriadoFacade;
     @EJB private MunicipioFacade municipioFacade;
 
@@ -34,6 +34,7 @@ public class FeriadoMovelMB implements Serializable {
         getFeriadoMovel().setDiasPascoa(getFeriadoMovel().getDiasPascoa()-1);
     }
 
+    @Override
     public void salvar(ActionEvent event) {
         try {
             feriadoFacade.salvarFeriadoMovel(getFeriadoMovel());
@@ -44,41 +45,20 @@ public class FeriadoMovelMB implements Serializable {
         }
     }
 
-    public void novo(ActionEvent event) {
-        setFeriadoMovel(null);
-        setListaFeriadosMoveis(null);
-    }
-
-    public void excluir(ActionEvent event) {
-        try {
-            feriadoFacade.remove(getFeriadoMovel());
-            setFeriadoMovel(null);
-            setListaFeriadosMoveis(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
-    public int getQuantFeriadosMoveis() {
-        return getListaFeriadosMoveis().size();
-    }
-
     public FeriadoMovel getFeriadoMovel() {
-        if (this.feriadoMovel==null) this.feriadoMovel = new FeriadoMovel();
-        return feriadoMovel;
+        return this.getElemento();
     }
 
     public void setFeriadoMovel(FeriadoMovel feriadoMovel) {
-        this.feriadoMovel = feriadoMovel;
+        this.setElemento(feriadoMovel);
     }
 
     public List<FeriadoMovel> getListaFeriadosMoveis() {
-        if (this.listaFeriadosMoveis==null) this.listaFeriadosMoveis = feriadoFacade.findFeriadosMoveis();
-        return listaFeriadosMoveis;
+        return this.getLista();
     }
 
     public void setListaFeriadosMoveis(List<FeriadoMovel> listaFeriadosMoveis) {
-        this.listaFeriadosMoveis = listaFeriadosMoveis;
+        this.setLista(listaFeriadosMoveis);
     }
 
     public List<Municipio> getMunicipios() {
@@ -90,7 +70,23 @@ public class FeriadoMovelMB implements Serializable {
         this.municipios = municipios;
     }
 
-    private void mensagemErro(String mensagem) {
-        ContextoJSF.getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,mensagem,null));
+    @Override
+    protected List<FeriadoMovel> getListaRestrita() {
+        return this.feriadoFacade.findFeriadosMoveis();
+    }
+
+    @Override
+    protected AbstractFacade getFacade() {
+        return this.feriadoFacade;
+    }
+
+    @Override
+    public boolean isNovoElemento() {
+        return this.getFeriadoMovel().getCodigo()==null || this.getFeriadoMovel().getCodigo()==0;
+    }
+
+    @Override
+    protected FeriadoMovel novainstanciaElemento() {
+        return new FeriadoMovel();
     }
 }

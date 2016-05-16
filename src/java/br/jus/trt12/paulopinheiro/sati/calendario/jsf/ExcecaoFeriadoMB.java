@@ -4,63 +4,30 @@ import br.jus.trt12.paulopinheiro.sati.calendario.ejb.ExcecaoFeriadoNacionalFaca
 import br.jus.trt12.paulopinheiro.sati.calendario.model.ExcecaoFeriadoNacional;
 import br.jus.trt12.paulopinheiro.sati.calendario.model.Feriado;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.MunicipioFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaRestritaMB;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
-import br.jus.trt12.paulopinheiro.sati.util.ContextoJSF;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @ViewScoped
-public class ExcecaoFeriadoMB implements Serializable {
+public class ExcecaoFeriadoMB extends AbListaRestritaMB<ExcecaoFeriadoNacional> implements Serializable {
     @EJB private ExcecaoFeriadoNacionalFacade excecaoFeriadoFacade;
     @EJB private MunicipioFacade municipioFacade;
 
     private Feriado feriado;
     private String linkVoltar;
 
-    private ExcecaoFeriadoNacional excecaoFeriadoNacional;
-    private List<ExcecaoFeriadoNacional> listaExcecoesFeriados;
-
     private List<Municipio> municipios;
 
     public ExcecaoFeriadoMB() {}
 
-    public void salvar(ActionEvent event) {
-        try {
-            excecaoFeriadoFacade.salvar(getExcecaoFeriadoNacional());
-            setExcecaoFeriadoNacional(null);
-            setListaExcecoesFeriados(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
-    public void novo(ActionEvent event) {
-        setExcecaoFeriadoNacional(null);
-        setListaExcecoesFeriados(null);
-    }
-
-    public void excluir(ActionEvent event) {
-        try {
-            excecaoFeriadoFacade.remove(getExcecaoFeriadoNacional());
-            setExcecaoFeriadoNacional(null);
-            setListaExcecoesFeriados(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
     public String voltar() {
         return getLinkVoltar();
-    }
-
-    public int getQuantExcecoes() {
-        return getListaExcecoesFeriados().size();
     }
 
     public Feriado getFeriado() {
@@ -72,21 +39,19 @@ public class ExcecaoFeriadoMB implements Serializable {
     }
 
     public ExcecaoFeriadoNacional getExcecaoFeriadoNacional() {
-        if (this.excecaoFeriadoNacional==null) this.excecaoFeriadoNacional = new ExcecaoFeriadoNacional(getFeriado());
-        return excecaoFeriadoNacional;
+        return this.getElemento();
     }
 
     public void setExcecaoFeriadoNacional(ExcecaoFeriadoNacional excecaoFeriadoNacional) {
-        this.excecaoFeriadoNacional = excecaoFeriadoNacional;
+        this.setElemento(excecaoFeriadoNacional);
     }
 
     public List<ExcecaoFeriadoNacional> getListaExcecoesFeriados() {
-        if (this.listaExcecoesFeriados==null) this.listaExcecoesFeriados = excecaoFeriadoFacade.findByFeriado(getFeriado());
-        return listaExcecoesFeriados;
+        return this.getLista();
     }
 
     public void setListaExcecoesFeriados(List<ExcecaoFeriadoNacional> listaExcecoesFeriados) {
-        this.listaExcecoesFeriados = listaExcecoesFeriados;
+        this.setLista(listaExcecoesFeriados);
     }
 
     public List<Municipio> getMunicipios() {
@@ -106,7 +71,23 @@ public class ExcecaoFeriadoMB implements Serializable {
         this.linkVoltar = linkVoltar;
     }
 
-    private void mensagemErro(String mensagem) {
-        ContextoJSF.getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,mensagem,null));
+    @Override
+    protected List<ExcecaoFeriadoNacional> getListaRestrita() {
+        return this.excecaoFeriadoFacade.findByFeriado(this.getFeriado());
+    }
+
+    @Override
+    protected AbstractFacade getFacade() {
+        return this.excecaoFeriadoFacade;
+    }
+
+    @Override
+    public boolean isNovoElemento() {
+        return this.getExcecaoFeriadoNacional().getCodigo()==null || this.getExcecaoFeriadoNacional().getCodigo()==0;
+    }
+
+    @Override
+    protected ExcecaoFeriadoNacional novainstanciaElemento() {
+        return new ExcecaoFeriadoNacional(getFeriado());
     }
 }

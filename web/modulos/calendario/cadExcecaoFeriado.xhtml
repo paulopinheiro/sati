@@ -14,44 +14,36 @@
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
                 <ui:define name="titulo">Exceções para o feriado #{excecaoFeriadoMB.feriado}</ui:define>
                 <ui:define name="top">Exceções para o feriado #{excecaoFeriadoMB.feriado}</ui:define>
-                <!--
-                <ui:define name="left">
-                    <h:form id="formMenu">
-                        <h:panelGrid styleClass="menu" id="menuTomadaPanel" columns="1">
-                            <h:commandLink id="linkVoltar" value="Voltar" action="#{excecaoFeriadoMB.voltar}" />
-                        </h:panelGrid>
-                    </h:form>
-                </ui:define>
-                -->
                 <ui:define name="content">
                     <h:form id="formExcecao">
-                        <h:panelGrid id="gridFormFeriadoMovel" columns="2">
+                        <p:panelGrid id="gridFormFeriadoMovel" columns="2">
                             <f:facet name="header"><b>Dados da Exceção</b></f:facet>
-                            <h:outputLabel for="municipio" value="Exceto para o município:" />
-                            <h:selectOneMenu id="municipio" value="#{excecaoFeriadoMB.excecaoFeriadoNacional.municipio}" converter="converteMunicipio">
+                            <p:outputLabel for="municipio" value="Exceto para o município:" />
+                            <p:selectOneMenu id="municipio" value="#{excecaoFeriadoMB.excecaoFeriadoNacional.municipio}" converter="converteMunicipio">
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione um município ---" />
                                 <f:selectItems id="sgiMunicipio" value="#{excecaoFeriadoMB.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
-                            </h:selectOneMenu>
-                            <h:outputLabel for="calendDesde" value="Desde:" />
+                            </p:selectOneMenu>
+                            <p:outputLabel for="calendDesde" value="Desde:" />
                             <p:calendar id="calendDesde" value="#{excecaoFeriadoMB.excecaoFeriadoNacional.desde}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
-                            <h:outputLabel for="calendAte" value="Até:" />
+                            <p:outputLabel for="calendAte" value="Até:" />
                             <p:calendar id="calendAte" value="#{excecaoFeriadoMB.excecaoFeriadoNacional.ate}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
-                        </h:panelGrid>
-                        <h:panelGrid id="gridBotoes" columns="4">
-                            <h:commandButton value="Salvar" actionListener="#{excecaoFeriadoMB.salvar}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabExcecoes" />
-                            </h:commandButton>
-                            <h:commandButton value="Novo" actionListener="#{excecaoFeriadoMB.novo}">
-                                <f:ajax execute="@form" render="@form :msgerro" />
-                            </h:commandButton>
-                            <h:commandButton disabled="#{empty excecaoFeriadoMB.excecaoFeriadoNacional.codigo}" value="Excluir" actionListener="#{excecaoFeriadoMB.excluir}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabExcecoes" />
-                            </h:commandButton>
-                            <h:commandButton value="Voltar" action="#{excecaoFeriadoMB.voltar}" />
-                        </h:panelGrid>
+                        </p:panelGrid>
+                        <p:panelGrid id="gridBotoes" columns="4">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{excecaoFeriadoMB.salvar}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabExcecoes" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{excecaoFeriadoMB.limparElemento}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" disabled="#{excecaoFeriadoMB.novoElemento}" value="Excluir" actionListener="#{excecaoFeriadoMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta exceção?')) return false;">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabExcecoes" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Voltar" action="#{excecaoFeriadoMB.voltar}" />
+                        </p:panelGrid>
                         <br />
                     </h:form>
-                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                     <h:form id="tabExcecoes">
                         <p:dataTable id="tabelaFeriadosMoveis" var="excecaoFeriado" value="#{excecaoFeriadoMB.listaExcecoesFeriados}">
                             <f:facet name="header"><h:outputText id="headerDtExcecaoFeriado" value="Exceções" /></f:facet>
@@ -59,7 +51,7 @@
                                 <f:facet name="header"><h:outputText style="text-align: center;" value="Município" /></f:facet>
                                 <p:commandLink ajax="false" value="#{excecaoFeriado.municipio}">
                                     <f:setPropertyActionListener value="#{excecaoFeriado}" target="#{excecaoFeriadoMB.excecaoFeriadoNacional}" />
-                                    <f:ajax execute="@form" render=":formExcecao :msgerro" />
+                                    <f:ajax execute="@form" render=":formExcecao :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column>
@@ -74,7 +66,7 @@
                                     <f:convertDateTime pattern="dd/MM/yyyy" />
                                 </h:outputText>
                             </p:column>
-                            <f:facet name="footer"><h:outputText id="footerDtExcecao" value="Total: #{excecaoFeriadoMB.quantExcecoes}" /></f:facet>
+                            <f:facet name="footer"><h:outputText id="footerDtExcecao" value="Total: #{excecaoFeriadoMB.quantLista}" /></f:facet>
                         </p:dataTable>
                     </h:form>
                 </ui:define>
