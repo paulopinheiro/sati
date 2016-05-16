@@ -42,7 +42,7 @@
                             <p:commandButton ajax="false" value="Novo" actionListener="#{municipioMB.limparElemento}">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{empty municipioMB.municipio.codigo}" value="Excluir" actionListener="#{municipioMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta área?') return false;">
+                            <p:commandButton ajax="false" disabled="#{municipioMB.novoElemento}" value="Excluir" actionListener="#{municipioMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este município?') return false;">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabMunicipios" />
                             </p:commandButton>
                         </p:panelGrid>

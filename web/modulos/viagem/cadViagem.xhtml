@@ -13,44 +13,32 @@
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
                 <ui:define name="titulo">Cadastro de Viagem do TI #{geralMB.progint}</ui:define>
                 <ui:define name="top">Cadastro de Viagem do TI #{geralMB.progint}</ui:define>
-                <!--
-                <ui:define name="left">
-                    <h:form id="formMenu">
-                        <h:panelGrid styleClass="menu" id="menuCadRack" columns="1">
-                            <h:commandLink rendered="#{!empty viagemMB.viagem.dataViagem}" id="linkEventos" value="Pedido Ressarcimento" action="/modulos/viagem/cadEventoReqViagem">
-                                <f:setPropertyActionListener target="#{eventoReqViagemMB.viagem}" value="#{viagemMB.viagem}" />
-                            </h:commandLink>
-                            <h:commandLink id="linkVoltar" value="Voltar" action="/modulos/viagem/lisViagens" />
-                        </h:panelGrid>
-                    </h:form>
-                </ui:define>
-                -->
                 <ui:define name="content">
                     <h:form id="formViagem">
-                        <h:panelGrid id="gridViagem" columns="4">
+                        <p:panelGrid id="gridViagem" columns="4">
                             <f:facet name="header"><b>Dados da Viagem</b></f:facet>
-                            <h:outputLabel id="labelDataProgramada" for="calendDataProgramada" value="Data Programada" />
+                            <p:outputLabel id="labelDataProgramada" for="calendDataProgramada" value="Data Programada" />
                             <p:calendar id="calendDataProgramada" value="#{viagemMB.viagem.dataProgramada}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
-                            <h:outputLabel id="labelDataViagem" for="calendDataViagem" value="Data Viagem" />
+                            <p:outputLabel id="labelDataViagem" for="calendDataViagem" value="Data Viagem" />
                             <p:calendar id="calendDataViagem" value="#{viagemMB.viagem.dataViagem}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
-                            <h:outputLabel id="labelMunicipio" for="listaMunicipios" value="Município de Destino" />
-                            <h:selectOneMenu id="listaMunicipios" label="Municipios" value="#{viagemMB.viagem.municipioDestino}" converter="converteMunicipio" >
+                            <p:outputLabel id="labelMunicipio" for="listaMunicipios" value="Município de Destino" />
+                            <p:selectOneMenu id="listaMunicipios" label="Municipios" value="#{viagemMB.viagem.municipioDestino}" converter="converteMunicipio" >
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Selecione um município --" />
                                 <f:selectItems value="#{viagemMB.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
-                            </h:selectOneMenu>
-                        </h:panelGrid>
-                        <h:panelGrid id="gridBotoesViagem" columns="4">
-                            <h:commandButton value="Salvar" actionListener="#{viagemMB.salvar}">
-                                <f:ajax execute="@form" render="@form :formTarefa :msgerro" />
-                            </h:commandButton>
-                            <h:commandButton value="Nova" actionListener="#{viagemMB.nova}">
-                                <f:ajax execute="@form" render="@form :formTarefa :msgerro" />
-                            </h:commandButton>
-                            <h:commandButton disabled="#{empty viagemMB.viagem.codigo}" value="Excluir" actionListener="#{viagemMB.excluir}">
-                                <f:ajax execute="@form" render="@form :formTarefa :msgerro" />
-                            </h:commandButton>
-                            <h:commandButton value="Voltar" action="/modulos/viagem/lisViagens" />
-                        </h:panelGrid>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:panelGrid id="gridBotoesViagem" columns="4">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{viagemMB.salvar}">
+                                <f:ajax execute="@form" render="@form :formTarefa :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Nova" actionListener="#{viagemMB.limparElemento}">
+                                <f:ajax execute="@form" render="@form :formTarefa :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" disabled="#{viagemMB.novoElemento}" value="Excluir" actionListener="#{viagemMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta viagem?')) return false;">
+                                <f:ajax execute="@form" render="@form :formTarefa :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Voltar" action="/modulos/viagem/lisViagens" />
+                        </p:panelGrid>
                         <h:panelGroup id="grpOutrasFuncoes" rendered="#{!empty viagemMB.viagem.dataViagem}">
                             <br />
                             <h:panelGrid  border="1" id="outrasFuncoes" columns="1">
@@ -62,32 +50,32 @@
                         <br />
                     </h:form>
                     <h:form id="formTarefa">
-                        <h:panelGrid id="gridTarefa" columns="2" rendered="#{!viagemMB.novaViagem}">
+                        <p:panelGrid id="gridTarefa" columns="2" rendered="#{!viagemMB.novoElemento}">
                             <f:facet name="header"><b>Tarefa</b></f:facet>
-                            <h:outputLabel id="labelDescricaoTarefa" for="descricaoTarefa" value="Descrição" />
-                            <h:inputTextarea id="descricaoTarefa" cols="60" rows="4" value="#{viagemMB.tarefa.descricao}" onkeydown="limitText(this, 255);" onkeyup="limitText(this, 255);" />
-                            <h:outputLabel id="labelTomboequipTarefa" for="tomboequipTarefa" value="Tombo Equipamento" />
-                            <h:inputText id="tomboequipTarefa" value="#{viagemMB.tarefa.tomboequip}" onkeydown="limitText(this, 6);" onkeyup="limitText(this, 6);" />
-                            <h:outputLabel id="labelNroTarefaRITM" for="nroTarefaRITM" value="Número da tarefa no RITM" />
-                            <h:inputText id="nroTarefaRITM" value="#{viagemMB.tarefa.nroTarefaRITM}" onkeydown="limitText(this, 9);" onkeyup="limitText(this, 9);"/>
-                        </h:panelGrid>
-                        <h:panelGrid id="gridBotoesTarefa" columns="3" rendered="#{!viagemMB.novaViagem}">
-                            <h:commandButton id="botaoSalvarTarefa" value="Salvar" actionListener="#{viagemMB.salvarTarefa}" >
-                                <f:ajax execute="@form" render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :formTarefa:tabTarefas :msgerro"/>
-                            </h:commandButton>
-                            <h:commandButton id="botaoNovaTarefa" value="Nova" actionListener="#{viagemMB.novaTarefa}">
-                                <f:ajax render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :msgerro" />
-                            </h:commandButton>
-                            <h:commandButton id="botaoExcluirTarefa" disabled="#{empty viagemMB.tarefa.codigo}" value="Excluir" actionListener="#{viagemMB.excluirTarefa}">
-                                <f:ajax execute="@form" render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :formTarefa:tabTarefas :msgerro" />
-                            </h:commandButton>
-                        </h:panelGrid>
-                        <p:dataTable id="tabTarefas" var="tarefa" value="#{viagemMB.viagem.tarefas}" rendered="#{!viagemMB.novaViagem}">
+                            <p:outputLabel id="labelDescricaoTarefa" for="descricaoTarefa" value="Descrição" />
+                            <p:inputTextarea id="descricaoTarefa" cols="60" rows="4" value="#{viagemMB.tarefa.descricao}" onkeydown="limitText(this, 255);" onkeyup="limitText(this, 255);" />
+                            <p:outputLabel id="labelTomboequipTarefa" for="tomboequipTarefa" value="Tombo Equipamento" />
+                            <p:inputText id="tomboequipTarefa" value="#{viagemMB.tarefa.tomboequip}" onkeydown="limitText(this, 6);" onkeyup="limitText(this, 6);" />
+                            <p:outputLabel id="labelNroTarefaRITM" for="nroTarefaRITM" value="Número da tarefa no RITM" />
+                            <p:inputText id="nroTarefaRITM" value="#{viagemMB.tarefa.nroTarefaRITM}" onkeydown="limitText(this, 9);" onkeyup="limitText(this, 9);"/>
+                        </p:panelGrid>
+                        <p:panelGrid id="gridBotoesTarefa" columns="3" rendered="#{!viagemMB.novoElemento}">
+                            <p:commandButton ajax="false" id="botaoSalvarTarefa" value="Salvar" actionListener="#{viagemMB.salvarTarefa}" >
+                                <f:ajax execute="@form" render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :formTarefa:tabTarefas :msgerro :gmensagem"/>
+                            </p:commandButton>
+                            <p:commandButton ajax="false" id="botaoNovaTarefa" value="Nova" actionListener="#{viagemMB.novaTarefa}">
+                                <f:ajax render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" id="botaoExcluirTarefa" disabled="#{empty viagemMB.tarefa.codigo}" value="Excluir" actionListener="#{viagemMB.excluirTarefa}" onclick="if (!confirm('Tem certeza de que deseja excluir esta tarefa?')) return false;">
+                                <f:ajax execute="@form" render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :formTarefa:tabTarefas :msgerro :gmensagem" />
+                            </p:commandButton>
+                        </p:panelGrid>
+                        <p:dataTable id="tabTarefas" var="tarefa" value="#{viagemMB.viagem.tarefas}" rendered="#{!viagemMB.novoElemento}">
                             <f:facet name="header"><h:outputText id="headerDtTarefas" value="Tarefas cadastradas" /></f:facet>
                             <p:column id="colDescricaoTarefa" ><f:facet name="header"><h:outputText id="headerDescricaoTarefa" value="Descrição" /></f:facet>
                                 <p:commandLink ajax="false" id="clinkTarefa" value="#{tarefa.descricao}">
                                     <f:setPropertyActionListener value="#{tarefa}" target="#{viagemMB.tarefa}" />
-                                    <f:ajax render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :msgerro" />
+                                    <f:ajax render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column id="colunaEquipamento" ><f:facet name="header"><h:outputText id="headerEquipamento" value="Equipamento" /></f:facet>
@@ -99,7 +87,8 @@
                             <f:facet name="footer"><h:outputText id="footerDtTarefas" value="Total: #{viagemMB.quantTarefas}" /></f:facet>
                         </p:dataTable>
                     </h:form>
-                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                 </ui:define>
             </ui:composition>
         </body>

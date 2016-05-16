@@ -17,7 +17,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
 
 @ManagedBean
 @ViewScoped

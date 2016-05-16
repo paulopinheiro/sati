@@ -13,55 +13,45 @@
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
                 <ui:define name="titulo">Eventos do pedido de ressarcimento da viagem #{eventoReqViagemMB.viagem}</ui:define>
                 <ui:define name="top">Eventos do pedido de ressarcimento da viagem <u>#{eventoReqViagemMB.viagem}</u></ui:define>
-                <!--
-                <ui:define name="left">
-                    <h:form id="formMenu">
-                        <h:panelGrid styleClass="menu" id="menuCadRack" columns="1">
-                            <h:commandLink id="linkVoltar" value="Voltar" action="/modulos/viagem/cadViagem">
-                                <f:setPropertyActionListener target="#{viagemMB.viagem}" value="#{eventoReqViagemMB.viagem}" />
-                            </h:commandLink>
-                        </h:panelGrid>
-                    </h:form>
-                </ui:define>
-                -->
                 <ui:define name="content">
                     <h:form id="formEvento">
-                        <h:panelGrid id="dadosEvento" columns="2">
+                        <p:panelGrid id="dadosEvento" columns="2">
                             <f:facet name="header"><b>Dados do Evento</b></f:facet>
-                            <h:outputLabel for="dataEvento" value="Data Evento:" />
+                            <p:outputLabel for="dataEvento" value="Data Evento:" />
                             <p:calendar id="dataEvento" value="#{eventoReqViagemMB.eventoReqViagem.dataEvento}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
-                            <h:outputLabel for="tipo" value="Tipo:" />
-                            <h:selectOneMenu id="tipo" label="Tipos" value="#{eventoReqViagemMB.eventoReqViagem.tipoEvento}" converter="converteTipoEventoReqViagem" >
+                            <p:outputLabel for="tipo" value="Tipo:" />
+                            <p:selectOneMenu id="tipo" label="Tipos" value="#{eventoReqViagemMB.eventoReqViagem.tipoEvento}" converter="converteTipoEventoReqViagem" >
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Selecione um tipo de evento --" />
                                 <f:selectItems id="siTipoEvento" value="#{eventoReqViagemMB.tiposEvento}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo}"  />
-                            </h:selectOneMenu>
-                            <h:outputLabel for="observacao" value="Observação:" />
-                            <h:inputTextarea id="observacao" cols="60" rows="4" value="#{eventoReqViagemMB.eventoReqViagem.observacao}" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" />
-                        </h:panelGrid>
-                        <h:panelGrid columns="4">
-                            <h:commandButton value="Salvar" actionListener="#{eventoReqViagemMB.salvar}">
-                                <f:ajax execute="@form" render="@form :tabEventos :msgerro" />
-                            </h:commandButton>
-                            <h:commandButton value="Novo" actionListener="#{eventoReqViagemMB.novo}">
-                                <f:ajax render="@form :msgerro" />
-                            </h:commandButton>
-                            <h:commandButton disabled="#{empty eventoReqViagemMB.eventoReqViagem.codigo}" value="Excluir" actionListener="#{eventoReqViagemMB.excluir}">
-                                <f:ajax execute="@form" render="@form :tabEventos :msgerro" />
-                            </h:commandButton>
+                            </p:selectOneMenu>
+                            <p:outputLabel for="observacao" value="Observação:" />
+                            <p:inputTextarea id="observacao" cols="60" rows="4" value="#{eventoReqViagemMB.eventoReqViagem.observacao}" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" />
+                        </p:panelGrid>
+                        <p:panelGrid columns="4">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{eventoReqViagemMB.salvar}">
+                                <f:ajax execute="@form" render="@form :tabEventos :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{eventoReqViagemMB.limparElemento}">
+                                <f:ajax render="@form :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" disabled="#{eventoReqViagemMB.novoElemento}" value="Excluir" actionListener="#{eventoReqViagemMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este evento?')) return false;">
+                                <f:ajax execute="@form" render="@form :tabEventos :msgerro :gmensagem" />
+                            </p:commandButton>
                             <p:link value="Voltar" outcome="/modulos/viagem/cadViagem">
                                 <f:param name="viagemCod" value="#{eventoReqViagemMB.viagem.codigo}" />
                             </p:link>
-                        </h:panelGrid>
+                        </p:panelGrid>
                         <br />
                     </h:form>
-                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                     <h:form id="tabEventos">
                         <p:dataTable id="tabelaEventos" var="evento" value="#{eventoReqViagemMB.listaEventos}">
                             <f:facet name="header"><h:outputText id="headerDtEventos" value="Eventos cadastrados" /></f:facet>
                             <p:column><f:facet name="header"><h:outputText value="Evento" /></f:facet>
                                 <p:commandLink ajax="false" id="clinkEvento" value="#{evento.tipoEvento}">
                                     <f:setPropertyActionListener value="#{evento}" target="#{eventoReqViagemMB.eventoReqViagem}" />
-                                    <f:ajax render=":formEvento :msgerro" />
+                                    <f:ajax render=":formEvento :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column><f:facet name="header"><h:outputText value="Data evento" /></f:facet>

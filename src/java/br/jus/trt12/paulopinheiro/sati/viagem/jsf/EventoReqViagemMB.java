@@ -1,6 +1,7 @@
 package br.jus.trt12.paulopinheiro.sati.viagem.jsf;
 
-import br.jus.trt12.paulopinheiro.sati.util.ContextoJSF;
+import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaRestritaMB;
 import br.jus.trt12.paulopinheiro.sati.viagem.ejb.EventoReqViagemFacade;
 import br.jus.trt12.paulopinheiro.sati.viagem.model.EventoReqViagem;
 import br.jus.trt12.paulopinheiro.sati.viagem.model.TipoEventoReqViagem;
@@ -8,65 +9,34 @@ import br.jus.trt12.paulopinheiro.sati.viagem.model.Viagem;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @ViewScoped
-public class EventoReqViagemMB implements Serializable {
+public class EventoReqViagemMB extends AbListaRestritaMB<EventoReqViagem> implements Serializable {
     @EJB private EventoReqViagemFacade eventoReqViagemFacade;
 
     private Viagem viagem;
-
-    private List<EventoReqViagem> listaEventos;
-    private EventoReqViagem eventoReqViagem;
 
     private List<TipoEventoReqViagem> tiposEvento;
 
     public EventoReqViagemMB() {}
 
-    public void salvar(ActionEvent event) {
-        try {
-            eventoReqViagemFacade.salvar(getEventoReqViagem());
-            setEventoReqViagem(null);
-            setListaEventos(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
-    public void novo(ActionEvent event) {
-        setEventoReqViagem(null);
-    }
-
-    public void excluir(ActionEvent event) {
-        try {
-            eventoReqViagemFacade.remove(getEventoReqViagem());
-            setEventoReqViagem(null);
-            setListaEventos(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
     public EventoReqViagem getEventoReqViagem() {
-        if (this.eventoReqViagem==null) this.eventoReqViagem = new EventoReqViagem(getViagem());
-        return eventoReqViagem;
+        return this.getElemento();
     }
 
     public void setEventoReqViagem(EventoReqViagem eventoReqViagem) {
-        this.eventoReqViagem = eventoReqViagem;
+        this.setElemento(eventoReqViagem);
     }
 
     public List<EventoReqViagem> getListaEventos() {
-        if (this.listaEventos==null) this.listaEventos = eventoReqViagemFacade.findByViagem(getViagem());
-        return listaEventos;
+        return this.getLista();
     }
 
     public void setListaEventos(List<EventoReqViagem> listaEventos) {
-        this.listaEventos = listaEventos;
+        this.setLista(listaEventos);
     }
 
     public List<TipoEventoReqViagem> getTiposEvento() {
@@ -87,7 +57,23 @@ public class EventoReqViagemMB implements Serializable {
         this.viagem = viagem;
     }
 
-    private void mensagemErro(String mensagem) {
-        ContextoJSF.getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,mensagem,null));
+    @Override
+    protected List<EventoReqViagem> getListaRestrita() {
+        return this.eventoReqViagemFacade.findByViagem(this.getViagem());
+    }
+
+    @Override
+    protected AbstractFacade getFacade() {
+        return this.eventoReqViagemFacade;
+    }
+
+    @Override
+    public boolean isNovoElemento() {
+        return this.getEventoReqViagem().getCodigo()==null || this.getEventoReqViagem().getCodigo()==0;
+    }
+
+    @Override
+    protected EventoReqViagem novainstanciaElemento() {
+        return new EventoReqViagem(this.getViagem());
     }
 }

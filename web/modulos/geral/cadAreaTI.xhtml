@@ -41,7 +41,7 @@
                             <p:commandButton ajax="false" value="Novo" actionListener="#{areaTIMB.limparElemento}">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{empty areaTIMB.areaTI.codigo}" value="Excluir" actionListener="#{areaTIMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta área?') return false;" >
+                            <p:commandButton ajax="false" disabled="#{areaTIMB.novoElemento}" value="Excluir" actionListener="#{areaTIMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta área?') return false;" >
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabAreaTI" />
                             </p:commandButton>
                         </p:panelGrid>

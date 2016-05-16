@@ -12,24 +12,24 @@
                 <ui:define name="top">Relação de Viagens do TI #{geralMB.progint}</ui:define>
                 <ui:define name="content">
                     <h:form id="formFiltraViagem">
-                        <h:panelGrid columns="1"><f:facet name="header"  ><b>Selecione uma viagem para editá-la</b></f:facet></h:panelGrid>
-                        <h:panelGrid id="gridCorpoFiltro" columns="3">
+                        <p:panelGrid columns="1"><f:facet name="header"  ><b>Selecione uma viagem para editá-la</b></f:facet></p:panelGrid>
+                        <p:panelGrid id="gridCorpoFiltro" columns="3">
                             <f:facet name="header"><b>Filtrar lista</b></f:facet>
-                            <h:outputLabel for="listaMunicipios" id="labelListaMunicipio" value="Município de Destino" />
-                            <h:selectOneMenu id="listaMunicipios" label="Municipios" value="#{listaViagensMB.municipioFiltro}" converter="converteMunicipio" >
+                            <p:outputLabel for="listaMunicipios" id="labelListaMunicipio" value="Município de Destino" />
+                            <p:selectOneMenu id="listaMunicipios" label="Municipios" value="#{listaViagensMB.municipioFiltro}" converter="converteMunicipio" >
                                 <f:selectItem noSelectionOption="true" id="itemNenhumMunicipio" itemValue="-1" itemLabel="-- Selecione um município --" />
                                 <f:selectItems id="itensMunicipio" value="#{listaViagensMB.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
-                            </h:selectOneMenu>
-                            <h:commandButton id="botaoFiltrar" value="Filtrar" actionListener="#{listaViagensMB.filtrar}" >
+                            </p:selectOneMenu>
+                            <p:commandButton ajax="false" id="botaoFiltrar" value="Filtrar" actionListener="#{listaViagensMB.filtrar}" >
                                 <f:ajax execute="@form" render=":tabViagens :msgerro" />
-                            </h:commandButton>
-                        </h:panelGrid>
-                        <h:panelGrid id="outrasFuncoes" columns="1" border="1" >
-                            <h:commandLink id="linkNovaViagem" value="Nova viagem" action="/modulos/viagem/cadViagem" />
-                        </h:panelGrid>
+                            </p:commandButton>
+                        </p:panelGrid>
+                        <p:panelGrid id="outrasFuncoes" columns="1">
+                            <p:commandLink id="linkNovaViagem" value="Nova viagem" action="/modulos/viagem/cadViagem" />
+                        </p:panelGrid>
                         <br />
                     </h:form>
-                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                     <h:form id="tabViagens">
                         <p:dataTable id="tabelaViagens" var="viagem" value="#{listaViagensMB.listaViagens}" paginator="true" rows="10" paginatorPosition="bottom" tableStyle="width:auto">
                             <f:facet name="header"><h:outputText value="Viagens cadastradas" /></f:facet>

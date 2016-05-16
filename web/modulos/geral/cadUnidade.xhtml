@@ -35,7 +35,7 @@
                             <p:commandButton ajax="false" value="Novo" actionListener="#{unidadeMB.limparElemento}">
                                 <f:ajax execute="@form" render=":formUnidade:gridFormUnidade :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{empty unidadeMB.unidade.codigo}" value="Excluir" actionListener="#{unidadeMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta unidade?') return false;">
+                            <p:commandButton ajax="false" disabled="#{unidadeMB.novoElemento}" value="Excluir" actionListener="#{unidadeMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta unidade?') return false;">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabUnidades" />
                             </p:commandButton>
                             <p:commandButton ajax="false" value="Voltar" action="/modulos/geral/cadMunicipio.xhtml" />
