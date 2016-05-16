@@ -1,65 +1,31 @@
 package br.jus.trt12.paulopinheiro.sati.geral.jsf;
 
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.UnidadeFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaRestritaMB;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Unidade;
-import br.jus.trt12.paulopinheiro.sati.util.ContextoJSF;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @ViewScoped
-public class UnidadeMB implements Serializable {
+public class UnidadeMB extends AbListaRestritaMB<Unidade> implements Serializable {
     @EJB private UnidadeFacade unidadeFacade;
 
     private Municipio municipio;
 
-    private List<Unidade> listaUnidades;
-    private Unidade unidade;
-
     public UnidadeMB() {}
 
-    public void salvar(ActionEvent event) {
-        try {
-            unidadeFacade.salvar(getUnidade());
-            setUnidade(null);
-            setListaUnidades(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
-    public void novo(ActionEvent event) {
-        setUnidade(null);
-    }
-
-    public void excluir(ActionEvent event) {
-        try {
-            unidadeFacade.remove(getUnidade());
-            setUnidade(null);
-            setListaUnidades(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
-    public int getQuantUnidades() {
-        return getListaUnidades().size();
-    }
-
-
     public List<Unidade> getListaUnidades() {
-        if (this.listaUnidades==null) this.listaUnidades=unidadeFacade.findByMunicipio(getMunicipio());
-        return listaUnidades;
+        return this.getLista();
     }
 
     public void setListaUnidades(List<Unidade> listaUnidades) {
-        this.listaUnidades = listaUnidades;
+        setLista(listaUnidades);
     }
 
     public Municipio getMunicipio() {
@@ -72,15 +38,30 @@ public class UnidadeMB implements Serializable {
     }
 
     public Unidade getUnidade() {
-        if (this.unidade==null) this.unidade = new Unidade(getMunicipio());
-        return unidade;
+        return this.getElemento();
     }
 
     public void setUnidade(Unidade unidade) {
-        this.unidade = unidade;
+        this.setElemento(unidade);
     }
 
-    private void mensagemErro(String mensagem) {
-        ContextoJSF.getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,mensagem,null));
+    @Override
+    protected List<Unidade> getListaRestrita() {
+        return this.unidadeFacade.findByMunicipio(this.getMunicipio());
+    }
+
+    @Override
+    protected AbstractFacade getFacade() {
+        return this.unidadeFacade;
+    }
+
+    @Override
+    public boolean isNovoElemento() {
+        return this.getUnidade().getCodigo()==null||this.getUnidade().getCodigo()==0;
+    }
+
+    @Override
+    protected Unidade novainstanciaElemento() {
+        return new Unidade(this.getMunicipio());
     }
 }

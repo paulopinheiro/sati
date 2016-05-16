@@ -29,8 +29,7 @@
                     <h:commandButton id="btNovo" actionListener="#{loteMB.limparElemento}" value="Novo">
                         <f:ajax execute="@form" render="@form :mensagem" />
                     </h:commandButton>
-                    <h:commandButton id="btExcluir" actionListener="#{loteMB.excluir}" value="Excluir" disabled="#{loteMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este lote?'))
-                                return false;">
+                    <h:commandButton id="btExcluir" actionListener="#{loteMB.excluir}" value="Excluir" disabled="#{loteMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este lote?')) return false;">
                         <f:ajax execute="@form" render="@form :tabLote :mensagem" />
                     </h:commandButton>
                     <h:commandButton id="btFiltrar" actionListener="#{loteMB.filtrar}" value="Filtrar" disabled="#{!loteMB.novoElemento}">

@@ -38,10 +38,10 @@
                             <p:commandButton ajax="false" value="Salvar" actionListener="#{progintMB.salvar}">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabProgints" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{progintMB.limparElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir esta área?') return false;">
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{progintMB.limparElemento}">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{empty progintMB.progint.codigo}" value="Excluir" actionListener="#{progintMB.excluir}">
+                            <p:commandButton ajax="false" disabled="#{empty progintMB.progint.codigo}" value="Excluir" actionListener="#{progintMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este técnico?') return false;">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabProgints" />
                             </p:commandButton>
                         </p:panelGrid>
