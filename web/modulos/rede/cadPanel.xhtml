@@ -13,62 +13,52 @@
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
                 <ui:define name="titulo">Cadastro de Painéis do Rack #{panelMB.rack}, Município de #{geralMB.municipioSessao}</ui:define>
                 <ui:define name="top">Cadastro de Painéis do Rack #{panelMB.rack}, Município de #{geralMB.municipioSessao}</ui:define>
-                <!--
-                <ui:define name="left">
-                    <h:form id="formMenu">
-                        <h:panelGrid styleClass="menu" id="menuCaPanel" columns="1">
-                            <h:commandLink id="linkVoltar" value="Voltar" action="/modulos/rede/cadRack" />
-                        </h:panelGrid>
-                    </h:form>
-                </ui:define>
-                -->
                 <ui:define name="content">
                     <h:form id="formPanel">
-                        <h:panelGrid id="gridTitulo" columns="1">
+                        <p:panelGrid id="gridTitulo" columns="1">
                             <f:facet name="header"><b>Dados do Painel</b></f:facet>
-                        </h:panelGrid>
-                        <h:panelGrid rendered="#{empty panelMB.panel.codigo}" columns="3">
-                            <h:outputLabel for="quantPortas" value="Painel de " />
-                            <h:inputText size="4" maxlength="3" id="quantPortas" value="#{panelMB.panel.quantPortas}" dir="RTL" onkeyup="this.value = this.value.replace (/\D+/, '')" onkeydown="this.value = this.value.replace (/\D+/, '')" />
+                        </p:panelGrid>
+                        <p:panelGrid rendered="#{panelMB.novoElemento}" columns="3">
+                            <p:outputLabel for="quantPortas" value="Painel de " />
+                            <p:inputText size="4" maxlength="3" id="quantPortas" value="#{panelMB.panel.quantPortas}" dir="RTL" onkeyup="this.value = this.value.replace (/\D+/, '')" onkeydown="this.value = this.value.replace (/\D+/, '')" />
                             <h:outputText value="portas" />
-                        </h:panelGrid>
-                        <h:panelGrid rendered="#{! empty panelMB.panel.codigo}" columns="3">
-                            <h:outputText value="Painel de " />
-                            <h:outputText value="#{panelMB.panel.quantPortas}" />
-                            <h:outputText value="portas" />
-                        </h:panelGrid>
-                        <h:panelGrid id="gridFormPanel" columns="2">
-                            <h:outputLabel for="nome" value="Nome: " />
-                            <h:inputText size="20" id="nome" value="#{panelMB.panel.nome}" onkeydown="limitText(this,15)" onkeyup="limitText(this,15)" />
-                            <h:outputLabel for="descricao" value="Descrição: " />
-                            <h:inputTextarea cols="50" rows="5" id="descricao" value="#{panelMB.panel.descricao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
-                            <h:outputLabel for="rack" value="Rack: " />
+                        </p:panelGrid>
+                        <p:panelGrid rendered="#{!panelMB.novoElemento}" columns="3">
+                            <h:outputText value="Painel de #{panelMB.panel.quantPortas} portas" />
+                        </p:panelGrid>
+                        <p:panelGrid id="gridFormPanel" columns="2">
+                            <p:outputLabel for="nome" value="Nome: " />
+                            <p:inputText size="20" id="nome" value="#{panelMB.panel.nome}" onkeydown="limitText(this,15)" onkeyup="limitText(this,15)" />
+                            <p:outputLabel for="descricao" value="Descrição: " />
+                            <p:inputTextarea cols="50" rows="5" id="descricao" value="#{panelMB.panel.descricao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <p:outputLabel for="rack" value="Rack: " />
                             <h:outputText id="rack" value="#{panelMB.rack}" />
-                            <h:outputLabel for="observacao" value="Observação: " />
-                            <h:inputTextarea cols="50" rows="5" id="observacao" value="#{panelMB.panel.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
-                        </h:panelGrid>
-                        <h:panelGrid id="gridBotoes" columns="4">
-                            <h:commandButton value="Salvar" actionListener="#{panelMB.salvar}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabPanels" />
-                            </h:commandButton>
-                            <h:commandButton value="Novo" actionListener="#{panelMB.novo}">
-                                <f:ajax execute="@form" render="@form :msgerro" />
-                            </h:commandButton>
-                            <h:commandButton disabled="#{empty panelMB.panel.codigo}" value="Excluir" actionListener="#{panelMB.excluir}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabPanels" />
-                            </h:commandButton>
-                            <h:commandButton value="Voltar" action="/modulos/rede/cadRack" />
-                        </h:panelGrid>
+                            <p:outputLabel for="observacao" value="Observação: " />
+                            <p:inputTextarea cols="50" rows="5" id="observacao" value="#{panelMB.panel.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                        </p:panelGrid>
+                        <p:panelGrid id="gridBotoes" columns="4">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{panelMB.salvar}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabPanels" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{panelMB.limparElemento}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" disabled="#{empty panelMB.panel.codigo}" value="Excluir" actionListener="#{panelMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este panel?')) return false;">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabPanels" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Voltar" action="/modulos/rede/cadRack" />
+                        </p:panelGrid>
                         <br />
                     </h:form>
-                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                     <h:form id="tabPanels">
                         <p:dataTable id="tabelaPanels" var="panel" value="#{panelMB.listaPanels}">
                             <f:facet name="header"><h:outputText id="headerDtPanels" value="Painéis cadastrados" /></f:facet>
                             <p:column><f:facet name="header"><h:outputText value="Nome" /></f:facet>
                                 <p:commandLink ajax="false" value="#{panel.nome}">
                                     <f:setPropertyActionListener value="#{panel}" target="#{panelMB.panel}" />
-                                    <f:ajax execute="@form" render=":formPanel :msgerro" />
+                                    <f:ajax execute="@form" render=":formPanel :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column><f:facet name="header"><h:outputText value="Portas" /></f:facet>
@@ -83,7 +73,7 @@
                                     <f:param name="panelCod" value="#{panel.codigo}" />
                                 </p:link>
                             </p:column>
-                            <f:facet name="footer"><h:outputText id="footerDtPanels" value="Total: #{panelMB.quantPanels}" /></f:facet>
+                            <f:facet name="footer"><h:outputText id="footerDtPanels" value="Total: #{panelMB.quantLista}" /></f:facet>
                         </p:dataTable>
                     </h:form>
                 </ui:define>

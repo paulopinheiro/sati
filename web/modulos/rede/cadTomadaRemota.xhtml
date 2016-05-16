@@ -13,52 +13,44 @@
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
                 <ui:define name="titulo">Cadastro de tomadas do módulo #{tomadaRemotaMB.modulo} (#{geralMB.municipioSessao})</ui:define>
                 <ui:define name="top">Cadastro de tomadas do módulo #{tomadaRemotaMB.modulo} (#{geralMB.municipioSessao})</ui:define>
-                <!--
-                <ui:define name="left">
-                    <h:form id="formMenu">
-                        <h:panelGrid styleClass="menu" id="menuCadTomadaRemota" columns="1">
-                            <h:commandLink id="linkVoltar" value="Voltar" action="/modulos/rede/cadModulo" />
-                        </h:panelGrid>
-                    </h:form>
-                </ui:define>
-                -->
                 <ui:define name="content">
                     <h:form id="formTomadaRemota">
-                        <h:panelGrid columns="2">
+                        <p:panelGrid columns="2">
                             <f:facet name="header"><b>Dados da Tomada</b></f:facet>
-                            <h:outputLabel for="nome" value="Nome" />
-                            <h:inputText id="nome" value="#{tomadaRemotaMB.tomadaRemota.nome}" size="10" onkeydown="limitText(this,10)" onkeyup="limitText(this,10)" />
-                            <h:outputLabel for="tipo" value="Tipo" />
-                            <h:selectOneRadio id="tipo" label="Tipo" value="#{tomadaRemotaMB.tomadaRemota.tipoConector}" converter="converteTipoConector" >
+                            <p:outputLabel for="nome" value="Nome" />
+                            <p:inputText id="nome" value="#{tomadaRemotaMB.tomadaRemota.nome}" size="10" onkeydown="limitText(this,10)" onkeyup="limitText(this,10)" />
+                            <p:outputLabel for="tipo" value="Tipo" />
+                            <p:selectOneRadio id="tipo" label="Tipo" value="#{tomadaRemotaMB.tomadaRemota.tipoConector}" converter="converteTipoConector" >
                                 <f:selectItems id="sgiTipoConector" value="#{tomadaRemotaMB.tiposConector}"  var="tipoConector" itemValue="#{tipoConector}" itemLabel="#{tipoConector}" />
-                            </h:selectOneRadio>
-                            <h:outputLabel for="descricao" value="Descrição: " />
-                            <h:inputTextarea rows="6" cols="50" id="descricao" value="#{tomadaRemotaMB.tomadaRemota.descricao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
-                            <h:outputLabel for="observacao" value="Observação: " />
-                            <h:inputTextarea rows="6" cols="50" id="observacao" value="#{tomadaRemotaMB.tomadaRemota.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
-                        </h:panelGrid>
-                        <h:panelGrid columns="4">
-                            <h:commandButton value="Salvar" actionListener="#{tomadaRemotaMB.salvar}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabTomadasRemotas" />
-                            </h:commandButton>
-                            <h:commandButton value="Nova" actionListener="#{tomadaRemotaMB.nova}">
-                                <f:ajax execute="@form" render="@form :msgerro" />
-                            </h:commandButton>
-                            <h:commandButton disabled="#{empty moduloMB.modulo.codigo}" value="Excluir" actionListener="#{tomadaRemotaMB.excluir}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabTomadasRemotas" />
-                            </h:commandButton>
-                            <h:commandButton value="Voltar" action="/modulos/rede/cadModulo" />
-                        </h:panelGrid>
+                            </p:selectOneRadio>
+                            <p:outputLabel for="descricao" value="Descrição: " />
+                            <p:inputTextarea rows="6" cols="50" id="descricao" value="#{tomadaRemotaMB.tomadaRemota.descricao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <p:outputLabel for="observacao" value="Observação: " />
+                            <p:inputTextarea rows="6" cols="50" id="observacao" value="#{tomadaRemotaMB.tomadaRemota.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                        </p:panelGrid>
+                        <p:panelGrid columns="4">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{tomadaRemotaMB.salvar}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTomadasRemotas" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Nova" actionListener="#{tomadaRemotaMB.limparElemento}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" disabled="#{tomadaRemotaMB.novoElemento}" value="Excluir" actionListener="#{tomadaRemotaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta tomada?')) return false;">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTomadasRemotas" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Voltar" action="/modulos/rede/cadModulo" />
+                        </p:panelGrid>
                         <br />
                     </h:form>
-                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                     <h:form id="tabTomadasRemotas">
                         <p:dataTable id="tabelaTomadas" var="tomada" value="#{tomadaRemotaMB.listaTomadasRemotas}">
                             <f:facet name="header"><h:outputText value="Tomadas cadstradas" /></f:facet>
                             <p:column><f:facet name="header"><h:outputText value="Identificacao" /></f:facet>
                                 <p:commandLink ajax="false" value="#{tomada.nome}">
                                     <f:setPropertyActionListener value="#{tomada}" target="#{tomadaRemotaMB.tomadaRemota}" />
-                                    <f:ajax execute="@form" render=":formTomadaRemota :msgerro" />
+                                    <f:ajax execute="@form" render=":formTomadaRemota :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column><f:facet name="header"><h:outputText value="Conector" /></f:facet>

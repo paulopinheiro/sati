@@ -1,20 +1,23 @@
 package br.jus.trt12.paulopinheiro.sati.redes.jsf;
 
+import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
+import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaRestritaMB;
 import br.jus.trt12.paulopinheiro.sati.redes.ejb.PanelFacade;
 import br.jus.trt12.paulopinheiro.sati.redes.model.Panel;
 import br.jus.trt12.paulopinheiro.sati.redes.model.TomadaPanel;
-import br.jus.trt12.paulopinheiro.sati.util.ContextoJSF;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @ViewScoped
-public class TomadaPanelMB implements Serializable {
+public class TomadaPanelMB extends AbListaRestritaMB<TomadaPanel> implements Serializable {
     @EJB private PanelFacade panelFacade;
 
     private Panel panel;
@@ -25,23 +28,27 @@ public class TomadaPanelMB implements Serializable {
 
     public TomadaPanelMB() {}
 
-    public void salvar(ActionEvent event) {
+    @Override
+    public void salvar(ActionEvent evt) {
         try {
-            panelFacade.salvaTomadaPanel(getTomadaPanel());
-            setTomadaPanel(null);
-            setListaTomadas(null);
+            this.panelFacade.salvaTomadaPanel(this.getTomadaPanel());
+            setElemento(null);
+            setLista(null);
+            mensagemSucesso("Registro salvo com sucesso");
+        } catch (SatiLogicalException ex) {
+            mensagemErro(ex.getMessage());
         } catch (Exception ex) {
             mensagemErro(ex.getMessage());
+            Logger.getLogger("TomadaPanelMB.java").log(Level.SEVERE, "Erro ao salvar", ex);
         }
     }
 
     public List<TomadaPanel> getListaTomadas() {
-        if (this.listaTomadas==null) this.listaTomadas=panelFacade.getListaTomadas(getPanel());
-        return listaTomadas;
+        return this.getLista();
     }
 
     public void setListaTomadas(List<TomadaPanel> listaTomadas) {
-        this.listaTomadas = listaTomadas;
+        this.setLista(listaTomadas);
     }
 
     public Panel getPanel() {
@@ -54,15 +61,30 @@ public class TomadaPanelMB implements Serializable {
     }
 
     public TomadaPanel getTomadaPanel() {
-        if (this.tomadaPanel==null) this.tomadaPanel = new TomadaPanel(getPanel());
-        return tomadaPanel;
+        return this.getElemento();
     }
 
     public void setTomadaPanel(TomadaPanel tomadaPanel) {
-        this.tomadaPanel = tomadaPanel;
+        this.setElemento(tomadaPanel);
     }
 
-    private void mensagemErro(String mensagem) {
-        ContextoJSF.getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,mensagem,null));
+    @Override
+    protected List<TomadaPanel> getListaRestrita() {
+        return this.panelFacade.getListaTomadas(this.getPanel());
+    }
+
+    @Override
+    protected AbstractFacade getFacade() {
+        return this.panelFacade;
+    }
+
+    @Override
+    public boolean isNovoElemento() {
+        return this.getTomadaPanel().getCodigo()==null || this.getTomadaPanel().getCodigo()==0;
+    }
+
+    @Override
+    protected TomadaPanel novainstanciaElemento() {
+        return new TomadaPanel(this.getPanel());
     }
 }

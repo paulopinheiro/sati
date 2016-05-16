@@ -1,73 +1,39 @@
 package br.jus.trt12.paulopinheiro.sati.redes.jsf;
 
+import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaRestritaMB;
 import br.jus.trt12.paulopinheiro.sati.redes.ejb.PanelFacade;
 import br.jus.trt12.paulopinheiro.sati.redes.model.Panel;
 import br.jus.trt12.paulopinheiro.sati.redes.model.Rack;
-import br.jus.trt12.paulopinheiro.sati.util.ContextoJSF;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @ViewScoped
-public class PanelMB implements Serializable {
+public class PanelMB extends AbListaRestritaMB<Panel> implements Serializable {
     @EJB private PanelFacade panelFacade;
 
     private Rack rack;
 
-    private List<Panel> listaPanels;
-    private Panel panel;
-
     public PanelMB() {}
 
-    public void salvar(ActionEvent event) {
-        try {
-            panelFacade.salvar(getPanel());
-            setPanel(null);
-            setListaPanels(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
-    public void novo(ActionEvent event) {
-        setRack(null);
-    }
-
-    public void excluir(ActionEvent event) {
-        try {
-            panelFacade.remove(getPanel());
-            setPanel(null);
-            setListaPanels(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
-    public int getQuantPanels() {
-        return getListaPanels().size();
-    }
-
     public List<Panel> getListaPanels() {
-        if (this.listaPanels==null) this.listaPanels=panelFacade.findByRack(getRack());
-        return listaPanels;
+        return this.getLista();
     }
 
     public void setListaPanels(List<Panel> listaPanels) {
-        this.listaPanels = listaPanels;
+        this.setLista(listaPanels);
     }
 
     public Panel getPanel() {
-        if (this.panel==null) this.panel = new Panel(getRack());
-        return panel;
+        return this.getElemento();
     }
 
     public void setPanel(Panel panel) {
-        this.panel = panel;
+        this.setElemento(panel);
     }
 
     public Rack getRack() {
@@ -79,7 +45,23 @@ public class PanelMB implements Serializable {
         this.rack = rack;
     }
 
-    private void mensagemErro(String mensagem) {
-        ContextoJSF.getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,mensagem,null));
+    @Override
+    protected List<Panel> getListaRestrita() {
+        return this.panelFacade.findByRack(this.getRack());
+    }
+
+    @Override
+    protected AbstractFacade getFacade() {
+        return this.panelFacade;
+    }
+
+    @Override
+    public boolean isNovoElemento() {
+        return this.getPanel().getCodigo()==null || this.getPanel().getCodigo()==0;
+    }
+
+    @Override
+    protected Panel novainstanciaElemento() {
+        return new Panel(this.getRack());
     }
 }

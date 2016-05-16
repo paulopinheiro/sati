@@ -13,53 +13,43 @@
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
                 <ui:define name="titulo">Tomadas do panel #{tomadaPanelMB.panel} (#{geralMB.municipioSessao})</ui:define>
                 <ui:define name="top">Tomadas do panel #{tomadaPanelMB.panel} (#{geralMB.municipioSessao})</ui:define>
-                <!--
-                <ui:define name="left">
-                    <h:form id="formMenu">
-                        <h:panelGrid styleClass="menu" id="menuTomadaPanel" columns="1">
-                            <h:commandLink id="linkVoltar" value="Voltar" action="/modulos/rede/cadPanel">
-                                <f:setPropertyActionListener target="#{panelMB.rack}" value="#{tomadaPanelMB.panel.rack}" />
-                            </h:commandLink>
-                        </h:panelGrid>
-                    </h:form>
-                </ui:define>
-                -->
                 <ui:define name="content">
                     <h:form id="formTomadaPanel">
                         <h:panelGrid columns="2">
                             <f:facet name="header"><b>Detalhes da Tomada</b></f:facet>
-                            <h:outputLabel for="nome" value="Nome: " />
+                            <p:outputLabel for="nome" value="Nome: " />
                             <h:outputText id="nome" value="#{tomadaPanelMB.tomadaPanel.nome}" />
-                            <h:outputLabel for="descricao" value="Descrição: " />
+                            <p:outputLabel for="descricao" value="Descrição: " />
                             <h:outputText id="descricao" value="#{tomadaPanelMB.tomadaPanel.descricao}" />
-                            <h:outputLabel rendered="#{!tomadaPanelMB.tomadaPanel.dados}" for="ramal" value="Ramal: " />
-                            <h:inputText rendered="#{!tomadaPanelMB.tomadaPanel.dados}" id="ramal" size="10" value="#{tomadaPanelMB.tomadaPanel.ramal}" onkeydown="limitText(this,8)" onkeyup="limitText(this,8)" />
-                            <h:outputLabel for="observacao" value="Observação: " />
-                            <h:inputTextarea rows="5" cols="50" id="observacao" value="#{tomadaPanelMB.tomadaPanel.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
-                            <h:outputLabel value="Status:" />
+                            <p:outputLabel rendered="#{!tomadaPanelMB.tomadaPanel.dados}" for="ramal" value="Ramal: " />
+                            <p:inputText rendered="#{!tomadaPanelMB.tomadaPanel.dados}" id="ramal" size="10" value="#{tomadaPanelMB.tomadaPanel.ramal}" onkeydown="limitText(this,8)" onkeyup="limitText(this,8)" />
+                            <p:outputLabel for="observacao" value="Observação: " />
+                            <p:inputTextarea rows="5" cols="50" id="observacao" value="#{tomadaPanelMB.tomadaPanel.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <p:outputLabel value="Status:" />
                             <h:outputText rendered="#{tomadaPanelMB.tomadaPanel.voice}" value="Voice" />
                             <h:outputText rendered="#{tomadaPanelMB.tomadaPanel.irregular}" value="Irregular" />
                             <h:outputText rendered="#{tomadaPanelMB.tomadaPanel.desligada}" value="Desligada" />
                             <h:outputText rendered="#{tomadaPanelMB.tomadaPanel.dados}" value="Dados" />
                         </h:panelGrid>
                         <h:panelGrid columns="2">
-                            <h:commandButton disabled="#{empty tomadaPanelMB.tomadaPanel.codigo}" value="Salvar" actionListener="#{tomadaPanelMB.salvar}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabTomadas" />
-                            </h:commandButton>
+                            <p:commandButton ajax="false" disabled="#{empty tomadaPanelMB.tomadaPanel.codigo}" value="Salvar" actionListener="#{tomadaPanelMB.salvar}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTomadas" />
+                            </p:commandButton>
                             <p:link value="Voltar" outcome="/modulos/rede/cadPanel">
                                 <f:param name="rackCod" value="#{tomadaPanelMB.panel.rack.codigo}" />
                             </p:link>
                         </h:panelGrid>
                         <br />
                     </h:form>
-                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                     <h:form id="tabTomadas">
                         <p:dataTable id="tabelaTomadas" var="tomada" value="#{tomadaPanelMB.listaTomadas}">
                             <f:facet name="header"><h:outputText id="headerDtTomadas" value="Tomadas" /></f:facet>
                             <p:column><f:facet name="header"><h:outputText value="Nome" /></f:facet>
                                 <p:commandLink ajax="false" value="#{tomada.nome}">
                                     <f:setPropertyActionListener value="#{tomada}" target="#{tomadaPanelMB.tomadaPanel}" />
-                                    <f:ajax execute="@form" render=":formTomadaPanel :msgerro" />
+                                    <f:ajax execute="@form" render=":formTomadaPanel :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column><f:facet name="header"><h:outputText value="Descrição" /></f:facet>
