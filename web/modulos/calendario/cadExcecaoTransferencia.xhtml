@@ -13,42 +13,34 @@
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
                 <ui:define name="titulo">Exceções para a transferência de feriado #{excecaoTransferenciaMB.transferencia}</ui:define>
                 <ui:define name="top">Exceções para a transferência de feriado #{excecaoTransferenciaMB.transferencia}</ui:define>
-                <!--
-                <ui:define name="left">
-                    <h:form id="formMenu">
-                        <h:panelGrid styleClass="menu" id="menuTomadaPanel" columns="1">
-                            <h:commandLink id="linkVoltar" value="Voltar" action="/modulos/calendario/cadTransferencia" />
-                        </h:panelGrid>
-                    </h:form>
-                </ui:define>
-                -->
                 <ui:define name="content">
                     <h:form id="formExcecao">
-                        <h:panelGrid id="gridFormFeriadoMovel" columns="2">
+                        <p:panelGrid id="gridFormFeriadoMovel" columns="2">
                             <f:facet name="header"><b>Dados da Exceção</b></f:facet>
-                            <h:outputLabel for="municipio" value="Exceto para o município:" />
-                            <h:selectOneMenu id="municipio" value="#{excecaoTransferenciaMB.excecaoTransferencia.municipio}" converter="converteMunicipio">
+                            <p:outputLabel for="municipio" value="Exceto para o município:" />
+                            <p:selectOneMenu id="municipio" value="#{excecaoTransferenciaMB.excecaoTransferencia.municipio}" converter="converteMunicipio">
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione um município ---" />
                                 <f:selectItems id="sgiMunicipio" value="#{excecaoTransferenciaMB.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
-                            </h:selectOneMenu>
-                            <h:outputLabel for="observacao" value="Observação" />
-                            <h:inputTextarea id="observacao" rows="4"  cols="50" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" value="#{excecaoTransferenciaMB.excecaoTransferencia.observacao}" />
-                        </h:panelGrid>
-                        <h:panelGrid id="gridBotoes" columns="4">
-                            <h:commandButton value="Salvar" actionListener="#{excecaoTransferenciaMB.salvar}">
+                            </p:selectOneMenu>
+                            <p:outputLabel for="observacao" value="Observação" />
+                            <p:inputTextarea id="observacao" rows="4"  cols="50" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" value="#{excecaoTransferenciaMB.excecaoTransferencia.observacao}" />
+                        </p:panelGrid>
+                        <p:panelGrid id="gridBotoes" columns="4">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{excecaoTransferenciaMB.salvar}">
                                 <f:ajax execute="@form" render="@form :msgerro :tabExcecoes" />
-                            </h:commandButton>
-                            <h:commandButton value="Novo" actionListener="#{excecaoTransferenciaMB.novo}">
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{excecaoTransferenciaMB.limparElemento}">
                                 <f:ajax execute="@form" render="@form :msgerro" />
-                            </h:commandButton>
-                            <h:commandButton disabled="#{empty excecaoTransferenciaMB.excecaoTransferencia.codigo}" value="Excluir" actionListener="#{excecaoTransferenciaMB.excluir}">
+                            </p:commandButton>
+                            <p:commandButton ajax="false" disabled="#{excecaoTransferenciaMB.novoElemento}" value="Excluir" actionListener="#{excecaoTransferenciaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta exceção?')) return false;">
                                 <f:ajax execute="@form" render="@form :msgerro :tabExcecoes" />
-                            </h:commandButton>
-                            <h:commandButton value="Voltar" action="/modulos/calendario/cadTransferencia" />
-                        </h:panelGrid>
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Voltar" action="/modulos/calendario/cadTransferencia" />
+                        </p:panelGrid>
                         <br />
                     </h:form>
-                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                     <h:form id="tabExcecoes">
                         <p:dataTable id="tabelaFeriadosMoveis" var="excecaoTransferencia" value="#{excecaoTransferenciaMB.listaExcecoes}">
                             <f:facet name="header"><h:outputText id="headerDtFeriadoMovel" value="Exceções" /></f:facet>
@@ -59,7 +51,7 @@
                                     <f:ajax execute="@form" render=":formExcecao :msgerro" />
                                 </p:commandLink>
                             </p:column>
-                            <f:facet name="footer"><h:outputText id="footerDtExcecao" value="Total: #{excecaoTransferenciaMB.quantExcecoes}" /></f:facet>
+                            <f:facet name="footer"><h:outputText id="footerDtExcecao" value="Total: #{excecaoTransferenciaMB.quantLista}" /></f:facet>
                         </p:dataTable>
                     </h:form>
                 </ui:define>

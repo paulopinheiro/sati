@@ -5,30 +5,27 @@ import br.jus.trt12.paulopinheiro.sati.calendario.ejb.TransferenciaFacade;
 import br.jus.trt12.paulopinheiro.sati.calendario.model.Feriado;
 import br.jus.trt12.paulopinheiro.sati.calendario.model.Transferencia;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.MunicipioFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaRestritaMB;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
-import br.jus.trt12.paulopinheiro.sati.util.ContextoJSF;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @ViewScoped
-public class TransferenciaMB implements Serializable {
+public class TransferenciaMB extends AbListaRestritaMB<Transferencia> implements Serializable {
     @EJB private FeriadoFacade feriadoFacade;
     @EJB private TransferenciaFacade transferenciaFacade;
     @EJB private MunicipioFacade municipioFacade;
 
     private Integer ano;
     private Date novaData;
-
-    private Transferencia transferencia;
-    private List<Transferencia> listaTransferencias;
 
     private List<Feriado> feriados;
     private List<Municipio> municipios;
@@ -50,40 +47,6 @@ public class TransferenciaMB implements Serializable {
     public void pesquisar(ActionEvent event) {
         setTransferencia(null);
         setListaTransferencias(null);
-    }
-
-    public void salvar(ActionEvent event) {
-        try {
-            getTransferencia().setAno(getAno());
-            getTransferencia().setNovoDia(this.getNovoDia());
-            getTransferencia().setNovoMes(this.getNovoMes());
-            transferenciaFacade.salvar(getTransferencia());
-            setTransferencia(null);
-            setListaTransferencias(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
-    public void novo(ActionEvent event) {
-        setTransferencia(null);
-        setListaTransferencias(null);
-        setNovaData(null);
-    }
-
-    public void excluir(ActionEvent event) {
-        try {
-            transferenciaFacade.remove(getTransferencia());
-            setTransferencia(null);
-            setListaTransferencias(null);
-            setNovaData(null);
-        } catch (Exception ex) {
-            mensagemErro(ex.getMessage());
-        }
-    }
-
-    public int getQuantTransferencias() {
-        return getListaTransferencias().size();
     }
 
     private Integer anoAtual() {
@@ -123,12 +86,11 @@ public class TransferenciaMB implements Serializable {
     }
 
     public List<Transferencia> getListaTransferencias() {
-        if (this.listaTransferencias==null) this.listaTransferencias = transferenciaFacade.findByAno(getAno());
-        return listaTransferencias;
+        return this.getLista();
     }
 
     public void setListaTransferencias(List<Transferencia> listaTransferencias) {
-        this.listaTransferencias = listaTransferencias;
+        this.setLista(listaTransferencias);
     }
 
     public List<Municipio> getMunicipios() {
@@ -147,18 +109,36 @@ public class TransferenciaMB implements Serializable {
 
     public void setNovaData(Date novaData) {
         this.novaData = novaData;
+        getTransferencia().setAno(getAno());
+        getTransferencia().setNovoDia(this.getNovoDia());
+        getTransferencia().setNovoMes(this.getNovoMes());
     }
 
     public Transferencia getTransferencia() {
-        if (this.transferencia==null) this.transferencia = new Transferencia(getAno());
-        return transferencia;
+        return this.getElemento();
     }
 
     public void setTransferencia(Transferencia transferencia) {
-        this.transferencia = transferencia;
+        this.setElemento(transferencia);
     }
 
-    private void mensagemErro(String mensagem) {
-        ContextoJSF.getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,mensagem,null));
+    @Override
+    protected List<Transferencia> getListaRestrita() {
+        return this.transferenciaFacade.findByAno(this.getAno());
+    }
+
+    @Override
+    protected AbstractFacade getFacade() {
+        return this.transferenciaFacade;
+    }
+
+    @Override
+    public boolean isNovoElemento() {
+        return this.getTransferencia().getCodigo()==null || this.getTransferencia().getCodigo()==0;
+    }
+
+    @Override
+    protected Transferencia novainstanciaElemento() {
+        return new Transferencia(this.getAno());
     }
 }

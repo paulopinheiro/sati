@@ -10,60 +10,52 @@
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
                 <ui:define name="titulo">Cadastro de Transferências de Feriados</ui:define>
                 <ui:define name="top">Cadastro de Transferências de Feriados</ui:define>
-                <!--
-                <ui:define name="left">
-                    <h:form id="formMenu">
-                        <h:panelGrid id="gridMenu" columns="1">
-                            <h:commandLink value="Voltar" action="/modulos/calendario/homeCalendario" />
-                        </h:panelGrid>
-                    </h:form>
-                </ui:define>
-                -->
                 <ui:define name="content">
                     <h:form id="formTransferencia">
-                        <h:panelGrid id="gridPesqAno" columns="4">
-                            <h:outputLabel for="ano" value="Ano" />
-                            <h:inputText id="ano" value="#{transferenciaMB.ano}" size="4" readonly="true" />
-                            <h:commandButton disabled="#{empty transferenciaMB.ano}" value="&lt;" actionListener="#{transferenciaMB.anoAnterior}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabTransferencias" />
-                            </h:commandButton>
-                            <h:commandButton disabled="#{empty transferenciaMB.ano}" value="&gt;" actionListener="#{transferenciaMB.anoSeguinte}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabTransferencias" />
-                            </h:commandButton>
-                        </h:panelGrid>
+                        <p:panelGrid id="gridPesqAno" columns="4">
+                            <p:outputLabel for="ano" value="Ano" />
+                            <p:inputText id="ano" value="#{transferenciaMB.ano}" size="4" readonly="true" />
+                            <p:commandButton  ajax="false" disabled="#{empty transferenciaMB.ano}" value="&lt;" actionListener="#{transferenciaMB.anoAnterior}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTransferencias" />
+                            </p:commandButton>
+                            <p:commandButton  ajax="false" disabled="#{empty transferenciaMB.ano}" value="&gt;" actionListener="#{transferenciaMB.anoSeguinte}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTransferencias" />
+                            </p:commandButton>
+                        </p:panelGrid>
                         <br />
-                        <h:panelGrid id="gridFormTransferencia" columns="2">
+                        <p:panelGrid id="gridFormTransferencia" columns="2">
                             <f:facet name="header"><b>Dados da Transferência</b></f:facet>
-                            <h:outputLabel for="feriado" value="Feriado" />
-                            <h:selectOneMenu id="feriado" value="#{transferenciaMB.transferencia.feriado}" converter="converteFeriado">
+                            <p:outputLabel for="feriado" value="Feriado" />
+                            <p:selectOneMenu id="feriado" value="#{transferenciaMB.transferencia.feriado}" converter="converteFeriado">
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione um feriado ---" />
                                 <f:selectItems id="sgiFeriado" value="#{transferenciaMB.feriados}" var="feriado" itemValue="#{feriado}" itemLabel="#{feriado}" />
                                 <f:ajax event="change" execute="@this" render="@form" />
-                            </h:selectOneMenu>
-                            <h:outputLabel for="calendNovaData" value="Nova data:" />
+                            </p:selectOneMenu>
+                            <p:outputLabel for="calendNovaData" value="Nova data:" />
                             <p:calendar id="calendNovaData" value="#{transferenciaMB.novaData}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
-                            <h:outputLabel for="legislacao" value="Legislação" />
-                            <h:inputTextarea id="legislacao" cols="60" rows="4" value="#{transferenciaMB.transferencia.legislacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
-                            <h:outputLabel rendered="#{!transferenciaMB.transferencia.feriado.municipal}" for="municipio" value="Somente no município:" />
-                            <h:selectOneMenu rendered="#{!transferenciaMB.transferencia.feriado.municipal}" id="municipio" value="#{transferenciaMB.transferencia.municipio}" converter="converteMunicipio">
+                            <p:outputLabel for="legislacao" value="Legislação" />
+                            <p:inputTextarea id="legislacao" cols="60" rows="4" value="#{transferenciaMB.transferencia.legislacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <p:outputLabel rendered="#{!transferenciaMB.transferencia.feriado.municipal}" for="municipio" value="Somente no município:" />
+                            <p:selectOneMenu rendered="#{!transferenciaMB.transferencia.feriado.municipal}" id="municipio" value="#{transferenciaMB.transferencia.municipio}" converter="converteMunicipio">
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione um município ---" />
                                 <f:selectItems id="sgiMunicipio" value="#{transferenciaMB.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
-                            </h:selectOneMenu>
-                        </h:panelGrid>
-                        <h:panelGrid id="gridBotoes" columns="3">
-                            <h:commandButton value="Salvar" actionListener="#{transferenciaMB.salvar}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabTransferencias" />
-                            </h:commandButton>
-                            <h:commandButton value="Novo" actionListener="#{transferenciaMB.novo}">
-                                <f:ajax execute="@form" render="@form :msgerro" />
-                            </h:commandButton>
-                            <h:commandButton disabled="#{empty transferenciaMB.transferencia.codigo}" value="Excluir" actionListener="#{transferenciaMB.excluir}">
-                                <f:ajax execute="@form" render="@form :msgerro :tabTransferencias" />
-                            </h:commandButton>
-                        </h:panelGrid>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:panelGrid id="gridBotoes" columns="3">
+                            <p:commandButton  ajax="false" value="Salvar" actionListener="#{transferenciaMB.salvar}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTransferencias" />
+                            </p:commandButton>
+                            <p:commandButton  ajax="false" value="Novo" actionListener="#{transferenciaMB.limparElemento}">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton  ajax="false" disabled="#{transferenciaMB.novoElemento}" value="Excluir" actionListener="#{transferenciaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta transferência?')) return false;">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTransferencias" />
+                            </p:commandButton>
+                        </p:panelGrid>
                         <br />
                     </h:form>
-                    <h:messages id="msgerro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                     <br />
                     <h:form id="tabTransferencias">
                         <p:dataTable id="tabelaTransferencias" var="transferencia" value="#{transferenciaMB.listaTransferencias}">
@@ -72,7 +64,7 @@
                                 <f:facet name="header"><h:outputText style="text-align: center;" id="textoFeriado" value="Feriado" /></f:facet>
                                 <p:commandLink id="clinkFeriado" ajax="false" value="#{transferencia.feriado}">
                                     <f:setPropertyActionListener value="#{transferencia}" target="#{transferenciaMB.transferencia}" />
-                                    <f:ajax execute="@form" render=":formTransferencia :msgerro" />
+                                    <f:ajax execute="@form" render=":formTransferencia :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column id="colunaNovaData">
@@ -87,7 +79,7 @@
                                     <f:param name="transferenciaCod" value="#{transferencia.codigo}" />
                                 </p:link>
                             </p:column>
-                            <f:facet name="footer"><h:outputText id="footerDtTransferencias" value="Total: #{transferenciaMB.quantTransferencias}" /></f:facet>
+                            <f:facet name="footer"><h:outputText id="footerDtTransferencias" value="Total: #{transferenciaMB.quantLista}" /></f:facet>
                         </p:dataTable>
                     </h:form>
                 </ui:define>
