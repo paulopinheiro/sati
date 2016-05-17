@@ -11,10 +11,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class AreaTIMB extends AbListaMB<AreaTI> implements Serializable {
     @EJB private AreaTIFacade areaTIFacade;

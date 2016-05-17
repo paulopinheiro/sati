@@ -9,10 +9,10 @@ import br.jus.trt12.paulopinheiro.sati.viagem.model.Viagem;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class EventoReqViagemMB extends AbListaRestritaMB<EventoReqViagem> implements Serializable {
     @EJB private EventoReqViagemFacade eventoReqViagemFacade;

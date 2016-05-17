@@ -13,19 +13,18 @@ import br.jus.trt12.paulopinheiro.sati.geral.model.Unidade;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class EquipamentoMB extends AbBasicoMB<Equipamento> implements Serializable {
     @EJB private EquipamentoFacade equipamentoFacade;
     @EJB private UnidadeFacade unidadeFacade;
     @EJB private LoteFacade loteFacade;
-    @ManagedProperty(value="#{geralMB}")
-    private GeralMB geralMB;
+    @Inject private GeralMB geralMB;
 
     private List<Unidade> listaUnidades;
     private List<Lote> listaLotes;

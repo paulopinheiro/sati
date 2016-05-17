@@ -13,13 +13,13 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.primefaces.model.DualListModel;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class MovEquipamentoMB implements Serializable {
     private DualListModel<Equipamento> dlmEquipamentos;
@@ -31,8 +31,7 @@ public class MovEquipamentoMB implements Serializable {
 
     @EJB private TipoEquipamentoFacade tipoEquipamentoFacade;
     @EJB private EquipamentoFacade equipamentoFacade;
-    @ManagedProperty(value="#{geralMB}")
-    private GeralMB geralMB;
+    @Inject private GeralMB geralMB;
 
     public MovEquipamentoMB() {}
 

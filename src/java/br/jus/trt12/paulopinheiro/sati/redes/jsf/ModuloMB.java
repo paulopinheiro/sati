@@ -3,7 +3,7 @@ package br.jus.trt12.paulopinheiro.sati.redes.jsf;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.UnidadeFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.jsf.GeralMB;
-import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaMB;
+import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaRestritaMB;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Unidade;
 import br.jus.trt12.paulopinheiro.sati.redes.ejb.ModuloFacade;
@@ -12,17 +12,16 @@ import br.jus.trt12.paulopinheiro.sati.redes.model.TipoModulo;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
-public class ModuloMB extends AbListaMB<Modulo> implements Serializable {
+public class ModuloMB extends AbListaRestritaMB<Modulo> implements Serializable {
     @EJB private ModuloFacade moduloFacade;
     @EJB private UnidadeFacade unidadeFacade;
-    @ManagedProperty(value="#{geralMB}")
-    private GeralMB geralMB;
+    @Inject private GeralMB geralMB;
 
     private List<TipoModulo> tiposModulo;
     private List<Unidade> unidades;
@@ -88,5 +87,10 @@ public class ModuloMB extends AbListaMB<Modulo> implements Serializable {
     @Override
     protected Modulo novainstanciaElemento() {
         return new Modulo();
+    }
+
+    @Override
+    protected List<Modulo> getListaRestrita() {
+        return this.moduloFacade.findByMunicipio(this.getMunicipio());
     }
 }

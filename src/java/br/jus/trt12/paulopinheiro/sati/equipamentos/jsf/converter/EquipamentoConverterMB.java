@@ -4,16 +4,14 @@ import br.jus.trt12.paulopinheiro.sati.equipamentos.ejb.EquipamentoFacade;
 import br.jus.trt12.paulopinheiro.sati.equipamentos.model.Equipamento;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
-@ManagedBean
-@RequestScoped
+@Model
 public class EquipamentoConverterMB implements Converter, Serializable {
     @EJB private EquipamentoFacade equipamentoFacade;
 

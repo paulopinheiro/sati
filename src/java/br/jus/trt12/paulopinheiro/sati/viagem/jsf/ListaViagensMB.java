@@ -12,18 +12,17 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class ListaViagensMB implements Serializable {
     @EJB private ViagemFacade viagemFacade;
     @EJB private MunicipioFacade municipioFacade;
-    @ManagedProperty(value="#{geralMB}")
-    private GeralMB geralMB;
+    @Inject private GeralMB geralMB;
 
     private List<Viagem> listaViagens;
 

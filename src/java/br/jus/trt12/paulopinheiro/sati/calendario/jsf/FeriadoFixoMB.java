@@ -9,11 +9,11 @@ import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class FeriadoFixoMB extends AbListaRestritaMB<FeriadoFixo> implements Serializable {
     @EJB private FeriadoFacade feriadoFacade;

@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class TomadaPanelMB extends AbListaRestritaMB<TomadaPanel> implements Serializable {
     @EJB private PanelFacade panelFacade;

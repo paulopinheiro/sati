@@ -14,22 +14,19 @@ import br.jus.trt12.paulopinheiro.sati.util.ContextoJSF;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Inject;
 
-@ManagedBean
-@RequestScoped
+@Model
 public class ListaMicrocomputadoresMB implements Serializable {
     @EJB private EquipamentoFacade equipamentoFacade;
     @EJB private TipoEquipamentoFacade tipoEquipamentoFacade;
     @EJB private LoteFacade loteFacade;
     @EJB private ModeloFacade modeloFacade;
-    @ManagedProperty(value="#{geralMB}")
-    private GeralMB geralMB;
+    @Inject private GeralMB geralMB;
     private TipoEquipamento tipoEquipamento;
 
     private List<Equipamento> listaMicrocomputadores;

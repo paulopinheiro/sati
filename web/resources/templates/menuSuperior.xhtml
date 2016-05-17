@@ -57,15 +57,6 @@
         </div>
 
         <div id="barramenu">
-            <div id="combo">
-                <h:form>
-                    <h:outputLabel for="municipioSessao" id="labelMunicipioSessao" value="Município:" />
-                    <h:selectOneMenu id="municipioSessao" value="#{geralMB.municipioSessao}" converter="converteMunicipio">
-                        <f:selectItems id="sgiMunicipio" value="#{geralMB.listaMunicipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
-                        <f:ajax immediate="true" />
-                    </h:selectOneMenu>
-                </h:form>
-            </div>
             <div id="menu">
                 <ui:insert name="menu">
                     <h:form id="formMenu">
@@ -78,7 +69,9 @@
                                     <h:link outcome="/sessao.xhtml" value="Dados da Sessão" />
                                 </p:menuitem>
                                 <p:separator />
-                                <p:menuitem id="menuitemSair" value="Sair" action="#{geralMB.desconectar()}" />
+                                <p:menuitem id="menuitemSair">
+                                    <p:commandLink ajax="false" id="sair" value="Sair" action="#{geralMB.desconectar}" />
+                                </p:menuitem>
                             </p:submenu>
                             <p:submenu id="menuGeral" label="Cadastros gerais">
                                 <p:menuitem id="cadProgint">
@@ -127,6 +120,15 @@
                                     </p:menuitem>
                                 </p:submenu>
                             </p:submenu>
+                            <f:facet name="options">
+                                <h:form style="vertical-align: middle">
+                                    <p:outputLabel for="municipioSessao" id="labelMunicipioSessao" value="Município:" style="vertical-align: middle" />
+                                    <p:selectOneMenu id="municipioSessao" value="#{geralMB.municipioSessao}" converter="converteMunicipio" style="vertical-align: middle">
+                                        <f:selectItems id="sgiMunicipio" value="#{geralMB.listaMunicipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
+                                        <f:ajax immediate="true" />
+                                    </p:selectOneMenu>
+                                </h:form>
+                            </f:facet>
                         </p:menubar>
                     </h:form>
                 </ui:insert>

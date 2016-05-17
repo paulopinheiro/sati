@@ -7,10 +7,10 @@ import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbBasicoMB;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class HistoricoMB extends AbBasicoMB<Historico> implements Serializable {
     @EJB private HistoricoFacade historicoFacade;

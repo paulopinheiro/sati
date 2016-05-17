@@ -9,10 +9,10 @@ import br.jus.trt12.paulopinheiro.sati.redes.model.TomadaRemota;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class TomadaRemotaMB extends AbListaRestritaMB<TomadaRemota> implements Serializable {
     @EJB private TomadaRemotaFacade tomadaRemotaFacade;

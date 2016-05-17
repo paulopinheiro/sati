@@ -9,18 +9,15 @@ import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class FeriadoMovelMB extends AbListaRestritaMB<FeriadoMovel> implements Serializable {
     @EJB private FeriadoFacade feriadoFacade;
     @EJB private MunicipioFacade municipioFacade;
-
-    private FeriadoMovel feriadoMovel;
-    private List<FeriadoMovel> listaFeriadosMoveis;
 
     private List<Municipio> municipios;
     

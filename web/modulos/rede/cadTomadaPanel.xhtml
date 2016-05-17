@@ -11,8 +11,8 @@
         </f:metadata>
         <body>
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
-                <ui:define name="titulo">Tomadas do panel #{tomadaPanelMB.panel} (#{geralMB.municipioSessao})</ui:define>
-                <ui:define name="top">Tomadas do panel #{tomadaPanelMB.panel} (#{geralMB.municipioSessao})</ui:define>
+                <ui:define name="titulo">Tomadas do panel #{tomadaPanelMB.panel} (#{tomadaPanelMB.panel.rack.municipio})</ui:define>
+                <ui:define name="top">Tomadas do panel #{tomadaPanelMB.panel} (#{tomadaPanelMB.panel.rack.municipio})</ui:define>
                 <ui:define name="content">
                     <h:form id="formTomadaPanel">
                         <h:panelGrid columns="2">

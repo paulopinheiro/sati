@@ -11,8 +11,8 @@
         </f:metadata>
         <body>
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
-                <ui:define name="titulo">Cadastro de tomadas do módulo #{tomadaRemotaMB.modulo} (#{geralMB.municipioSessao})</ui:define>
-                <ui:define name="top">Cadastro de tomadas do módulo #{tomadaRemotaMB.modulo} (#{geralMB.municipioSessao})</ui:define>
+                <ui:define name="titulo">Cadastro de tomadas do módulo #{tomadaRemotaMB.modulo} (#{tomadaRemotaMB.modulo.unidade})</ui:define>
+                <ui:define name="top">Cadastro de tomadas do módulo #{tomadaRemotaMB.modulo} (#{tomadaRemotaMB.modulo.unidade})</ui:define>
                 <ui:define name="content">
                     <h:form id="formTomadaRemota">
                         <p:panelGrid columns="2">

@@ -11,8 +11,8 @@
         </f:metadata>
         <body>
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
-                <ui:define name="titulo">Cadastro de Painéis do Rack #{panelMB.rack}, Município de #{geralMB.municipioSessao}</ui:define>
-                <ui:define name="top">Cadastro de Painéis do Rack #{panelMB.rack}, Município de #{geralMB.municipioSessao}</ui:define>
+                <ui:define name="titulo">Cadastro de Painéis do Rack #{panelMB.rack}, Município de #{panelMB.rack.municipio}</ui:define>
+                <ui:define name="top">Cadastro de Painéis do Rack #{panelMB.rack}, Município de #{panelMB.rack.municipio}</ui:define>
                 <ui:define name="content">
                     <h:form id="formPanel">
                         <p:panelGrid id="gridTitulo" columns="1">

@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <f:view>
         <body>
             <ui:composition template="./resources/templates/semMenu.xhtml">
@@ -11,20 +12,23 @@
                 <ui:define name="top">Sistema de Apoio ao Técnico do Interior - SATI</ui:define>
                 <ui:define name="content">
                     <h:form id="formLogin">
-                        <h:panelGrid id="gridLogin" columns="2">
-                            <h:outputLabel id="labelProgint" for="progint" value="Usuário:" />
-                            <h:selectOneMenu id="progint" value="#{geralMB.progint}" converter="converteProgint">
+                        <p:panelGrid id="gridLogin" columns="2">
+                            <p:outputLabel id="labelProgint" for="progint" value="Usuário:" />
+                            <p:selectOneMenu id="progint" value="#{geralMB.progint}" converter="converteProgint">
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o usuário ---" />
                                 <f:selectItems id="sgiProgint" value="#{geralMB.listaProgints}" var="progint" itemValue="#{progint}" itemLabel="#{progint}" />
-                            </h:selectOneMenu>
-                            <h:outputLabel id="labelSenha" for="senhaProgint" value="Senha" />
-                            <h:inputSecret id="senhaProgint" value="#{geralMB.senha}" />
-                        </h:panelGrid>
-                        <h:panelGrid id="gridBotoes" columns="1">
-                            <h:commandButton value="Conectar" action="#{geralMB.conectar}" />
-                        </h:panelGrid>
-                        <h:messages id="msgErro" errorClass="estiloErro" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel id="labelSenha" for="senhaProgint" value="Senha" />
+                            <p:password id="senhaProgint" value="#{geralMB.senha}" />
+                        </p:panelGrid>
+                        <p:panelGrid id="gridBotoes" columns="1">
+                            <p:commandButton ajax="false" value="Conectar" action="#{geralMB.conectar}">
+                                <f:ajax execute="form" render=":msgerro" />
+                            </p:commandButton>
+                        </p:panelGrid>
                     </h:form>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                 </ui:define>
                 <ui:define name="bottom">Desenvolvido por Paulo Pinheiro</ui:define>
             </ui:composition>

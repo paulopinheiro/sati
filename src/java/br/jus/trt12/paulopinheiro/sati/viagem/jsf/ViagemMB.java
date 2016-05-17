@@ -10,21 +10,19 @@ import br.jus.trt12.paulopinheiro.sati.viagem.ejb.ViagemFacade;
 import br.jus.trt12.paulopinheiro.sati.viagem.model.Tarefa;
 import br.jus.trt12.paulopinheiro.sati.viagem.model.Viagem;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.event.ActionEvent;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class ViagemMB extends AbBasicoMB<Viagem> implements Serializable {
     @EJB ViagemFacade viagemFacade;
     @EJB MunicipioFacade municipioFacade;
-    @ManagedProperty(value="#{geralMB}")
-    private GeralMB geralMB;
+    @Inject private GeralMB geralMB;
 
     private Progint progint;
 

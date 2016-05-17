@@ -9,16 +9,15 @@ import br.jus.trt12.paulopinheiro.sati.redes.model.Rack;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class RackMB extends AbListaRestritaMB<Rack> implements Serializable {
     @EJB private RackFacade rackFacade;
-    @ManagedProperty(value="#{geralMB}")
-    private GeralMB geralMB;
+    @Inject private GeralMB geralMB;
 
     public RackMB() {}
 

@@ -13,11 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class TransferenciaMB extends AbListaRestritaMB<Transferencia> implements Serializable {
     @EJB private FeriadoFacade feriadoFacade;

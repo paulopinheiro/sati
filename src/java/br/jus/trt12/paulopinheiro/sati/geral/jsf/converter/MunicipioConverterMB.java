@@ -4,16 +4,14 @@ import br.jus.trt12.paulopinheiro.sati.geral.ejb.MunicipioFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
-@ManagedBean
-@RequestScoped
+@Model
 public class MunicipioConverterMB implements Converter, Serializable {
     @EJB private MunicipioFacade municipioFacade;
 
