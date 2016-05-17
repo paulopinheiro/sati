@@ -134,7 +134,9 @@ public class Unidade implements Serializable, Comparable {
     @Override
     public int compareTo(Object o) {
         Unidade outra = (Unidade) o;
+        if ((this.getMunicipio()==null)||(outra.getMunicipio()==null)) return 0;
         if (!this.getMunicipio().equals(outra.getMunicipio())) return this.getMunicipio().compareTo(outra.getMunicipio());
+        if ((this.getNome()==null)||(outra.getNome()==null)) return 0;
         Collator col = Collator.getInstance(Locale.getDefault());
         return col.compare(this.getNome().toUpperCase(), outra.getNome().toUpperCase());
     }

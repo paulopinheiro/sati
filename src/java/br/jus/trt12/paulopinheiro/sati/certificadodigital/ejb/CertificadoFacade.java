@@ -3,9 +3,11 @@ package br.jus.trt12.paulopinheiro.sati.certificadodigital.ejb;
 import br.jus.trt12.paulopinheiro.sati.certificadodigital.model.Certificado;
 import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+@Stateless
 public class CertificadoFacade extends AbstractFacade<Certificado> {
     @PersistenceContext(unitName = "satiPU")
     private EntityManager em;

@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <body>
+            <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+                <ui:define name="titulo">Cadastro de usuários do município: #{usuarioFinalMB.municipio}</ui:define>
+                <ui:define name="top">Cadastro de usuários do município: #{usuarioFinalMB.municipio}</ui:define>
+                <ui:define name="content">
+                    <h:form id="formUsuario">
+                        <p:panelGrid id="gridFormUsuario" columns="2">
+                            <f:facet name="header"><b>Dados do usuário</b></f:facet>
+                            <p:outputLabel id="labelNome" for="nome" value="Nome" />
+                            <p:inputText id="nome" value="#{usuarioFinalMB.usuarioFinal.nome}" size="80" onkeydown="limitText(this, 100)" onkeyup="limitText(this, 100)" />
+                            <p:outputLabel id="labelUnidade" for="unidade" value="Unidade" />
+                            <p:selectOneMenu id="unidade" value="#{usuarioFinalMB.usuarioFinal.unidade}" converter="converteUnidade">
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione a unidade ---" />
+                                <f:selectItems id="sgiUnidade" value="#{usuarioFinalMB.unidades}" var="unidade" itemValue="#{unidade}" itemLabel="#{unidade}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel id="labelMatricula" for="matricula" value="Matrícula" />
+                            <p:inputText id="matricula" value="#{usuarioFinalMB.usuarioFinal.matricula}" size="5" onkeydown="limitText(this, 5)" onkeyup="limitText(this, 5)" />
+                            <p:outputLabel id="labelEmail" for="email" value="e-mail" />
+                            <p:inputText id="email" value="#{usuarioFinalMB.usuarioFinal.email}" size="60" onkeydown="limitText(this, 60)" onkeyup="limitText(this, 60)" />
+                            <p:outputLabel id="labelFonecontato" for="fonecontato" value="Fone" />
+                            <p:inputText id="fonecontato" value="#{usuarioFinalMB.usuarioFinal.fonecontato}" size="20" onkeydown="limitText(this, 20)" onkeyup="limitText(this, 20)" />
+                            <p:outputLabel id="labelObservacao" for="observacao" value="Observação:" />
+                            <p:inputTextarea id="observacao" value="#{usuarioFinalMB.usuarioFinal.observacao}" cols="50" rows="5" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" />
+                            <p:selectBooleanCheckbox id="ativo" label="Ativo" value="#{usuarioFinalMB.usuarioFinal.ativo}" />
+                            <p:outputLabel id="labelAtivo" for="ativo" value="Ativo" /> 
+                        </p:panelGrid>
+                        <p:panelGrid id="gridBotoes" columns="4">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{usuarioFinalMB.salvar}" icon="ui-icon-disk">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabUsuarios" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{usuarioFinalMB.limparElemento}" icon="ui-icon-document">
+                                <f:ajax execute="@form" render=":formUsuario:gridFormUsuario :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" disabled="#{usuarioFinalMB.novoElemento}" value="Excluir" actionListener="#{usuarioFinalMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta usuario?')
+                                        return false;" icon="ui-icon-trash">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabUsuarios" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Filtrar" actionListener="#{usuarioFinalMB.filtrar}" icon="ui-icon-search">
+                                <f:ajax execute="@form" render=":tabUsuarios :msgerro :gmensagem" />
+                            </p:commandButton>
+                        </p:panelGrid>
+                        <br />
+                    </h:form>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <h:form id="tabUsuarios">
+                        <p:dataTable id="tabelaUsuarios" var="usuario" value="#{usuarioFinalMB.listaUsuarios}">
+                            <f:facet name="header"><h:outputText id="headerDtUsuario" value="Usuários cadastrados" /></f:facet>
+                            <p:column id="colunaNome">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoNome" value="Nome" /></f:facet>
+                                <p:commandLink value="#{usuario.nome}">
+                                    <f:setPropertyActionListener value="#{usuario}" target="#{usuarioFinalMB.usuarioFinal}" />
+                                    <f:ajax execute="@form" render=":formUsuario :msgerro :gmensagem" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column id="colunaMatricula">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoSigla" value="Matrícula" /></f:facet>
+                                <h:outputText id="labelMatricula"  value="#{usuario.matricula}" />
+                            </p:column>
+                            <p:column id="colunaUnidade">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoUnidade" value="Unidade" /></f:facet>
+                                <h:outputText id="labelUnidade"  value="#{usuario.unidade.sigla}" />
+                            </p:column>
+                            <f:facet name="footer"><h:outputText id="footerDtUsuarios" value="Total: #{usuarioFinalMB.quantLista}" /></f:facet>
+                        </p:dataTable>
+                    </h:form>
+                </ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
+</html>

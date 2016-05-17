@@ -11,23 +11,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "usuario_final", catalog = "sati", schema = "public")
+@NamedQueries({
+    @NamedQuery(name = "UsuarioFinal.findByMunicipio", query = "SELECT u FROM UsuarioFinal u WHERE u.unidade.municipio = :municipio order by u.nome")})
 public class UsuarioFinal implements Serializable, Comparable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "UsuarioFinal_Gen", sequenceName = "unidade_final_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "UsuarioFinal_Gen", sequenceName = "usuario_final_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "UsuarioFinal_Gen")
     private Integer id;
     @Basic(optional = false)
     private String nome;
-    @Basic(optional = false)
     private String email;
     private String matricula;
     private String fonecontato;
@@ -40,11 +43,13 @@ public class UsuarioFinal implements Serializable, Comparable {
     private List<Certificado> certificados;
 
     public UsuarioFinal() {
+        this.ativo = true;
     }
 
     public UsuarioFinal(String nome, Unidade unidade) {
         this.nome = nome;
         this.unidade = unidade;
+        this.ativo = true;
     }
 
     public Integer getId() {
