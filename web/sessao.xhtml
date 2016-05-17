@@ -11,14 +11,14 @@
 
         <ui:define name="content">
             <h:form id="formSessao">
-                <h:panelGrid id="gridSessao" columns="2">
-                    <h:outputLabel id="labelUsuario" for="usuario" value="Usuário" />
+                <p:panelGrid id="gridSessao" columns="2">
+                    <p:outputLabel id="labelUsuario" for="usuario" value="Usuário" />
                     <h:outputText id="usuario" value="#{geralMB.progint}" />
-                    <h:outputLabel id="labelAreaAtuacaoUsuario" for="areaAtuacaoUsuario" value="Área de Atuação do Usuário" />
+                    <p:outputLabel id="labelAreaAtuacaoUsuario" for="areaAtuacaoUsuario" value="Área de Atuação do Usuário" />
                     <h:outputText id="areaAtuacaoUsuario" value="#{geralMB.progint.areaAtuacao}" />
-                    <h:outputLabel id="labelMunicipioSedeUsuario" for="municipioSedeUsuario" value="Município sede" />
+                    <p:outputLabel id="labelMunicipioSedeUsuario" for="municipioSedeUsuario" value="Município sede" />
                     <h:outputText id="municipioSedeUsuario" value="#{geralMB.progint.areaAtuacao.municipioSede}" />
-                </h:panelGrid>
+                </p:panelGrid>
             </h:form>
             <p:messages id="mensagem" globalOnly="true" showDetail="false" showSummary="true"/>
         </ui:define>

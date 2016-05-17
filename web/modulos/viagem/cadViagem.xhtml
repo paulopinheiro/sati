@@ -28,23 +28,23 @@
                             </p:selectOneMenu>
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoesViagem" columns="4">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{viagemMB.salvar}">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{viagemMB.salvar}" icon="ui-icon-disk">
                                 <f:ajax execute="@form" render="@form :formTarefa :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Nova" actionListener="#{viagemMB.limparElemento}">
+                            <p:commandButton ajax="false" value="Nova" actionListener="#{viagemMB.limparElemento}" icon="ui-icon-document">
                                 <f:ajax execute="@form" render="@form :formTarefa :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{viagemMB.novoElemento}" value="Excluir" actionListener="#{viagemMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta viagem?')) return false;">
+                            <p:commandButton ajax="false" disabled="#{viagemMB.novoElemento}" value="Excluir" actionListener="#{viagemMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta viagem?')) return false;" icon="ui-icon-trash">
                                 <f:ajax execute="@form" render="@form :formTarefa :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Voltar" action="/modulos/viagem/lisViagens" />
+                            <p:commandButton ajax="false" value="Voltar" action="/modulos/viagem/lisViagens" icon="ui-icon-arrowreturn-1-w" />
                         </p:panelGrid>
                         <h:panelGroup id="grpOutrasFuncoes" rendered="#{!empty viagemMB.viagem.dataViagem}">
                             <br />
-                            <h:panelGrid  border="1" id="outrasFuncoes" columns="1">
-                                <p:link id="linkEventos" outcome="/modulos/viagem/cadEventoReqViagem" value="Pedido Ressarcimento">
+                            <h:panelGrid id="outrasFuncoes" columns="1">
+                                <p:button id="linkEventos" outcome="/modulos/viagem/cadEventoReqViagem" value="Pedido Ressarcimento" icon="ui-icon-newwin">
                                     <f:param name="viagemCod" value="#{viagemMB.viagem.codigo}" />
-                                </p:link>
+                                </p:button>
                             </h:panelGrid>
                         </h:panelGroup>
                         <br />
@@ -60,13 +60,13 @@
                             <p:inputText id="nroTarefaRITM" value="#{viagemMB.tarefa.nroTarefaRITM}" onkeydown="limitText(this, 9);" onkeyup="limitText(this, 9);"/>
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoesTarefa" columns="3" rendered="#{!viagemMB.novoElemento}">
-                            <p:commandButton ajax="false" id="botaoSalvarTarefa" value="Salvar" actionListener="#{viagemMB.salvarTarefa}" >
+                            <p:commandButton ajax="false" id="botaoSalvarTarefa" value="Salvar" actionListener="#{viagemMB.salvarTarefa}" icon="ui-icon-disk">
                                 <f:ajax execute="@form" render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :formTarefa:tabTarefas :msgerro :gmensagem"/>
                             </p:commandButton>
-                            <p:commandButton ajax="false" id="botaoNovaTarefa" value="Nova" actionListener="#{viagemMB.novaTarefa}">
+                            <p:commandButton ajax="false" id="botaoNovaTarefa" value="Nova" actionListener="#{viagemMB.novaTarefa}" icon="ui-icon-document">
                                 <f:ajax render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" id="botaoExcluirTarefa" disabled="#{empty viagemMB.tarefa.codigo}" value="Excluir" actionListener="#{viagemMB.excluirTarefa}" onclick="if (!confirm('Tem certeza de que deseja excluir esta tarefa?')) return false;">
+                            <p:commandButton ajax="false" id="botaoExcluirTarefa" disabled="#{empty viagemMB.tarefa.codigo}" value="Excluir" actionListener="#{viagemMB.excluirTarefa}" onclick="if (!confirm('Tem certeza de que deseja excluir esta tarefa?')) return false;" icon="ui-icon-trash">
                                 <f:ajax execute="@form" render=":formTarefa:gridTarefa :formTarefa:gridBotoesTarefa :formTarefa:tabTarefas :msgerro :gmensagem" />
                             </p:commandButton>
                         </p:panelGrid>

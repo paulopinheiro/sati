@@ -10,13 +10,6 @@
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
                 <ui:define name="titulo">Cadastro de técnicos de informática</ui:define>
                 <ui:define name="top">Cadastro de técnicos de informática</ui:define>
-                <!--
-                <ui:define name="left">
-                    <h:form id="formMenu">
-                        <h:commandLink value="Voltar" action="/modulos/geral/homeGeral.xhtml" />
-                    </h:form>
-                </ui:define>
-                -->
                 <ui:define name="content">
                     <h:form id="formProgint">
                         <p:panelGrid id="gridFormProgint" columns="2">
@@ -35,13 +28,13 @@
                             <p:outputLabel id="labelAtivo" for="ativo" value="Ativo" />                            
                         </p:panelGrid>
                         <p:panelGrid columns="3">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{progintMB.salvar}">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{progintMB.salvar}" icon="ui-icon-disk">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabProgints" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{progintMB.limparElemento}">
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{progintMB.limparElemento}" icon="ui-icon-document">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{progintMB.novoElemento}" value="Excluir" actionListener="#{progintMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este técnico?') return false;">
+                            <p:commandButton ajax="false" disabled="#{progintMB.novoElemento}" value="Excluir" actionListener="#{progintMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este técnico?') return false;" icon="ui-icon-trash">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabProgints" />
                             </p:commandButton>
                         </p:panelGrid>

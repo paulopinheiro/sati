@@ -24,13 +24,13 @@
                             <p:inputTextarea id="observacao" cols="50" onkeydown="limitText(this,50)" onkeyup="limitText(this,50)" value="#{rackMB.rack.observacao}" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="3">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{rackMB.salvar}">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{rackMB.salvar}" icon="ui-icon-disk">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabRacks" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{rackMB.limparElemento}">
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{rackMB.limparElemento}" icon="ui-icon-document">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{rackMB.novoElemento}" value="Excluir" actionListener="#{rackMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este rack?')) return false;">
+                            <p:commandButton ajax="false" disabled="#{rackMB.novoElemento}" value="Excluir" actionListener="#{rackMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este rack?')) return false;" icon="ui-icon-trash">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabRacks" />
                             </p:commandButton>
                         </p:panelGrid>

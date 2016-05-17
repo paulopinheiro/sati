@@ -10,13 +10,6 @@
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
                 <ui:define name="titulo">Cadastro de áreas de atuação dos TI</ui:define>
                 <ui:define name="top">Cadastro de áreas de atuação dos TI</ui:define>
-                <!--
-                <ui:define name="left">
-                    <h:form id="formMenu">
-                        <h:commandLink value="Voltar" action="/modulos/geral/homeGeral.xhtml" />
-                    </h:form>
-                </ui:define>
-                -->
                 <ui:define name="content">
                     <h:form id="formAreaTI">
                         <p:panelGrid id="gridFormAreaTI" columns="2">
@@ -35,13 +28,13 @@
                             </p:selectOneMenu>
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="3">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{areaTIMB.salvar}">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{areaTIMB.salvar}" icon="ui-icon-disk">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabAreaTI" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{areaTIMB.limparElemento}">
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{areaTIMB.limparElemento}" icon="ui-icon-document">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{areaTIMB.novoElemento}" value="Excluir" actionListener="#{areaTIMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta área?') return false;" >
+                            <p:commandButton ajax="false" disabled="#{areaTIMB.novoElemento}" value="Excluir" actionListener="#{areaTIMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta área?') return false;" icon="ui-icon-trash">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabAreaTI" />
                             </p:commandButton>
                         </p:panelGrid>

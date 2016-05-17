@@ -20,12 +20,12 @@
                                 <f:selectItem noSelectionOption="true" id="itemNenhumMunicipio" itemValue="-1" itemLabel="-- Selecione um município --" />
                                 <f:selectItems id="itensMunicipio" value="#{listaViagensMB.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
                             </p:selectOneMenu>
-                            <p:commandButton ajax="false" id="botaoFiltrar" value="Filtrar" actionListener="#{listaViagensMB.filtrar}" >
+                            <p:commandButton ajax="false" id="botaoFiltrar" value="Filtrar" actionListener="#{listaViagensMB.filtrar}" icon="ui-icon-search" >
                                 <f:ajax execute="@form" render=":tabViagens :msgerro" />
                             </p:commandButton>
                         </p:panelGrid>
                         <p:panelGrid id="outrasFuncoes" columns="1">
-                            <p:commandLink id="linkNovaViagem" value="Nova viagem" action="/modulos/viagem/cadViagem" />
+                            <p:commandButton ajax="false" id="linkNovaViagem" value="Nova viagem" action="/modulos/viagem/cadViagem" icon="ui-icon-newwin" />
                         </p:panelGrid>
                         <br />
                     </h:form>

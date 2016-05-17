@@ -37,13 +37,13 @@
                             </p:selectOneMenu>
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="3">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{feriadoMovelMB.salvar}">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{feriadoMovelMB.salvar}" icon="ui-icon-disk">
                                 <f:ajax execute="@form" render="@form :msgerro :tabFeriadosMoveis" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{feriadoMovelMB.limparElemento}">
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{feriadoMovelMB.limparElemento}" icon="ui-icon-document">
                                 <f:ajax execute="@form" render="@form :msgerro" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{feriadoMovelMB.novoElemento}" value="Excluir" actionListener="#{feriadoMovelMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este feriado?')) return false;">
+                            <p:commandButton ajax="false" disabled="#{feriadoMovelMB.novoElemento}" value="Excluir" actionListener="#{feriadoMovelMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este feriado?')) return false;" icon="ui-icon-trash">
                                 <f:ajax execute="@form" render="@form :msgerro :tabFeriadosMoveis" />
                             </p:commandButton>
                         </p:panelGrid>

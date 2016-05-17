@@ -42,13 +42,13 @@
                             </p:selectOneMenu>
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="3">
-                            <p:commandButton  ajax="false" value="Salvar" actionListener="#{transferenciaMB.salvar}">
+                            <p:commandButton  ajax="false" value="Salvar" actionListener="#{transferenciaMB.salvar}" icon="ui-icon-disk">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTransferencias" />
                             </p:commandButton>
-                            <p:commandButton  ajax="false" value="Novo" actionListener="#{transferenciaMB.limparElemento}">
+                            <p:commandButton  ajax="false" value="Novo" actionListener="#{transferenciaMB.limparElemento}" icon="ui-icon-document">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton  ajax="false" disabled="#{transferenciaMB.novoElemento}" value="Excluir" actionListener="#{transferenciaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta transferência?')) return false;">
+                            <p:commandButton  ajax="false" disabled="#{transferenciaMB.novoElemento}" value="Excluir" actionListener="#{transferenciaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta transferência?')) return false;" icon="ui-icon-trash">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTransferencias" />
                             </p:commandButton>
                         </p:panelGrid>

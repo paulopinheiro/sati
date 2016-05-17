@@ -29,16 +29,16 @@
                             <p:inputTextarea rows="6" cols="50" id="observacao" value="#{tomadaRemotaMB.tomadaRemota.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
                         </p:panelGrid>
                         <p:panelGrid columns="4">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{tomadaRemotaMB.salvar}">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{tomadaRemotaMB.salvar}" icon="ui-icon-disk">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTomadasRemotas" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Nova" actionListener="#{tomadaRemotaMB.limparElemento}">
+                            <p:commandButton ajax="false" value="Nova" actionListener="#{tomadaRemotaMB.limparElemento}" icon="ui-icon-document">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{tomadaRemotaMB.novoElemento}" value="Excluir" actionListener="#{tomadaRemotaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta tomada?')) return false;">
+                            <p:commandButton ajax="false" disabled="#{tomadaRemotaMB.novoElemento}" value="Excluir" actionListener="#{tomadaRemotaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta tomada?')) return false;" icon="ui-icon-trash">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTomadasRemotas" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Voltar" action="/modulos/rede/cadModulo" />
+                            <p:commandButton ajax="false" value="Voltar" action="/modulos/rede/cadModulo" icon="ui-icon-arrowreturn-1-w" />
                         </p:panelGrid>
                         <br />
                     </h:form>

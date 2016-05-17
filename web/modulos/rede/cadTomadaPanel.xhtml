@@ -32,12 +32,12 @@
                             <h:outputText rendered="#{tomadaPanelMB.tomadaPanel.dados}" value="Dados" />
                         </h:panelGrid>
                         <h:panelGrid columns="2">
-                            <p:commandButton ajax="false" disabled="#{empty tomadaPanelMB.tomadaPanel.codigo}" value="Salvar" actionListener="#{tomadaPanelMB.salvar}">
+                            <p:commandButton ajax="false" disabled="#{empty tomadaPanelMB.tomadaPanel.codigo}" value="Salvar" actionListener="#{tomadaPanelMB.salvar}" icon="ui-icon-disk">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTomadas" />
                             </p:commandButton>
-                            <p:link value="Voltar" outcome="/modulos/rede/cadPanel">
+                            <p:button value="Voltar" outcome="/modulos/rede/cadPanel" icon="ui-icon-arrowreturn-1-w">
                                 <f:param name="rackCod" value="#{tomadaPanelMB.panel.rack.codigo}" />
-                            </p:link>
+                            </p:button>
                         </h:panelGrid>
                         <br />
                     </h:form>

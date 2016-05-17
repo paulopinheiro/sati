@@ -29,16 +29,16 @@
                             <p:calendar id="calendAte" value="#{excecaoFeriadoMB.excecaoFeriadoNacional.ate}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="4">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{excecaoFeriadoMB.salvar}">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{excecaoFeriadoMB.salvar}" icon="ui-icon-disk">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabExcecoes" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{excecaoFeriadoMB.limparElemento}">
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{excecaoFeriadoMB.limparElemento}" icon="ui-icon-document">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{excecaoFeriadoMB.novoElemento}" value="Excluir" actionListener="#{excecaoFeriadoMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta exceção?')) return false;">
+                            <p:commandButton ajax="false" disabled="#{excecaoFeriadoMB.novoElemento}" value="Excluir" actionListener="#{excecaoFeriadoMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta exceção?')) return false;" icon="ui-icon-trash">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabExcecoes" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Voltar" action="#{excecaoFeriadoMB.voltar}" />
+                            <p:commandButton ajax="false" value="Voltar" action="#{excecaoFeriadoMB.voltar}" icon="ui-icon-arrowreturn-1-w" />
                         </p:panelGrid>
                         <br />
                     </h:form>

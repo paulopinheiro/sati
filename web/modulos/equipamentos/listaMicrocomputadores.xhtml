@@ -11,31 +11,31 @@
             <ui:define name="top">Lista de Microcomputadores Cadastrados - #{listaMicrocomputadoresMB.municipioSessao}</ui:define>
             <ui:define name="content">
                 <h:form id="formFiltraLista">
-                <h:panelGrid id="gridFiltros" columns="4">
+                <p:panelGrid id="gridFiltros" columns="4">
                     <f:facet name="header"><h:outputText value="Filtrar Lista" /></f:facet>
-                    <h:outputLabel id="labelModelo" for="filtroModelo" value="Modelo" />
-                    <h:selectOneMenu id="filtroModelo" label="Modelo" value="#{listaMicrocomputadoresMB.filtroModelo}" converter="converteModelo" >
+                    <p:outputLabel id="labelModelo" for="filtroModelo" value="Modelo" />
+                    <p:selectOneMenu id="filtroModelo" label="Modelo" value="#{listaMicrocomputadoresMB.filtroModelo}" converter="converteModelo" >
                         <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Todos os modelos --" />
                         <f:selectItems value="#{listaMicrocomputadoresMB.listaModelos}" var="modelo" itemValue="#{modelo}" itemLabel="#{modelo}" />
                         <f:ajax event="change" listener="#{listaMicrocomputadoresMB.alteracaoModelo}" execute="@this" render="formFiltraLista:filtroLote" />
-                    </h:selectOneMenu>
-                    <h:outputLabel id="labelFiltroLote" for="filtroLote" value="Lote" />
-                    <h:selectOneMenu id="filtroLote" label="Lotes" value="#{listaMicrocomputadoresMB.filtroLote}" converter="converteLote" >
+                    </p:selectOneMenu>
+                    <p:outputLabel id="labelFiltroLote" for="filtroLote" value="Lote" />
+                    <p:selectOneMenu id="filtroLote" label="Lotes" value="#{listaMicrocomputadoresMB.filtroLote}" converter="converteLote" >
                         <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Todos os lotes --" />
                         <f:selectItems value="#{listaMicrocomputadoresMB.listaLotes}" var="lote" itemValue="#{lote}" itemLabel="#{lote.nome}" />
-                    </h:selectOneMenu>
-                </h:panelGrid>
-                <h:panelGrid id="gridFiltros2" columns="3">
-                    <h:outputLabel id="labelTombo" for="filtroTombo" value="Tombo" />
-                    <h:inputText id="filtroTombo" value="#{listaMicrocomputadoresMB.filtroTombo}" size="10" onkeydown="limitText(this, 6);" onkeyup="limitText(this, 6);"/>
-                    <h:commandButton value="Filtrar" actionListener="#{listaMicrocomputadoresMB.filtrar}">
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <p:panelGrid id="gridFiltros2" columns="3">
+                    <p:outputLabel id="labelTombo" for="filtroTombo" value="Tombo" />
+                    <p:inputText id="filtroTombo" value="#{listaMicrocomputadoresMB.filtroTombo}" size="10" onkeydown="limitText(this, 6);" onkeyup="limitText(this, 6);"/>
+                    <p:commandButton ajax="false" value="Filtrar" actionListener="#{listaMicrocomputadoresMB.filtrar}" icon="ui-icon-search">
                         <f:ajax execute="@form" render=":tabMicrocomputadores :msgerro" />
-                    </h:commandButton>
-                </h:panelGrid>
+                    </p:commandButton>
+                </p:panelGrid>
                 <br />
-                <h:panelGrid id="outrasFuncoes" columns="1" border="1">
-                    <h:commandLink id="linkNovaEquipamento" value="Novo Microcomputador" action="cadEquipamento.xhtml" />
-                </h:panelGrid>
+                <p:panelGrid id="outrasFuncoes" columns="1">
+                    <p:commandButton ajax="false" id="linkNovaEquipamento" value="Novo Microcomputador" action="cadEquipamento.xhtml" icon="ui-icon-newwin" />
+                </p:panelGrid>
             </h:form>
             <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
             <h:form id="tabMicrocomputadores">

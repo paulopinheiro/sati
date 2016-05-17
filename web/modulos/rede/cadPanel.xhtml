@@ -37,16 +37,16 @@
                             <p:inputTextarea cols="50" rows="5" id="observacao" value="#{panelMB.panel.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="4">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{panelMB.salvar}">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{panelMB.salvar}" icon="ui-icon-disk">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabPanels" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{panelMB.limparElemento}">
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{panelMB.limparElemento}" icon="ui-icon-document">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{empty panelMB.panel.codigo}" value="Excluir" actionListener="#{panelMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este panel?')) return false;">
+                            <p:commandButton ajax="false" disabled="#{empty panelMB.panel.codigo}" value="Excluir" actionListener="#{panelMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este panel?')) return false;" icon="ui-icon-trash">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabPanels" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Voltar" action="/modulos/rede/cadRack" />
+                            <p:commandButton ajax="false" value="Voltar" action="/modulos/rede/cadRack" icon="ui-icon-arrowreturn-1-w" />
                         </p:panelGrid>
                         <br />
                     </h:form>

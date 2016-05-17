@@ -14,29 +14,29 @@
 
         <ui:define name="content">
             <h:form id="formLote">
-                <h:panelGrid id="gridLote" columns="2">
-                    <h:outputLabel id="labelNome" for="nome" value="Nome" />
-                    <h:inputText id="nome" value="#{loteMB.lote.nome}" size="100" onkeydown="limitText(this, 100);" onkeyup="limitText(this, 100);"/>
-                    <h:outputLabel id="labelDataFimGarantia" for="datafimgarantia" value="Garantia até" />
+                <p:panelGrid id="gridLote" columns="2">
+                    <p:outputLabel id="labelNome" for="nome" value="Nome" />
+                    <p:inputText id="nome" value="#{loteMB.lote.nome}" size="100" onkeydown="limitText(this, 100);" onkeyup="limitText(this, 100);"/>
+                    <p:outputLabel id="labelDataFimGarantia" for="datafimgarantia" value="Garantia até" />
                     <p:calendar id="datafimgarantia" value="#{loteMB.lote.dataFimGarantia}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
-                    <h:outputLabel id="labelModelo" for="modelo" value="Modelo equipamento:" />
+                    <p:outputLabel id="labelModelo" for="modelo" value="Modelo equipamento:" />
                     <h:outputText id="modelo" value="#{loteMB.lote.modelo}" />
-                </h:panelGrid>
-                <h:panelGrid id="botoesLote" columns="5">
-                    <h:commandButton id="btSalvar" actionListener="#{loteMB.salvar}" value="Salvar">
+                </p:panelGrid>
+                <p:panelGrid id="botoesLote" columns="5">
+                    <p:commandButton ajax="false" id="btSalvar" actionListener="#{loteMB.salvar}" value="Salvar" icon="ui-icon-disk">
                         <f:ajax execute="@form" render="@form :tabLote :mensagem" />
-                    </h:commandButton>
-                    <h:commandButton id="btNovo" actionListener="#{loteMB.limparElemento}" value="Novo">
+                    </p:commandButton>
+                    <p:commandButton ajax="false" id="btNovo" actionListener="#{loteMB.limparElemento}" value="Novo" icon="ui-icon-document">
                         <f:ajax execute="@form" render="@form :mensagem" />
-                    </h:commandButton>
-                    <h:commandButton id="btExcluir" actionListener="#{loteMB.excluir}" value="Excluir" disabled="#{loteMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este lote?')) return false;">
+                    </p:commandButton>
+                    <p:commandButton ajax="false" id="btExcluir" actionListener="#{loteMB.excluir}" value="Excluir" disabled="#{loteMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este lote?')) return false;" icon="ui-icon-trash">
                         <f:ajax execute="@form" render="@form :tabLote :mensagem" />
-                    </h:commandButton>
-                    <h:commandButton id="btFiltrar" actionListener="#{loteMB.filtrar}" value="Filtrar" disabled="#{!loteMB.novoElemento}">
+                    </p:commandButton>
+                    <p:commandButton ajax="false" id="btFiltrar" actionListener="#{loteMB.filtrar}" value="Filtrar" disabled="#{!loteMB.novoElemento}" icon="ui-icon-search">
                         <f:ajax execute="@form" render="@form :tabLote :mensagem" />
-                    </h:commandButton>
-                    <h:commandButton id="btVoltar" action="cadModelo.xhtml" value="Voltar" />
-                </h:panelGrid>
+                    </p:commandButton>
+                    <p:commandButton ajax="false" id="btVoltar" action="cadModelo" value="Voltar" icon="ui-icon-arrowreturn-1-w" />
+                </p:panelGrid>
             </h:form>
             <h:form id="tabLote">
                 <p:dataTable id="tabelaLote" var="lote" value="#{loteMB.listaLotes}">

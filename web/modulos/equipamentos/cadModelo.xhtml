@@ -11,33 +11,31 @@
 
         <ui:define name="content">
             <h:form id="formModelo">
-                <h:panelGrid id="gridModelo" columns="2">
-                    <h:outputLabel id="labelNome" for="nome" value="Nome" />
-                    <h:inputText id="nome" value="#{modeloMB.modelo.nome}" size="100" onkeydown="limitText(this, 150);" onkeyup="limitText(this, 150);"/>
-                    <h:outputLabel id="labelDescricao" for="descricao" value="Descriçao" />
-                    <h:inputTextarea id="descricao" cols="60" rows="5" value="#{modeloMB.modelo.descricao}" onkeydown="limitText(this, 256);" onkeyup="limitText(this, 256);" />
-                    <h:outputLabel id="labelTipoEquipamento" for="tipoEquipamento" value="Tipo Equipamento" />
-                    <h:selectOneMenu id="tipoEquipamento" value="#{modeloMB.modelo.tipoEquipamento}" converter="converteTipoEquipamento">
+                <p:panelGrid id="gridModelo" columns="2">
+                    <p:outputLabel id="labelNome" for="nome" value="Nome" />
+                    <p:inputText id="nome" value="#{modeloMB.modelo.nome}" size="100" onkeydown="limitText(this, 150);" onkeyup="limitText(this, 150);"/>
+                    <p:outputLabel id="labelDescricao" for="descricao" value="Descriçao" />
+                    <p:inputTextarea id="descricao" cols="60" rows="5" value="#{modeloMB.modelo.descricao}" onkeydown="limitText(this, 256);" onkeyup="limitText(this, 256);" />
+                    <p:outputLabel id="labelTipoEquipamento" for="tipoEquipamento" value="Tipo Equipamento" />
+                    <p:selectOneMenu id="tipoEquipamento" value="#{modeloMB.modelo.tipoEquipamento}" converter="converteTipoEquipamento">
                         <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o tipo ---" />
                         <f:selectItems id="sgiTipoEquipamento" value="#{modeloMB.tiposEquipamento}" var="tipoEquipamento" itemValue="#{tipoEquipamento}" itemLabel="#{tipoEquipamento}" />
-                    </h:selectOneMenu>
-                </h:panelGrid>
-                <h:panelGrid id="botoesModelo" columns="5">
-                    <h:commandButton id="btSalvar" actionListener="#{modeloMB.salvar}" value="Salvar">
-                        <f:ajax execute="@form" render="@form :tabModelo :mensagem" />
-                    </h:commandButton>
-                    <h:commandButton id="btNovo" actionListener="#{modeloMB.limparElemento}" value="Novo">
-                        <f:ajax execute="@form" render="@form :mensagem" />
-                    </h:commandButton>
-                    <h:commandButton id="btExcluir" actionListener="#{modeloMB.excluir}" value="Excluir" disabled="#{modeloMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este modelo?')return false;">
-                                return false;">
-                        <f:ajax execute="@form" render="@form :tabModelo :mensagem" />
-                    </h:commandButton>
-                    <h:commandButton id="btFiltrar" actionListener="#{modeloMB.filtrar}" value="Filtrar" disabled="#{!modeloMB.novoElemento}">
-                        <f:ajax execute="@form" render="@form :tabModelo :mensagem" />
-                    </h:commandButton>
-                    <h:commandButton value="Voltar" action="/home.xhtml" />
-                </h:panelGrid>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <p:panelGrid id="botoesModelo" columns="4">
+                    <p:commandButton ajax="false" id="btSalvar" actionListener="#{modeloMB.salvar}" value="Salvar" icon="ui-icon-disk">
+                        <f:ajax execute="@form" render="@form :tabModelo :msgerro :gmensagem" />
+                    </p:commandButton>
+                    <p:commandButton ajax="false" id="btNovo" actionListener="#{modeloMB.limparElemento}" value="Novo" icon="ui-icon-document">
+                        <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
+                    </p:commandButton>
+                    <p:commandButton ajax="false" id="btExcluir" actionListener="#{modeloMB.excluir}" value="Excluir" disabled="#{modeloMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este modelo?')return false;" icon="ui-icon-trash">
+                        <f:ajax execute="@form" render="@form :tabModelo :msgerro :gmensagem" />
+                    </p:commandButton>
+                    <p:commandButton ajax="false" id="btFiltrar" actionListener="#{modeloMB.filtrar}" value="Filtrar" disabled="#{!modeloMB.novoElemento}" icon="ui-icon-search">
+                        <f:ajax execute="@form" render="@form :tabModelo :msgerro :gmensagem" />
+                    </p:commandButton>
+                </p:panelGrid>
             </h:form>
             <h:form id="tabModelo">
                 <p:dataTable id="tabelaModelo" var="modelo" value="#{modeloMB.listaModelos}" rows="10" paginator="true" paginatorPosition="bottom">
@@ -45,7 +43,7 @@
                     <p:column style="white-space: normal" id="colunaNome"><f:facet name="header"><h:outputText id="textoNome" value="Nome" /></f:facet>
                         <h:commandLink id="linkNome" value="#{modelo.nome}">
                             <f:setPropertyActionListener value="#{modelo}" target="#{modeloMB.modelo}" />
-                            <f:ajax execute="@this" render=":formModelo :mensagem" />
+                            <f:ajax execute="@this" render=":formModelo :msgerro :gmensagem" />
                         </h:commandLink>
                     </p:column>
                     <p:column style="white-space: normal" id="colunaDescricao"><f:facet name="header"><h:outputText id="textoDescricao" value="Descrição" /></f:facet>
@@ -62,7 +60,8 @@
                     <f:facet name="footer"><h:outputText value="Total: #{modeloMB.quantLista}" /></f:facet>
                 </p:dataTable>
             </h:form>
-            <p:messages id="mensagem" globalOnly="true" showDetail="false" showSummary="true"/>
+            <p:growl id="gmensagem" globalOnly="true" />
+            <p:messages id="msgeerro" globalOnly="true" showDetail="false" showSummary="true"/>
         </ui:define>
     </ui:composition>
 </html>

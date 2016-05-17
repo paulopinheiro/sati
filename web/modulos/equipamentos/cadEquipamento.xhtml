@@ -15,51 +15,50 @@
 
         <ui:define name="content">
             <h:form id="formEquipamento">
-                <h:panelGrid id="gridEquipamento" columns="2">
-                    <h:outputLabel id="labelLote" for="lote" value="Lote" />
-                    <h:selectOneMenu id="lote" value="#{equipamentoMB.equipamento.lote}" converter="converteLote">
+                <p:panelGrid id="gridEquipamento" columns="2">
+                    <p:outputLabel id="labelLote" for="lote" value="Lote" />
+                    <p:selectOneMenu id="lote" value="#{equipamentoMB.equipamento.lote}" converter="converteLote">
                         <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o lote ---" />
                         <f:selectItems id="sgiLote" value="#{equipamentoMB.listaLotes}" var="lote" itemValue="#{lote}" itemLabel="#{lote}" />
-                    </h:selectOneMenu>
-                    <h:outputLabel id="labelTombo" for="tombo" value="Tombo" />
-                    <h:inputText id="tombo" value="#{equipamentoMB.equipamento.tombo}" size="10" onkeydown="limitText(this, 6);" onkeyup="limitText(this, 6);"/>
-                    <h:outputLabel id="labelUsuario" for="usuario" value="Usuário" />
-                    <h:inputText id="usuario" value="#{equipamentoMB.equipamento.usuario}" size="80" onkeydown="limitText(this, 100);" onkeyup="limitText(this, 100);"/>                    <h:outputLabel id="labelLocalizacao" for="localizacao" value="Localização" />
-                    <h:inputTextarea id="localizacao" cols="60" rows="5" value="#{equipamentoMB.equipamento.localizacao}" onkeydown="limitText(this, 255);" onkeyup="limitText(this, 255);" />
-                    <h:outputLabel id="labelObservacao" for="observacao" value="Observação" />
-                    <h:inputTextarea id="observacao" cols="60" rows="5" value="#{equipamentoMB.equipamento.observacao}" onkeydown="limitText(this, 255);" onkeyup="limitText(this, 255);" />
-                    <h:outputLabel id="labelUnidade" for="unidade" value="Unidade" />
-                    <h:selectOneMenu id="unidade" value="#{equipamentoMB.equipamento.unidade}" converter="converteUnidade">
+                    </p:selectOneMenu>
+                    <p:outputLabel id="labelTombo" for="tombo" value="Tombo" />
+                    <p:inputText id="tombo" value="#{equipamentoMB.equipamento.tombo}" size="10" onkeydown="limitText(this, 6);" onkeyup="limitText(this, 6);"/>
+                    <p:outputLabel id="labelUsuario" for="usuario" value="Usuário" />
+                    <p:inputText id="usuario" value="#{equipamentoMB.equipamento.usuario}" size="80" onkeydown="limitText(this, 100);" onkeyup="limitText(this, 100);"/>                    <h:outputLabel id="labelLocalizacao" for="localizacao" value="Localização" />
+                    <p:inputTextarea id="localizacao" cols="60" rows="5" value="#{equipamentoMB.equipamento.localizacao}" onkeydown="limitText(this, 255);" onkeyup="limitText(this, 255);" />
+                    <p:outputLabel id="labelObservacao" for="observacao" value="Observação" />
+                    <p:inputTextarea id="observacao" cols="60" rows="5" value="#{equipamentoMB.equipamento.observacao}" onkeydown="limitText(this, 255);" onkeyup="limitText(this, 255);" />
+                    <p:outputLabel id="labelUnidade" for="unidade" value="Unidade" />
+                    <p:selectOneMenu id="unidade" value="#{equipamentoMB.equipamento.unidade}" converter="converteUnidade">
                         <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione a unidade ---" />
                         <f:selectItems id="sgiUnidade" value="#{equipamentoMB.listaUnidades}" var="unidade" itemValue="#{unidade}" itemLabel="#{unidade}" />
-                    </h:selectOneMenu>
-                    <h:outputLabel id="labelNroSerie" for="nroSerie" value="Série" />
-                    <h:inputText id="nroSerie" value="#{equipamentoMB.equipamento.nroSerie}" size="65" onkeydown="limitText(this, 50);" onkeyup="limitText(this, 50);"/>
-                </h:panelGrid>
-                <h:panelGrid id="botoesEquipamento" columns="5">
-                    <h:commandButton id="btSalvar" actionListener="#{equipamentoMB.salvar}" value="Salvar">
-                        <f:ajax execute="@form" render="@form :mensagem :formHistorico" />
-                    </h:commandButton>
-                    <h:commandButton id="btNovo" actionListener="#{equipamentoMB.limparElemento}" value="Novo">
-                        <f:ajax execute="@form" render="@form :mensagem :formHistorico" />
-                    </h:commandButton>
-                    <h:commandButton id="btExcluir" actionListener="#{equipamentoMB.excluir}" value="Excluir" disabled="#{equipamentoMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este equipamento?'))
-                                return false;">
-                        <f:ajax execute="@form" render="@form :mensagem :formHistorico" />
-                    </h:commandButton>
-                    <h:commandButton id="btBaixar" actionListener="#{equipamentoMB.baixar}" value="Baixar" disabled="#{equipamentoMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja dar baixa neste equipamento?'))
-                                return false;">
-                        <f:ajax execute="@form" render="@form :mensagem :formHistorico" />
-                    </h:commandButton>
-                    <h:commandButton value="Voltar" action="listaEquipamentos.xhtml" />
-                </h:panelGrid>
+                    </p:selectOneMenu>
+                    <p:outputLabel id="labelNroSerie" for="nroSerie" value="Série" />
+                    <p:inputText id="nroSerie" value="#{equipamentoMB.equipamento.nroSerie}" size="65" onkeydown="limitText(this, 50);" onkeyup="limitText(this, 50);"/>
+                </p:panelGrid>
+                <p:panelGrid id="botoesEquipamento" columns="5">
+                    <p:commandButton ajax="false" id="btSalvar" actionListener="#{equipamentoMB.salvar}" value="Salvar" icon="ui-icon-disk">
+                        <f:ajax execute="@form" render="@form :msgerro :gmensagem :formHistorico" />
+                    </p:commandButton>
+                    <p:commandButton ajax="false" id="btNovo" actionListener="#{equipamentoMB.limparElemento}" value="Novo" icon="ui-icon-document">
+                        <f:ajax execute="@form" render="@form :msgerro :gmensagem :formHistorico" />
+                    </p:commandButton>
+                    <p:commandButton ajax="false" id="btExcluir" actionListener="#{equipamentoMB.excluir}" value="Excluir" disabled="#{equipamentoMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este equipamento?')) return false;" icon="ui-icon-trash">
+                        <f:ajax execute="@form" render="@form :msgerro :gmensagem :formHistorico" />
+                    </p:commandButton>
+                    <p:commandButton ajax="false" id="btBaixar" actionListener="#{equipamentoMB.baixar}" value="Baixar" disabled="#{equipamentoMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja dar baixa neste equipamento?')) return false;" icon="ui-icon-arrowreturn-1-s">
+                        <f:ajax execute="@form" render="@form :msgerro :gmensagem :formHistorico" />
+                    </p:commandButton>
+                    <p:commandButton ajax="false" value="Voltar" action="listaMicrocomputadores.xhtml" icon="ui-icon-arrowreturn-1-w" />
+                </p:panelGrid>
             </h:form>
-            <p:messages id="mensagem" globalOnly="true" showDetail="false" showSummary="true"/>
+            <p:growl id="gmensagem" globalOnly="true" />
+            <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
             <h:form id="formHistorico">
                 <h:panelGrid id="panelTabHistorico" columns="1" rendered="#{!equipamentoMB.novoElemento}">
-                    <h:link id="linkNovoHistorico" value="Novo Histórico" outcome="cadHistorico.xhtml">
+                    <p:button id="linkNovoHistorico" value="Novo Histórico" outcome="cadHistorico.xhtml" icon="ui-icon-newwin">
                         <f:param name="equipamentoCod" value="#{equipamentoMB.equipamento.codigo}" />
-                    </h:link>
+                    </p:button>
                     <p:dataTable id="tabelaHistorico" var="historico" value="#{equipamentoMB.equipamento.listaHistoricos}">
                         <f:facet name="header"><h:outputText value="Históricos cadastrados" /></f:facet>
                         <p:column id="colunaDataHistorico"><f:facet name="header"><h:outputText id="textoDataHistorico" value="Data" /></f:facet>

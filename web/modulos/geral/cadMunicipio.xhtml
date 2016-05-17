@@ -10,15 +10,6 @@
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
                 <ui:define name="titulo">Cadastro de Municípios</ui:define>
                 <ui:define name="top">Cadastro de Municípios</ui:define>
-                <!--
-                <ui:define name="left">
-                    <h:form id="formMenu">
-                        <h:panelGrid styleClass="menu" id="menuCadMunicipio" columns="1">
-                            <h:commandLink value="Voltar" action="/modulos/geral/homeGeral.xhtml" />
-                        </h:panelGrid>
-                    </h:form>
-                </ui:define>
-                -->
                 <ui:define name="content">
                     <h:form id="formMunicipio">
                         <p:panelGrid id="gridFormMunicipio" columns="2">
@@ -36,13 +27,13 @@
                             <p:inputTextarea id="observacao" value="#{municipioMB.municipio.observacao}" cols="50" rows="5" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="3">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{municipioMB.salvar}">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{municipioMB.salvar}" icon="ui-icon-disk">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabMunicipios" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{municipioMB.limparElemento}">
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{municipioMB.limparElemento}" icon="ui-icon-document">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{municipioMB.novoElemento}" value="Excluir" actionListener="#{municipioMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este município?') return false;">
+                            <p:commandButton ajax="false" disabled="#{municipioMB.novoElemento}" value="Excluir" actionListener="#{municipioMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este município?') return false;" icon="ui-icon-trash">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabMunicipios" />
                             </p:commandButton>
                         </p:panelGrid>
