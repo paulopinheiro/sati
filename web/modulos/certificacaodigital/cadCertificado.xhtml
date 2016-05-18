@@ -54,7 +54,7 @@
                     <p:growl id="gmensagem" globalOnly="true" />
                     <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                     <h:form id="tabCertificados">
-                        <p:dataTable id="tabelaCertificados" var="certificado" value="#{certificadoMB.listaCertificados}">
+                        <p:dataTable rows="10" paginator="true" id="tabelaCertificados" var="certificado" value="#{certificadoMB.listaCertificados}">
                             <f:facet name="header"><h:outputText id="headerDtCertificado" value="Certificados cadastrados" /></f:facet>
                             <p:column id="colunaUsuario">
                                 <f:facet name="header"><h:outputText style="text-align: center;" id="textoUsuario" value="Usuário" /></f:facet>

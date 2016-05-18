@@ -52,7 +52,7 @@
                     <p:growl id="gmensagem" globalOnly="true" />
                     <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                     <h:form id="tabUsuarios">
-                        <p:dataTable id="tabelaUsuarios" var="usuario" value="#{usuarioFinalMB.listaUsuarios}">
+                        <p:dataTable rows="10" paginator="true" id="tabelaUsuarios" var="usuario" value="#{usuarioFinalMB.listaUsuarios}">
                             <f:facet name="header"><h:outputText id="headerDtUsuario" value="Usuários cadastrados" /></f:facet>
                             <p:column id="colunaNome">
                                 <f:facet name="header"><h:outputText style="text-align: center;" id="textoNome" value="Nome" /></f:facet>
