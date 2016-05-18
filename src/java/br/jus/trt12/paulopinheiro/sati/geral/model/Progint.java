@@ -9,9 +9,10 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -36,8 +37,12 @@ public class Progint implements Serializable, Comparable {
     private String fonecontato;
     private String observacao;
     private boolean ativo;
-    @OneToOne (mappedBy="progint", optional=true)
+    @JoinColumn(name="cod_areati")
+    @ManyToOne
     private AreaTI areaAtuacao;
+    @JoinColumn(name="cod_unidade")
+    @ManyToOne
+    private Unidade unidade;
 
     public Progint() {}
 
@@ -109,6 +114,14 @@ public class Progint implements Serializable, Comparable {
 
     public void setAreaAtuacao(AreaTI areaAtuacao) {
         this.areaAtuacao = areaAtuacao;
+    }
+
+    public Unidade getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(Unidade unidade) {
+        this.unidade = unidade;
     }
 
     @Override

@@ -32,13 +32,8 @@ public class ViagemFacade extends AbstractFacade<Viagem> {
             if (viagem.getDataProgramada()==null) throw new SatiLogicalException("Informe a data programada para a viagem");
             if (viagem.getProgint()==null) throw new SatiLogicalException("Informe o técnico");
             if (viagem.getMunicipioDestino()== null) throw new SatiLogicalException("Informe o município de destino");
-            AreaTI area = null;
-            try {
-                area = areaTIFacade.getByProgint(viagem.getProgint());
-            } catch (Exception ex) {}
-            if (area==null) throw new SatiLogicalException("Técnico não está vinculado a uma área de responsabilidade - contatar o administrador");
             //preenche município de origem, baseado no município sede do Técnico
-            viagem.setMunicipioOrigem(area.getMunicipioSede());
+            viagem.setMunicipioOrigem(viagem.getProgint().getUnidade().getMunicipio());
             if (viagem.getMunicipioOrigem()==null) throw new SatiLogicalException("Erro ao tentar obter o município de lotação do técnico");
             if (viagem.getMunicipioDestino().equals(viagem.getMunicipioOrigem())) throw new SatiLogicalException("Não pode haver viagem para o município onde está lotado o técnico");
             if (viagem.getCodigo() != null) { //Não é uma viagem nova

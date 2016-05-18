@@ -26,6 +26,8 @@ public class ProgintFacade extends AbstractFacade<Progint> {
             if ((progint.getNome()==null)||(progint.getNome().trim().isEmpty())) throw new SatiLogicalException("Informe o nome do técnico");
             if ((progint.getMatricula()==null)||(progint.getMatricula().trim().isEmpty())) throw new SatiLogicalException("Informe a matrícula do técnico");
             if ((progint.getEmail()==null)||(progint.getEmail().trim().isEmpty())) throw new SatiLogicalException("Informe o e-mail do técnico");
+            if (progint.getAreaAtuacao()==null) throw new SatiLogicalException("Informe a área de atuação do técnico");
+            if (progint.getUnidade()==null) throw new SatiLogicalException("Informe a unidade onde se encontra lotado ou sediado o técnico");
             if (progint.getCodigo()==null) super.create(progint);
             else super.edit(progint);
         }

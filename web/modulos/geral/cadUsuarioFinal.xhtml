@@ -22,7 +22,7 @@
                                 <f:selectItems id="sgiUnidade" value="#{usuarioFinalMB.unidades}" var="unidade" itemValue="#{unidade}" itemLabel="#{unidade}" />
                             </p:selectOneMenu>
                             <p:outputLabel id="labelMatricula" for="matricula" value="Matrícula" />
-                            <p:inputText id="matricula" value="#{usuarioFinalMB.usuarioFinal.matricula}" size="5" onkeydown="limitText(this, 5)" onkeyup="limitText(this, 5)" />
+                            <p:inputText id="matricula" value="#{usuarioFinalMB.usuarioFinal.matricula}" size="5" onkeydown="limitText(this, 10)" onkeyup="limitText(this, 10)" />
                             <p:outputLabel id="labelEmail" for="email" value="e-mail" />
                             <p:inputText id="email" value="#{usuarioFinalMB.usuarioFinal.email}" size="60" onkeydown="limitText(this, 60)" onkeyup="limitText(this, 60)" />
                             <p:outputLabel id="labelFonecontato" for="fonecontato" value="Fone" />

@@ -17,13 +17,23 @@
                             <p:outputLabel id="labelNome" for="nome" value="Nome" />
                             <p:inputText id="nome" value="#{progintMB.progint.nome}" size="80" onkeydown="limitText(this,100)" onkeyup="limitText(this,100)" />
                             <p:outputLabel id="labelMatricula" for="matricula" value="Matrícula" />
-                            <p:inputText id="matricula" value="#{progintMB.progint.matricula}" size="5" onkeydown="limitText(this,5)" onkeyup="limitText(this,5)" />
+                            <p:inputText id="matricula" value="#{progintMB.progint.matricula}" size="5" onkeydown="limitText(this,10)" onkeyup="limitText(this,10)" />
                             <p:outputLabel id="labelEmail" for="email" value="e-mail" />
                             <p:inputText id="email" value="#{progintMB.progint.email}" size="60" onkeydown="limitText(this,60)" onkeyup="limitText(this,60)" />
                             <p:outputLabel id="labelFonecontato" for="fonecontato" value="Fone" />
                             <p:inputText id="fonecontato" value="#{progintMB.progint.fonecontato}" size="20" onkeydown="limitText(this,20)" onkeyup="limitText(this,20)" />
                             <p:outputLabel id="labelObservacao" for="observacao" value="Observação:" />
                             <p:inputTextarea id="observacao" value="#{progintMB.progint.observacao}" cols="50" rows="5" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <p:outputLabel id="labelUnidade" for="unidade" value="Unidade" />
+                            <p:selectOneMenu id="unidade" value="#{progintMB.progint.unidade}" converter="converteUnidade">
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione a unidade ---" />
+                                <f:selectItems id="sgiUnidade" value="#{progintMB.unidades}" var="unidade" itemValue="#{unidade}" itemLabel="#{unidade}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel id="labelAreaTI" for="areaTI" value="Área atuação" />
+                            <p:selectOneMenu id="areaTI" value="#{progintMB.progint.areaAtuacao}" converter="converteAreaTI">
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione a área ---" />
+                                <f:selectItems id="sgiAreaTI" value="#{progintMB.areasTI}" var="areaTI" itemValue="#{areaTI}" itemLabel="#{areaTI}" />
+                            </p:selectOneMenu>
                             <p:selectBooleanCheckbox id="ativo" label="Ativo" value="#{progintMB.progint.ativo}" />
                             <p:outputLabel id="labelAtivo" for="ativo" value="Ativo" />                            
                         </p:panelGrid>
@@ -59,6 +69,10 @@
                             <p:column id="colunaEmail">
                                 <f:facet name="header"><h:outputText style="text-align: center;" id="textoEmail" value="e-mail" /></f:facet>
                                 <h:outputText id="labelEmail"  value="#{progint.email}" />
+                            </p:column>
+                            <p:column id="colunaAreaTI">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoAreaTI" value="Área" /></f:facet>
+                                <h:outputText id="labelAreaTI"  value="#{progint.areaAtuacao}" />
                             </p:column>
                             <p:column id="colunaAtivo">
                                 <f:facet name="header"><h:outputText style="text-align: center;" id="textoAtivo" value="Ativo?" /></f:facet>

@@ -93,7 +93,7 @@ public class GeralMB implements Serializable {
     public Municipio getMunicipioSessao() {
         if (this.municipioSessao==null) {
             if ((this.getProgint().getCodigo()!=null)&&(this.getProgint().getCodigo()>0)) {
-                setMunicipioSessao(this.getProgint().getAreaAtuacao().getMunicipioSede());
+                setMunicipioSessao(this.getProgint().getUnidade().getMunicipio());
             } else {
                 setMunicipioSessao(new Municipio());
             }

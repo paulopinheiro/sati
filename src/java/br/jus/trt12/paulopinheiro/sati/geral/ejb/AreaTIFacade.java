@@ -20,18 +20,9 @@ public class AreaTIFacade extends AbstractFacade<AreaTI> {
     public void salvar(AreaTI areaTI) throws SatiLogicalException {
         if (areaTI!= null) {
             if ((areaTI.getNome()==null)||(areaTI.getNome().trim().isEmpty())) throw new SatiLogicalException("Informe o nome da área");
-            if (areaTI.getProgint()==null) throw new SatiLogicalException("Informe o técnico responsável pela área");
             if (areaTI.getCodigo()==null) super.create(areaTI);
             else super.edit(areaTI);
         }
-    }
-
-    public AreaTI getByProgint(Progint progint) {
-        AreaTI resposta = null;
-        Query query = getEntityManager().createNamedQuery("AreaTI.areaTIByProgint");
-        query.setParameter("progint", progint);
-        resposta = (AreaTI) query.getSingleResult();
-        return resposta;
     }
 
     @Override

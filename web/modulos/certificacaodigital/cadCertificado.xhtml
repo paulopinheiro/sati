@@ -13,6 +13,7 @@
                 <ui:define name="content">
                     <h:form id="formCertificados">
                         <p:panelGrid id="gridFormCertificado" columns="2">
+                            <f:facet name="header"><b>Dados do Técnico</b></f:facet>
                             <p:outputLabel id="labelUsuario" for="usuario" value="Usuário" />
                             <p:selectOneMenu id="usuario" value="#{certificadoMB.certificado.usuario}" converter="converteUsuarioFinal">
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o usuário ---" />

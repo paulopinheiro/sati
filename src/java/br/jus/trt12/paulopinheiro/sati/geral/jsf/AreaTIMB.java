@@ -1,12 +1,10 @@
 package br.jus.trt12.paulopinheiro.sati.geral.jsf;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.AreaTIFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.MunicipioFacade;
-import br.jus.trt12.paulopinheiro.sati.geral.ejb.ProgintFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaMB;
 import br.jus.trt12.paulopinheiro.sati.geral.model.AreaTI;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
-import br.jus.trt12.paulopinheiro.sati.geral.model.Progint;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +16,8 @@ import javax.inject.Named;
 @ViewScoped
 public class AreaTIMB extends AbListaMB<AreaTI> implements Serializable {
     @EJB private AreaTIFacade areaTIFacade;
-    @EJB private ProgintFacade progintFacade;
     @EJB private MunicipioFacade municipioFacade;
 
-    private List<Progint> progints;
     private List<Municipio> municipiosArea;
 
     public AreaTIMB() {}
@@ -40,15 +36,6 @@ public class AreaTIMB extends AbListaMB<AreaTI> implements Serializable {
 
     public void setListaAreasTI(List<AreaTI> listaAreasTI) {
         this.setLista(listaAreasTI);
-    }
-
-    public List<Progint> getProgints() {
-        if (this.progints==null) this.progints = progintFacade.findAll();
-        return progints;
-    }
-
-    public void setProgints(List<Progint> progints) {
-        this.progints = progints;
     }
 
     public List<Municipio> getMunicipiosArea() {

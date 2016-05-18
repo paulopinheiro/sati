@@ -17,8 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "areati", catalog = "sati", schema = "public")
 @NamedQueries({
-    @NamedQuery(name="AreaTI.todasAreasTI", query = "Select a from AreaTI a order by a.nome"),
-    @NamedQuery(name="AreaTI.areaTIByProgint", query = "Select a from AreaTI a where a.progint = :progint")
+    @NamedQuery(name="AreaTI.todasAreasTI", query = "Select a from AreaTI a order by a.nome")
 })
 public class AreaTI implements Serializable, Comparable {
     private static final long serialVersionUID = 1L;
@@ -28,18 +27,14 @@ public class AreaTI implements Serializable, Comparable {
     private Integer codigo;
     @Basic(optional = false)
     private String nome;
-    @JoinColumn(name = "cod_progint")
-    @OneToOne(optional = false)
-    private Progint progint;
     @JoinColumn(name = "cod_municipiosede")
     @OneToOne
     private Municipio municipioSede;
 
     public AreaTI() {}
 
-    public AreaTI(String nome, Progint progint) {
+    public AreaTI(String nome) {
         this.nome = nome;
-        this.progint = progint;
     }
 
     public Integer getCodigo() {
@@ -56,14 +51,6 @@ public class AreaTI implements Serializable, Comparable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Progint getProgint() {
-        return progint;
-    }
-
-    public void setProgint(Progint progint) {
-        this.progint = progint;
     }
 
     public Municipio getMunicipioSede() {
