@@ -52,6 +52,10 @@ public class UsuarioFinal implements Serializable, Comparable {
         this.ativo = true;
     }
 
+    public UsuarioFinal(Unidade unidade) {
+        this.unidade=unidade;
+    }
+
     public Integer getId() {
         return id;
     }

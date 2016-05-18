@@ -10,15 +10,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "certificado", catalog = "sati", schema = "certificacao")
+@NamedQueries({
+    @NamedQuery(name = "Certificado.findAll", query = "SELECT c FROM Certificado c"),
+    @NamedQuery(name = "Certificado.findByMunicipio", query = "SELECT c FROM Certificado c where c.usuario.unidade.municipio = :municipio")
+})
 public class Certificado implements Serializable, Comparable {
     @Id
-    @SequenceGenerator(name = "Certificado_Gen", sequenceName = "certificado_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "Certificado_Gen", sequenceName = "certificacao.certificado_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "Certificado_Gen")
     private Integer id;
     @Column(name="data_gravacao", nullable=false)

@@ -6,10 +6,15 @@ import java.util.Locale;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "status_certificado", catalog = "sati", schema = "certificacao")
+@NamedQueries({
+    @NamedQuery(name = "StatusCertificado.findAll", query = "SELECT s FROM StatusCertificado s order by s.descricao")
+})
 public class StatusCertificado implements Serializable, Comparable {
     @Id
     private Integer id;

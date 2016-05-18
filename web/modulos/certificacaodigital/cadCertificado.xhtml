@@ -1,33 +1,86 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-
-    <body>
-
-        <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
-
-            <ui:define name="titulo">
-                titulo
-            </ui:define>
-
-            <ui:define name="top">
-                top
-            </ui:define>
-
-            <ui:define name="menu">
-                menu
-            </ui:define>
-
-            <ui:define name="content">
-                content
-            </ui:define>
-
-            <ui:define name="bottom">
-                bottom
-            </ui:define>
-
-        </ui:composition>
-
-    </body>
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <body>
+            <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+                <ui:define name="titulo">Cadastro de certificados digitais do município: #{certificadoMB.municipio}</ui:define>
+                <ui:define name="top">Cadastro de certificados digitais do município: #{certificadoMB.municipio}</ui:define>
+                <ui:define name="content">
+                    <h:form id="formCertificados">
+                        <p:panelGrid id="gridFormCertificado" columns="2">
+                            <p:outputLabel id="labelUsuario" for="usuario" value="Usuário" />
+                            <p:selectOneMenu id="usuario" value="#{certificadoMB.certificado.usuario}" converter="converteUsuarioFinal">
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o usuário ---" />
+                                <f:selectItems id="sgiUsuario" value="#{certificadoMB.usuarios}" var="usuario" itemValue="#{usuario}" itemLabel="#{usuario}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel id="labelEtoken" for="etoken" value="e-token" />
+                            <p:selectOneMenu id="etoken" value="#{certificadoMB.certificado.marcaEtoken}" converter="converteMarcaEtoken">
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o e-token ---" />
+                                <f:selectItems id="sgiMarca" value="#{certificadoMB.marcasEtoken}" var="marca" itemValue="#{marca}" itemLabel="#{marca}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel id="labelDataGravacao" for="datagravacao" value="Gravado em" />
+                            <p:calendar id="datagravacao" value="#{certificadoMB.certificado.dataGravacao}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
+                            <p:outputLabel id="labelDataValidade" for="datavalidade" value="Válido até" />
+                            <p:calendar id="datavalidade" value="#{certificadoMB.certificado.dataValidade}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
+                            <p:outputLabel id="labelStatus" for="status" value="Status" />
+                            <p:selectOneMenu id="status" value="#{certificadoMB.certificado.status}" converter="converteStatusCertificado">
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o status ---" />
+                                <f:selectItems id="sgiStatus" value="#{certificadoMB.statusCertificados}" var="status" itemValue="#{status}" itemLabel="#{status}" />
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:panelGrid id="gridBotoes" columns="4">
+                            <p:commandButton ajax="false" value="Salvar" actionListener="#{certificadoMB.salvar}" icon="ui-icon-disk">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabCertificados" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Novo" actionListener="#{certificadoMB.limparElemento}" icon="ui-icon-document">
+                                <f:ajax execute="@form" render=":formCertificados:gridFormCertificado :msgerro :gmensagem" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" disabled="#{certificadoMB.novoElemento}" value="Excluir" actionListener="#{certificadoMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este certificado?')
+                                        return false;" icon="ui-icon-trash">
+                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabCertificados" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" value="Filtrar" actionListener="#{certificadoMB.filtrar}" icon="ui-icon-search">
+                                <f:ajax execute="@form" render=":tabCertificados :msgerro :gmensagem" />
+                            </p:commandButton>
+                        </p:panelGrid>
+                        <br />
+                    </h:form>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <h:form id="tabCertificados">
+                        <p:dataTable id="tabelaCertificados" var="certificado" value="#{certificadoMB.listaCertificados}">
+                            <f:facet name="header"><h:outputText id="headerDtCertificado" value="Certificados cadastrados" /></f:facet>
+                            <p:column id="colunaUsuario">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoUsuario" value="Usuário" /></f:facet>
+                                <p:commandLink value="#{certificado.usuario}">
+                                    <f:setPropertyActionListener value="#{certificado}" target="#{certificadoMB.certificado}" />
+                                    <f:ajax execute="@form" render=":formCertificados :msgerro :gmensagem" />
+                                </p:commandLink>
+                            </p:column>
+                            <p:column id="colunaMarcaEtoken">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoMarcaEtoken" value="e-token" /></f:facet>
+                                <h:outputText id="labelMarcaEtoken"  value="#{certificado.marcaEtoken}" />
+                            </p:column>
+                            <p:column id="colunaStatus">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoStatus" value="Status" /></f:facet>
+                                <h:outputText id="labelStatus"  value="#{certificado.status}" />
+                            </p:column>
+                            <p:column id="colunaDtValidade">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoDtValidade" value="Validade" /></f:facet>
+                                <h:outputText id="labelDtValidade"  value="#{certificado.dataValidade}">
+                                    <f:convertDateTime parent="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <f:facet name="footer"><h:outputText id="footerDtCertificados" value="Total: #{certificadoMB.quantLista}" /></f:facet>
+                        </p:dataTable>
+                    </h:form>
+                </ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
 </html>

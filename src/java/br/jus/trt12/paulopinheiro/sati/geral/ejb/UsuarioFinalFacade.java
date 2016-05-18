@@ -1,6 +1,5 @@
 package br.jus.trt12.paulopinheiro.sati.geral.ejb;
 
-import br.jus.trt12.paulopinheiro.sati.equipamentos.model.Equipamento;
 import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
@@ -80,12 +79,12 @@ public class UsuarioFinalFacade extends AbstractFacade<UsuarioFinal> {
         }
         if ((filtro.getMatricula()!=null)&&(!filtro.getMatricula().isEmpty())) {
             Expression<String> a_matricula = root.get("matricula");
-            email = getCb().like(getCb().upper(a_matricula), filtro.getMatricula().toUpperCase());
+            matricula = getCb().like(getCb().upper(a_matricula), filtro.getMatricula().toUpperCase());
         }
 
         if ((filtro.getFonecontato()!=null)&&(!filtro.getFonecontato().isEmpty())) {
             Expression<String> a_fonecontato = root.get("fonecontato");
-            email = getCb().like(getCb().upper(a_fonecontato), filtro.getFonecontato().toUpperCase());
+            fonecontato = getCb().like(getCb().upper(a_fonecontato), filtro.getFonecontato().toUpperCase());
         }
 
         if (filtro.getUnidade()!=null) {

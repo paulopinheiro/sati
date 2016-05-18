@@ -39,7 +39,7 @@
                             <p:commandButton ajax="false" value="Novo" actionListener="#{usuarioFinalMB.limparElemento}" icon="ui-icon-document">
                                 <f:ajax execute="@form" render=":formUsuario:gridFormUsuario :msgerro :gmensagem" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{usuarioFinalMB.novoElemento}" value="Excluir" actionListener="#{usuarioFinalMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta usuario?')
+                            <p:commandButton ajax="false" disabled="#{usuarioFinalMB.novoElemento}" value="Excluir" actionListener="#{usuarioFinalMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este usuário?')
                                         return false;" icon="ui-icon-trash">
                                 <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabUsuarios" />
                             </p:commandButton>
@@ -62,7 +62,7 @@
                                 </p:commandLink>
                             </p:column>
                             <p:column id="colunaMatricula">
-                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoSigla" value="Matrícula" /></f:facet>
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoMatricula" value="Matrícula" /></f:facet>
                                 <h:outputText id="labelMatricula"  value="#{usuario.matricula}" />
                             </p:column>
                             <p:column id="colunaUnidade">

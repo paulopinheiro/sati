@@ -6,10 +6,15 @@ import java.util.Locale;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "marca_etoken", catalog = "sati", schema = "certificacao")
+@NamedQueries({
+    @NamedQuery(name = "MarcaEtoken.findAll", query = "SELECT m FROM MarcaEtoken m order by m.nome")
+})
 public class MarcaEtoken implements Serializable, Comparable {
     @Id
     private Integer id;
