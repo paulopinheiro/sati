@@ -28,20 +28,15 @@
                     <p:inputText id="incidenteRitmHistorico" value="#{historicoMB.historico.incidenteRitm}" size="25" onkeydown="limitText(this, 10);" onkeyup="limitText(this, 10);" />
                 </p:panelGrid>
                 <p:panelGrid id="gridBotoesHistorico" columns="4">
-                    <p:commandButton value="Salvar" actionListener="#{historicoMB.salvar}" icon="ui-icon-disk">
-                        <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
-                    </p:commandButton>
-                    <p:commandButton value="Novo" actionListener="#{historicoMB.limparElemento}" icon="ui-icon-document">
-                        <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
-                    </p:commandButton>
-                    <p:commandButton disabled="#{historicoMB.novoElemento}" value="Excluir" actionListener="#{historicoMB.excluir}" icon="ui-icon-trash">
-                        <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
-                    </p:commandButton>
+                    <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem" actionListener="#{historicoMB.salvar}" icon="ui-icon-disk" />
+                    <p:commandButton value="Novo" update="@form :msgerro :gmensagem" actionListener="#{historicoMB.limparElemento}" icon="ui-icon-document" />
+                    <p:commandButton value="Excluir" process="@form" update="@form :msgerro :gmensagem" disabled="#{historicoMB.novoElemento}" actionListener="#{historicoMB.excluir}" icon="ui-icon-trash" />
                     <p:button value="Voltar" outcome="cadEquipamento.xhtml" icon="ui-icon-arrowreturn-1-w">
                         <f:param name="equipamentoCod" value="#{historicoMB.equipamento.codigo}" />
                     </p:button>
                 </p:panelGrid>
             </h:form>
+            <p:growl id="gmensagem" globalOnly="true" />
             <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
         </ui:define>
     </ui:composition>

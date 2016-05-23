@@ -28,23 +28,22 @@
                 <p:panelGrid id="gridFiltros2" columns="3">
                     <p:outputLabel id="labelTombo" for="filtroTombo" value="Tombo" />
                     <p:inputText id="filtroTombo" value="#{listaMicrocomputadoresMB.filtroTombo}" size="10" onkeydown="limitText(this, 6);" onkeyup="limitText(this, 6);"/>
-                    <p:commandButton ajax="false" value="Filtrar" actionListener="#{listaMicrocomputadoresMB.filtrar}" icon="ui-icon-search">
-                        <f:ajax execute="@form" render=":tabMicrocomputadores :msgerro" />
-                    </p:commandButton>
+                    <p:commandButton value="Filtrar" process="@form" update=":tabMicrocomputadores :msgerro :gmensagem" actionListener="#{listaMicrocomputadoresMB.filtrar}" icon="ui-icon-search" />
                 </p:panelGrid>
                 <br />
                 <p:panelGrid id="outrasFuncoes" columns="1">
-                    <p:commandButton ajax="false" id="linkNovaEquipamento" value="Novo Microcomputador" action="cadEquipamento.xhtml" icon="ui-icon-newwin" />
+                    <p:button id="linkNovaEquipamento" value="Novo Microcomputador" outcome="cadEquipamento" icon="ui-icon-newwin" />
                 </p:panelGrid>
             </h:form>
+            <p:growl id="gmensagem" globalOnly="true" />
             <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
             <h:form id="tabMicrocomputadores">
                 <p:dataTable id="tabelaEquipamentos" var="equipamento" value="#{listaMicrocomputadoresMB.listaMicrocomputadores}" paginator="true" rows="10" paginatorPosition="bottom">
                     <f:facet name="header"><h:outputText value="Equipamentos cadastrados" /></f:facet>
                     <p:column id="colunaNome"><f:facet name="header"><h:outputText id="textoNome" value="Tombo" /></f:facet>
-                        <h:link id="linkTombo" outcome="cadEquipamento" value="#{equipamento.tombo}">
+                        <p:link id="linkTombo" outcome="cadEquipamento" value="#{equipamento.tombo}">
                             <f:param name="equipamentoCod" value="#{equipamento.codigo}" />
-                        </h:link>
+                        </p:link>
                     </p:column>
                     <p:column style="white-space: normal" id="colunaUnidade"><f:facet name="header"><h:outputText id="textoUnidade" value="Unidade" /></f:facet>
                         <h:outputText id="campoUnidade" value="#{equipamento.unidade.sigla}" />

@@ -2,12 +2,15 @@ package br.jus.trt12.paulopinheiro.sati.calendario.jsf;
 
 import br.jus.trt12.paulopinheiro.sati.calendario.ejb.FeriadoFacade;
 import br.jus.trt12.paulopinheiro.sati.calendario.model.FeriadoMovel;
+import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.MunicipioFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaRestritaMB;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -37,8 +40,12 @@ public class FeriadoMovelMB extends AbListaRestritaMB<FeriadoMovel> implements S
             feriadoFacade.salvarFeriadoMovel(getFeriadoMovel());
             setFeriadoMovel(null);
             setListaFeriadosMoveis(null);
+            mensagemSucesso("Registro salvo com sucesso");
+        } catch (SatiLogicalException ex) {
+            mensagemErro(ex.getMessage());
         } catch (Exception ex) {
             mensagemErro(ex.getMessage());
+            Logger.getLogger("FeriadoMovelMB.java").log(Level.SEVERE, "Erro ao salvar", ex);
         }
     }
 

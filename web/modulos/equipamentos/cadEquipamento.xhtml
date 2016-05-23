@@ -37,19 +37,11 @@
                     <p:inputText id="nroSerie" value="#{equipamentoMB.equipamento.nroSerie}" size="65" onkeydown="limitText(this, 50);" onkeyup="limitText(this, 50);"/>
                 </p:panelGrid>
                 <p:panelGrid id="botoesEquipamento" columns="5">
-                    <p:commandButton ajax="false" id="btSalvar" actionListener="#{equipamentoMB.salvar}" value="Salvar" icon="ui-icon-disk">
-                        <f:ajax execute="@form" render="@form :msgerro :gmensagem :formHistorico" />
-                    </p:commandButton>
-                    <p:commandButton ajax="false" id="btNovo" actionListener="#{equipamentoMB.limparElemento}" value="Novo" icon="ui-icon-document">
-                        <f:ajax execute="@form" render="@form :msgerro :gmensagem :formHistorico" />
-                    </p:commandButton>
-                    <p:commandButton ajax="false" id="btExcluir" actionListener="#{equipamentoMB.excluir}" value="Excluir" disabled="#{equipamentoMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este equipamento?')) return false;" icon="ui-icon-trash">
-                        <f:ajax execute="@form" render="@form :msgerro :gmensagem :formHistorico" />
-                    </p:commandButton>
-                    <p:commandButton ajax="false" id="btBaixar" actionListener="#{equipamentoMB.baixar}" value="Baixar" disabled="#{equipamentoMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja dar baixa neste equipamento?')) return false;" icon="ui-icon-arrowreturn-1-s">
-                        <f:ajax execute="@form" render="@form :msgerro :gmensagem :formHistorico" />
-                    </p:commandButton>
-                    <p:commandButton ajax="false" value="Voltar" action="listaMicrocomputadores.xhtml" icon="ui-icon-arrowreturn-1-w" />
+                    <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :formHistorico" id="btSalvar" actionListener="#{equipamentoMB.salvar}" icon="ui-icon-disk" />
+                    <p:commandButton value="Novo" update="@form :msgerro :gmensagem :formHistorico" id="btNovo" actionListener="#{equipamentoMB.limparElemento}" icon="ui-icon-document" />
+                    <p:commandButton value="Excluir" process="@form" update="@form :msgerro :gmensagem :formHistorico" id="btExcluir" actionListener="#{equipamentoMB.excluir}" disabled="#{equipamentoMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este equipamento?')) return false;" icon="ui-icon-trash" />
+                    <p:commandButton value="Baixar" process="@form" update="@form :msgerro :gmensagem :formHistorico" id="btBaixar" actionListener="#{equipamentoMB.baixar}" disabled="#{equipamentoMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja dar baixa neste equipamento?')) return false;" icon="ui-icon-arrowreturn-1-s" />
+                    <p:button value="Voltar" outcome="listaMicrocomputadores.xhtml" icon="ui-icon-arrowreturn-1-w" />
                 </p:panelGrid>
             </h:form>
             <p:growl id="gmensagem" globalOnly="true" />

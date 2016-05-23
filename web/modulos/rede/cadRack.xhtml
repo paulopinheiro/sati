@@ -24,15 +24,9 @@
                             <p:inputTextarea id="observacao" cols="50" onkeydown="limitText(this,50)" onkeyup="limitText(this,50)" value="#{rackMB.rack.observacao}" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="3">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{rackMB.salvar}" icon="ui-icon-disk">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabRacks" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{rackMB.limparElemento}" icon="ui-icon-document">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{rackMB.novoElemento}" value="Excluir" actionListener="#{rackMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este rack?')) return false;" icon="ui-icon-trash">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabRacks" />
-                            </p:commandButton>
+                            <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabRacks" actionListener="#{rackMB.salvar}" icon="ui-icon-disk" />
+                            <p:commandButton value="Novo" update="@form :msgerro :gmensagem" actionListener="#{rackMB.limparElemento}" icon="ui-icon-document" />
+                            <p:commandButton value="Excluir" process="@form" update="@form :msgerro :gmensagem :tabRacks" disabled="#{rackMB.novoElemento}" actionListener="#{rackMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este rack?')) return false;" icon="ui-icon-trash" />
                         </p:panelGrid>
                         <br />
                     </h:form>
@@ -42,9 +36,8 @@
                         <p:dataTable id="tabelaRacks" var="rack" value="#{rackMB.listaRacks}">
                             <f:facet name="header"><h:outputText id="headerDtRacks" value="Racks cadastrados" /></f:facet>
                             <p:column><f:facet name="header"><h:outputText value="Identificação" /></f:facet>
-                                <p:commandLink ajax="false" value="#{rack.identificacao}">
+                                <p:commandLink value="#{rack.identificacao}" update=":formRack :msgerro :gmensagem">
                                     <f:setPropertyActionListener value="#{rack}" target="#{rackMB.rack}" />
-                                    <f:ajax execute="@form" render=":formRack :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column><f:facet name="header"><h:outputText value="Descrição" /></f:facet>
@@ -55,9 +48,9 @@
                             </p:column>
                             <p:column id="columnEditaPanels">
                                 <f:facet name="header"><h:outputText id="textoEditarPanels" value="Painéis" /></f:facet>
-                                <p:link id="linkPanels" value="Ver" outcome="/modulos/rede/cadPanel">
+                                <p:button id="linkPanels" value="Editar" outcome="/modulos/rede/cadPanel" icon="ui-icon-newwin">
                                     <f:param name="rackCod" value="#{rack.codigo}" />
-                                </p:link>
+                                </p:button>
                             </p:column>
                             <f:facet name="footer"><h:outputText id="footerDtRacks" value="Total: #{rackMB.quantLista}" /></f:facet>
                         </p:dataTable>

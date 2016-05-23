@@ -23,28 +23,21 @@
                     </p:selectOneMenu>
                 </p:panelGrid>
                 <p:panelGrid id="botoesModelo" columns="4">
-                    <p:commandButton ajax="false" id="btSalvar" actionListener="#{modeloMB.salvar}" value="Salvar" icon="ui-icon-disk">
-                        <f:ajax execute="@form" render="@form :tabModelo :msgerro :gmensagem" />
-                    </p:commandButton>
-                    <p:commandButton ajax="false" id="btNovo" actionListener="#{modeloMB.limparElemento}" value="Novo" icon="ui-icon-document">
-                        <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
-                    </p:commandButton>
-                    <p:commandButton ajax="false" id="btExcluir" actionListener="#{modeloMB.excluir}" value="Excluir" disabled="#{modeloMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este modelo?')return false;" icon="ui-icon-trash">
-                        <f:ajax execute="@form" render="@form :tabModelo :msgerro :gmensagem" />
-                    </p:commandButton>
-                    <p:commandButton ajax="false" id="btFiltrar" actionListener="#{modeloMB.filtrar}" value="Filtrar" disabled="#{!modeloMB.novoElemento}" icon="ui-icon-search">
-                        <f:ajax execute="@form" render="@form :tabModelo :msgerro :gmensagem" />
-                    </p:commandButton>
+                    <p:commandButton value="Salvar" id="btSalvar" process="@form" update="@form :tabModelo :msgerro :gmensagem" actionListener="#{modeloMB.salvar}" icon="ui-icon-disk" />
+                    <p:commandButton value="Novo" update="@form :msgerro :gmensagem" id="btNovo" actionListener="#{modeloMB.limparElemento}" icon="ui-icon-document" />
+                    <p:commandButton value="Excluir" process="@form" update="@form :tabModelo :msgerro :gmensagem" id="btExcluir" actionListener="#{modeloMB.excluir}" disabled="#{modeloMB.novoElemento}" onclick="if (!confirm('Tem certeza de que deseja excluir este modelo?')return false;" icon="ui-icon-trash" />
+                    <p:commandButton value="Filtrar" process="@form" update=":tabModelo :msgerro :gmensagem" id="btFiltrar" actionListener="#{modeloMB.filtrar}" disabled="#{!modeloMB.novoElemento}" icon="ui-icon-search" />
                 </p:panelGrid>
             </h:form>
+            <p:growl id="gmensagem" globalOnly="true" />
+            <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
             <h:form id="tabModelo">
                 <p:dataTable id="tabelaModelo" var="modelo" value="#{modeloMB.listaModelos}" rows="10" paginator="true" paginatorPosition="bottom">
                     <f:facet name="header"><h:outputText value="Modelos cadastrados" /></f:facet>
                     <p:column style="white-space: normal" id="colunaNome"><f:facet name="header"><h:outputText id="textoNome" value="Nome" /></f:facet>
-                        <h:commandLink id="linkNome" value="#{modelo.nome}">
+                        <p:commandLink id="linkNome" value="#{modelo.nome}" update=":formModelo :msgerro :gmensagem">
                             <f:setPropertyActionListener value="#{modelo}" target="#{modeloMB.modelo}" />
-                            <f:ajax execute="@this" render=":formModelo :msgerro :gmensagem" />
-                        </h:commandLink>
+                        </p:commandLink>
                     </p:column>
                     <p:column style="white-space: normal" id="colunaDescricao"><f:facet name="header"><h:outputText id="textoDescricao" value="Descrição" /></f:facet>
                         <h:outputText id="campoDescricao" value="#{modelo.descricao}" />
@@ -53,15 +46,13 @@
                         <h:outputText id="campoTipoEquipamento" value="#{modelo.tipoEquipamento}" />
                     </p:column>
                     <p:column id="colunaLotes"><f:facet name="header"><h:outputText id="textoLotes" value="Lotes" /></f:facet>
-                        <h:link id="linkLotes" outcome="cadLote" value="Ver">
+                        <p:button id="linkLotes" outcome="cadLote" value="Editar" icon="ui-icon-newwin">
                             <f:param name="modeloCod" value="#{modelo.codigo}" />
-                        </h:link>
+                        </p:button>
                     </p:column>
                     <f:facet name="footer"><h:outputText value="Total: #{modeloMB.quantLista}" /></f:facet>
                 </p:dataTable>
             </h:form>
-            <p:growl id="gmensagem" globalOnly="true" />
-            <p:messages id="msgeerro" globalOnly="true" showDetail="false" showSummary="true"/>
         </ui:define>
     </ui:composition>
 </html>

@@ -35,19 +35,10 @@
                             </p:selectOneMenu>
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="4">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{certificadoMB.salvar}" icon="ui-icon-disk">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabCertificados" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{certificadoMB.limparElemento}" icon="ui-icon-document">
-                                <f:ajax execute="@form" render=":formCertificados:gridFormCertificado :msgerro :gmensagem" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{certificadoMB.novoElemento}" value="Excluir" actionListener="#{certificadoMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este certificado?')
-                                        return false;" icon="ui-icon-trash">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabCertificados" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Filtrar" actionListener="#{certificadoMB.filtrar}" icon="ui-icon-search">
-                                <f:ajax execute="@form" render=":tabCertificados :msgerro :gmensagem" />
-                            </p:commandButton>
+                            <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabCertificados" actionListener="#{certificadoMB.salvar}" icon="ui-icon-disk" />
+                            <p:commandButton value="Novo" update="@form :msgerro :gmensagem" actionListener="#{certificadoMB.limparElemento}" icon="ui-icon-document" />
+                            <p:commandButton value="Excluir" process="@form" update="@form :msgerro :gmensagem :tabCertificados" disabled="#{certificadoMB.novoElemento}"  actionListener="#{certificadoMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este certificado?') return false;" icon="ui-icon-trash" />
+                            <p:commandButton value="Filtrar" process="@form" update=":tabCertificados :msgerro :gmensagem" actionListener="#{certificadoMB.filtrar}" icon="ui-icon-search" />
                         </p:panelGrid>
                         <br />
                     </h:form>
@@ -58,9 +49,8 @@
                             <f:facet name="header"><h:outputText id="headerDtCertificado" value="Certificados cadastrados" /></f:facet>
                             <p:column id="colunaUsuario">
                                 <f:facet name="header"><h:outputText style="text-align: center;" id="textoUsuario" value="Usuário" /></f:facet>
-                                <p:commandLink value="#{certificado.usuario}">
+                                <p:commandLink value="#{certificado.usuario}" update=":formCertificados :msgerro :gmensagem">
                                     <f:setPropertyActionListener value="#{certificado}" target="#{certificadoMB.certificado}" />
-                                    <f:ajax execute="@form" render=":formCertificados :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column id="colunaMarcaEtoken">

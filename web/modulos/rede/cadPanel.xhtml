@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
     <f:view>
         <f:metadata>
-            <f:viewParam id="rackCod" name="rackCod" value="#{panelMB.rack}" converter="#{rackConverterMB}" required="true" />
+            <f:viewParam id="rackCod" name="rackCod" value="#{panelMB.rack}" converter="#{rackConverterMB}" />
         </f:metadata>
         <body>
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
@@ -37,16 +37,10 @@
                             <p:inputTextarea cols="50" rows="5" id="observacao" value="#{panelMB.panel.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="4">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{panelMB.salvar}" icon="ui-icon-disk">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabPanels" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{panelMB.limparElemento}" icon="ui-icon-document">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{empty panelMB.panel.codigo}" value="Excluir" actionListener="#{panelMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este panel?')) return false;" icon="ui-icon-trash">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabPanels" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Voltar" action="/modulos/rede/cadRack" icon="ui-icon-arrowreturn-1-w" />
+                            <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabPanels" actionListener="#{panelMB.salvar}" icon="ui-icon-disk" />
+                            <p:commandButton value="Novo" update="@form :msgerro :gmensagem" actionListener="#{panelMB.limparElemento}" icon="ui-icon-document" />
+                            <p:commandButton value="Excluir" process="@form" update="@form :msgerro :gmensagem :tabPanels" disabled="#{empty panelMB.panel.codigo}" actionListener="#{panelMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este panel?')) return false;" icon="ui-icon-trash" />
+                            <p:button value="Voltar" outcome="/modulos/rede/cadRack" icon="ui-icon-arrowreturn-1-w" />
                         </p:panelGrid>
                         <br />
                     </h:form>
@@ -56,9 +50,8 @@
                         <p:dataTable id="tabelaPanels" var="panel" value="#{panelMB.listaPanels}">
                             <f:facet name="header"><h:outputText id="headerDtPanels" value="Painéis cadastrados" /></f:facet>
                             <p:column><f:facet name="header"><h:outputText value="Nome" /></f:facet>
-                                <p:commandLink ajax="false" value="#{panel.nome}">
+                                <p:commandLink value="#{panel.nome}" update=":formPanel :msgerro :gmensagem">
                                     <f:setPropertyActionListener value="#{panel}" target="#{panelMB.panel}" />
-                                    <f:ajax execute="@form" render=":formPanel :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column><f:facet name="header"><h:outputText value="Portas" /></f:facet>
@@ -69,9 +62,9 @@
                             </p:column>
                             <p:column id="columnEditaTomadas">
                                 <f:facet name="header"><h:outputText id="textoEditarTomadas" value="Tomadas" /></f:facet>
-                                <p:link id="linkTomadas" value="Ver" outcome="/modulos/rede/cadTomadaPanel.xhtml">
+                                <p:button id="linkTomadas" value="Editar" outcome="/modulos/rede/cadTomadaPanel.xhtml" icon="ui-icon-newwin">
                                     <f:param name="panelCod" value="#{panel.codigo}" />
-                                </p:link>
+                                </p:button>
                             </p:column>
                             <f:facet name="footer"><h:outputText id="footerDtPanels" value="Total: #{panelMB.quantLista}" /></f:facet>
                         </p:dataTable>

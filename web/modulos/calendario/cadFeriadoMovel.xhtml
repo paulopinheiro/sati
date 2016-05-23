@@ -19,12 +19,8 @@
                             <p:outputLabel for="spinDiasPascoa" value="Dias em relação à Páscoa" />
                             <h:panelGroup id="spinDiasPascoa">
                                 <p:inputText id="diasPascoa" value="#{feriadoMovelMB.feriadoMovel.diasPascoa}" size="2" maxlength="4" onkeyup="doCheckInteger(this)" />
-                                <p:commandButton ajax="false" disabled="#{empty feriadoMovelMB.feriadoMovel.diasPascoa}" value="&lt;" actionListener="#{feriadoMovelMB.diaAnterior}">
-                                    <f:ajax execute="@form" render="@form :msgerro" />
-                                </p:commandButton>
-                                <p:commandButton ajax="false" disabled="#{empty feriadoMovelMB.feriadoMovel.diasPascoa}" value="&gt;" actionListener="#{feriadoMovelMB.diaSeguinte}">
-                                    <f:ajax execute="@form" render="@form :msgerro" />
-                                </p:commandButton>
+                                <p:commandButton process="@this" update=":formFeriadoMovel:diasPascoa" disabled="#{empty feriadoMovelMB.feriadoMovel.diasPascoa}" value="&lt;" actionListener="#{feriadoMovelMB.diaAnterior}" />
+                                <p:commandButton process="@this" update=":formFeriadoMovel:diasPascoa" disabled="#{empty feriadoMovelMB.feriadoMovel.diasPascoa}" value="&gt;" actionListener="#{feriadoMovelMB.diaSeguinte}" />
                             </h:panelGroup>
                             <p:outputLabel for="calendDataInstituicao" value="Data Instituição:" />
                             <p:calendar id="calendDataInstituicao" value="#{feriadoMovelMB.feriadoMovel.dataInstituicao}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
@@ -37,15 +33,9 @@
                             </p:selectOneMenu>
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="3">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{feriadoMovelMB.salvar}" icon="ui-icon-disk">
-                                <f:ajax execute="@form" render="@form :msgerro :tabFeriadosMoveis" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{feriadoMovelMB.limparElemento}" icon="ui-icon-document">
-                                <f:ajax execute="@form" render="@form :msgerro" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{feriadoMovelMB.novoElemento}" value="Excluir" actionListener="#{feriadoMovelMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este feriado?')) return false;" icon="ui-icon-trash">
-                                <f:ajax execute="@form" render="@form :msgerro :tabFeriadosMoveis" />
-                            </p:commandButton>
+                            <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabFeriadosMoveis" actionListener="#{feriadoMovelMB.salvar}" icon="ui-icon-disk" />
+                            <p:commandButton value="Novo" update="@form :msgerro :gmensagem" actionListener="#{feriadoMovelMB.limparElemento}" icon="ui-icon-document" />
+                            <p:commandButton value="Excluir" process="@form" update="@form :msgerro :gmensagem :tabFeriadosMoveis" disabled="#{feriadoMovelMB.novoElemento}" actionListener="#{feriadoMovelMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este feriado?')) return false;" icon="ui-icon-trash" />
                         </p:panelGrid>
                         <br />
                     </h:form>
@@ -56,9 +46,8 @@
                             <f:facet name="header"><h:outputText id="headerDtFeriadoMovel" value="Feriados cadastradas" /></f:facet>
                             <p:column>
                                 <f:facet name="header"><h:outputText style="text-align: center;" value="Descrição" /></f:facet>
-                                <p:commandLink value="#{feriadoMovel.descricao}">
+                                <p:commandLink value="#{feriadoMovel.descricao}" update=":formFeriadoMovel :msgerro :gmensagem">
                                     <f:setPropertyActionListener value="#{feriadoMovel}" target="#{feriadoMovelMB.feriadoMovel}" />
-                                    <f:ajax execute="@form" render=":formFeriadoMovel :msgerro" />
                                 </p:commandLink>
                             </p:column>
                             <p:column>
@@ -67,10 +56,10 @@
                             </p:column>
                             <p:column>
                                 <f:facet name="header"><h:outputText style="text-align: center;" id="excecoes" value="Exceções" /></f:facet>
-                                <p:link disabled="#{feriadoMovel.municipal}" id="linkExcecaoTransferencia" value="Ver" outcome="/modulos/calendario/cadExcecaoFeriado">
+                                <p:button disabled="#{feriadoMovel.municipal}" id="linkExcecaoTransferencia" value="Ver" outcome="/modulos/calendario/cadExcecaoFeriado" icon="ui-icon-newwin">
                                     <f:param name="feriadoCod" value="#{feriadoMovel.codigo}" />
                                     <f:param name="linkVoltar" value="/modulos/calendario/cadFeriadoMovel" />
-                                </p:link>
+                                </p:button>
                             </p:column>
                             <f:facet name="footer"><h:outputText id="footerDtFeriadoMovel" value="Total: #{feriadoMovelMB.quantLista}" /></f:facet>
                         </p:dataTable>

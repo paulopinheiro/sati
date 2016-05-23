@@ -23,15 +23,9 @@
                             </p:selectOneMenu>
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="3">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{areaTIMB.salvar}" icon="ui-icon-disk">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabAreaTI" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{areaTIMB.limparElemento}" icon="ui-icon-document">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{areaTIMB.novoElemento}" value="Excluir" actionListener="#{areaTIMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta área?') return false;" icon="ui-icon-trash">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabAreaTI" />
-                            </p:commandButton>
+                            <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabAreaTI" actionListener="#{areaTIMB.salvar}" icon="ui-icon-disk" />
+                            <p:commandButton value="Novo" update="@form :msgerro :gmensagem" actionListener="#{areaTIMB.limparElemento}" icon="ui-icon-document" />
+                            <p:commandButton value="Excluir" process="@form" update="@form :msgerro :gmensagem :tabAreaTI" disabled="#{areaTIMB.novoElemento}" actionListener="#{areaTIMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta área?') return false;" icon="ui-icon-trash" />
                         </p:panelGrid>
                         <br />
                     </h:form>
@@ -42,9 +36,8 @@
                             <f:facet name="header"><h:outputText id="headerDtAreaTI" value="Áreas cadastradas" /></f:facet>
                             <p:column id="colunaNome">
                                 <f:facet name="header"><h:outputText style="text-align: center;" id="textoNome" value="Nome" /></f:facet>
-                                <p:commandLink ajax="false" value="#{areaTI.nome}">
+                                <p:commandLink value="#{areaTI.nome}" update=":formAreaTI :msgerro :gmensagem">
                                     <f:setPropertyActionListener value="#{areaTI}" target="#{areaTIMB.areaTI}" />
-                                    <f:ajax execute="@form" render=":formAreaTI :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column id="colunaMunicipioSede">

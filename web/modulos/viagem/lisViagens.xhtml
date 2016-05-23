@@ -20,15 +20,14 @@
                                 <f:selectItem noSelectionOption="true" id="itemNenhumMunicipio" itemValue="-1" itemLabel="-- Selecione um município --" />
                                 <f:selectItems id="itensMunicipio" value="#{listaViagensMB.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
                             </p:selectOneMenu>
-                            <p:commandButton ajax="false" id="botaoFiltrar" value="Filtrar" actionListener="#{listaViagensMB.filtrar}" icon="ui-icon-search" >
-                                <f:ajax execute="@form" render=":tabViagens :msgerro" />
-                            </p:commandButton>
+                            <p:commandButton value="Filtrar" process="@form" update=":tabViagens :msgerro :gmensagem" id="botaoFiltrar" actionListener="#{listaViagensMB.filtrar}" icon="ui-icon-search"  />
                         </p:panelGrid>
                         <p:panelGrid id="outrasFuncoes" columns="1">
-                            <p:commandButton ajax="false" id="linkNovaViagem" value="Nova viagem" action="/modulos/viagem/cadViagem" icon="ui-icon-newwin" />
+                            <p:button id="linkNovaViagem" value="Nova viagem" outcome="/modulos/viagem/cadViagem" icon="ui-icon-newwin" />
                         </p:panelGrid>
                         <br />
                     </h:form>
+                    <p:growl id="gmensagem" globalOnly="true" />
                     <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
                     <h:form id="tabViagens">
                         <p:dataTable id="tabelaViagens" var="viagem" value="#{listaViagensMB.listaViagens}" paginator="true" rows="10" paginatorPosition="bottom" tableStyle="width:auto">

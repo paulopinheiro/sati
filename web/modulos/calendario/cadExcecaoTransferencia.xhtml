@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
     <f:view>
         <f:metadata>
-            <f:viewParam id="transferenciaCod" name="transferenciaCod" value="#{excecaoTransferenciaMB.transferencia}" converter="#{transferenciaConverterMB}" required="true" />
+            <f:viewParam id="transferenciaCod" name="transferenciaCod" value="#{excecaoTransferenciaMB.transferencia}" converter="#{transferenciaConverterMB}" />
         </f:metadata>
         <body>
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
@@ -26,16 +26,10 @@
                             <p:inputTextarea id="observacao" rows="4"  cols="50" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" value="#{excecaoTransferenciaMB.excecaoTransferencia.observacao}" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="4">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{excecaoTransferenciaMB.salvar}" icon="ui-icon-disk">
-                                <f:ajax execute="@form" render="@form :msgerro :tabExcecoes" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{excecaoTransferenciaMB.limparElemento}" icon="ui-icon-document">
-                                <f:ajax execute="@form" render="@form :msgerro" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{excecaoTransferenciaMB.novoElemento}" value="Excluir" actionListener="#{excecaoTransferenciaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta exceção?')) return false;" icon="ui-icon-trash">
-                                <f:ajax execute="@form" render="@form :msgerro :tabExcecoes" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Voltar" action="/modulos/calendario/cadTransferencia" icon="ui-icon-arrowreturn-1-w" />
+                            <p:commandButton value="Salvar" process="@form" update="@form :msgerro :tabExcecoes" actionListener="#{excecaoTransferenciaMB.salvar}" icon="ui-icon-disk" />
+                            <p:commandButton value="Novo" update="@form :msgerro :gmensagem" actionListener="#{excecaoTransferenciaMB.limparElemento}" icon="ui-icon-document" />
+                            <p:commandButton value="Excluir" process="@form" update="@form :msgerro :tabExcecoes" disabled="#{excecaoTransferenciaMB.novoElemento}" actionListener="#{excecaoTransferenciaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta exceção?')) return false;" icon="ui-icon-trash" />
+                            <p:button value="Voltar" outcome="/modulos/calendario/cadTransferencia" icon="ui-icon-arrowreturn-1-w" />
                         </p:panelGrid>
                         <br />
                     </h:form>
@@ -46,9 +40,8 @@
                             <f:facet name="header"><h:outputText id="headerDtFeriadoMovel" value="Exceções" /></f:facet>
                             <p:column>
                                 <f:facet name="header"><h:outputText style="text-align: center;" value="Município" /></f:facet>
-                                <p:commandLink ajax="false" value="#{excecaoTransferencia.municipio}">
+                                <p:commandLink value="#{excecaoTransferencia.municipio}" update=":formExcecao :msgerro :gmensagem">
                                     <f:setPropertyActionListener value="#{excecaoTransferencia}" target="#{excecaoTransferenciaMB.excecaoTransferencia}" />
-                                    <f:ajax execute="@form" render=":formExcecao :msgerro" />
                                 </p:commandLink>
                             </p:column>
                             <f:facet name="footer"><h:outputText id="footerDtExcecao" value="Total: #{excecaoTransferenciaMB.quantLista}" /></f:facet>

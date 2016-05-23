@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
     <f:view>
         <f:metadata>
-            <f:viewParam id="viagemCod" name="viagemCod" value="#{eventoReqViagemMB.viagem}" converter="#{viagemConverterMB}" required="true" />
+            <f:viewParam id="viagemCod" name="viagemCod" value="#{eventoReqViagemMB.viagem}" converter="#{viagemConverterMB}" />
         </f:metadata>
         <body>
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
@@ -28,15 +28,9 @@
                             <p:inputTextarea id="observacao" cols="60" rows="4" value="#{eventoReqViagemMB.eventoReqViagem.observacao}" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" />
                         </p:panelGrid>
                         <p:panelGrid columns="4">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{eventoReqViagemMB.salvar}" icon="ui-icon-disk">
-                                <f:ajax execute="@form" render="@form :tabEventos :msgerro :gmensagem" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{eventoReqViagemMB.limparElemento}" icon="ui-icon-document">
-                                <f:ajax render="@form :msgerro :gmensagem" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{eventoReqViagemMB.novoElemento}" value="Excluir" actionListener="#{eventoReqViagemMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este evento?')) return false;" icon="ui-icon-trash">
-                                <f:ajax execute="@form" render="@form :tabEventos :msgerro :gmensagem" />
-                            </p:commandButton>
+                            <p:commandButton value="Salvar" process="@form" update="@form :tabEventos :msgerro :gmensagem"  actionListener="#{eventoReqViagemMB.salvar}" icon="ui-icon-disk" />
+                            <p:commandButton value="Novo" update="@form :msgerro :gmensagem" actionListener="#{eventoReqViagemMB.limparElemento}" icon="ui-icon-document" />
+                            <p:commandButton value="Excluir" process="@form" update="@form :tabEventos :msgerro :gmensagem" disabled="#{eventoReqViagemMB.novoElemento}" actionListener="#{eventoReqViagemMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este evento?')) return false;" icon="ui-icon-trash" />
                             <p:button value="Voltar" outcome="/modulos/viagem/cadViagem" icon="ui-icon-arrowreturn-1-w">
                                 <f:param name="viagemCod" value="#{eventoReqViagemMB.viagem.codigo}" />
                             </p:button>
@@ -49,9 +43,8 @@
                         <p:dataTable id="tabelaEventos" var="evento" value="#{eventoReqViagemMB.listaEventos}">
                             <f:facet name="header"><h:outputText id="headerDtEventos" value="Eventos cadastrados" /></f:facet>
                             <p:column><f:facet name="header"><h:outputText value="Evento" /></f:facet>
-                                <p:commandLink ajax="false" id="clinkEvento" value="#{evento.tipoEvento}">
+                                <p:commandLink id="clinkEvento" value="#{evento.tipoEvento}" update=":formEvento :msgerro :gmensagem">
                                     <f:setPropertyActionListener value="#{evento}" target="#{eventoReqViagemMB.eventoReqViagem}" />
-                                    <f:ajax render=":formEvento :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column><f:facet name="header"><h:outputText value="Data evento" /></f:facet>

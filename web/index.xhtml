@@ -22,9 +22,7 @@
                             <p:password id="senhaProgint" value="#{geralMB.senha}" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="1">
-                            <p:commandButton ajax="false" value="Conectar" action="#{geralMB.conectar}">
-                                <f:ajax execute="form" render=":msgerro" />
-                            </p:commandButton>
+                            <p:commandButton update=":msgerro :gmensagem" process="@form" value="Conectar" action="#{geralMB.conectar}" />
                         </p:panelGrid>
                     </h:form>
                     <p:growl id="gmensagem" globalOnly="true" />

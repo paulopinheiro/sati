@@ -27,15 +27,9 @@
                             <p:inputTextarea id="observacao" value="#{municipioMB.municipio.observacao}" cols="50" rows="5" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="3">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{municipioMB.salvar}" icon="ui-icon-disk">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabMunicipios" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Novo" actionListener="#{municipioMB.limparElemento}" icon="ui-icon-document">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{municipioMB.novoElemento}" value="Excluir" actionListener="#{municipioMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este município?') return false;" icon="ui-icon-trash">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabMunicipios" />
-                            </p:commandButton>
+                            <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabMunicipios" actionListener="#{municipioMB.salvar}" icon="ui-icon-disk" />
+                            <p:commandButton value="Novo" update="@form :msgerro :gmensagem" actionListener="#{municipioMB.limparElemento}" icon="ui-icon-document" />
+                            <p:commandButton value="Excluir" process="@form" update="@form :msgerro :gmensagem :tabMunicipios" disabled="#{municipioMB.novoElemento}" actionListener="#{municipioMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir este município?') return false;" icon="ui-icon-trash" />
                         </p:panelGrid>
                         <br />
                     </h:form>
@@ -46,9 +40,8 @@
                             <f:facet name="header"><h:outputText id="headerDtMunicipios" value="Municípios cadastrados" /></f:facet>
                             <p:column id="colunaNome">
                                 <f:facet name="header"><h:outputText style="text-align: center;" id="textoNome" value="Nome" /></f:facet>
-                                <p:commandLink ajax="false" value="#{municipio.nome}">
+                                <p:commandLink value="#{municipio.nome}" update=":formMunicipio :msgerro :gmensagem">
                                     <f:setPropertyActionListener value="#{municipio}" target="#{municipioMB.municipio}" />
-                                    <f:ajax execute="@form" render=":formMunicipio :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column id="colunaAreaTI">
@@ -63,9 +56,9 @@
                             </p:column>
                             <p:column id="columnEditaUnidades">
                                 <f:facet name="header"><h:outputText id="textoEditarUnidades" value="Unidades" /></f:facet>
-                                <p:link id="linkUnidades" value="Editar" outcome="/modulos/geral/cadUnidade">
+                                <p:button id="linkUnidades" value="Editar" outcome="/modulos/geral/cadUnidade" icon="ui-icon-newwin">
                                     <f:param name="municipioCod" value="#{municipio.codigo}" />
-                                </p:link>
+                                </p:button>
                             </p:column>
                             <f:facet name="footer"><h:outputText id="footerDtMunicipios" value="Total: #{municipioMB.quantLista}" /></f:facet>
                         </p:dataTable>

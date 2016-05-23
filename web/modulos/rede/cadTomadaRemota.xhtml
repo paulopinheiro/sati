@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
     <f:view>
         <f:metadata>
-            <f:viewParam id="moduloCod" name="moduloCod" value="#{tomadaRemotaMB.modulo}" converter="#{moduloConverterMB}" required="true" />
+            <f:viewParam id="moduloCod" name="moduloCod" value="#{tomadaRemotaMB.modulo}" converter="#{moduloConverterMB}" />
         </f:metadata>
         <body>
             <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
@@ -29,16 +29,10 @@
                             <p:inputTextarea rows="6" cols="50" id="observacao" value="#{tomadaRemotaMB.tomadaRemota.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
                         </p:panelGrid>
                         <p:panelGrid columns="4">
-                            <p:commandButton ajax="false" value="Salvar" actionListener="#{tomadaRemotaMB.salvar}" icon="ui-icon-disk">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTomadasRemotas" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Nova" actionListener="#{tomadaRemotaMB.limparElemento}" icon="ui-icon-document">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" disabled="#{tomadaRemotaMB.novoElemento}" value="Excluir" actionListener="#{tomadaRemotaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta tomada?')) return false;" icon="ui-icon-trash">
-                                <f:ajax execute="@form" render="@form :msgerro :gmensagem :tabTomadasRemotas" />
-                            </p:commandButton>
-                            <p:commandButton ajax="false" value="Voltar" action="/modulos/rede/cadModulo" icon="ui-icon-arrowreturn-1-w" />
+                            <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabTomadasRemotas" actionListener="#{tomadaRemotaMB.salvar}" icon="ui-icon-disk" />
+                            <p:commandButton value="Nova" update="@form :msgerro :gmensagem" actionListener="#{tomadaRemotaMB.limparElemento}" icon="ui-icon-document" />
+                            <p:commandButton value="Excluir" process="@form" update="@form :msgerro :gmensagem :tabTomadasRemotas" disabled="#{tomadaRemotaMB.novoElemento}" actionListener="#{tomadaRemotaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta tomada?')) return false;" icon="ui-icon-trash" />
+                            <p:button value="Voltar" outcome="/modulos/rede/cadModulo" icon="ui-icon-arrowreturn-1-w" />
                         </p:panelGrid>
                         <br />
                     </h:form>
@@ -48,9 +42,8 @@
                         <p:dataTable id="tabelaTomadas" var="tomada" value="#{tomadaRemotaMB.listaTomadasRemotas}">
                             <f:facet name="header"><h:outputText value="Tomadas cadstradas" /></f:facet>
                             <p:column><f:facet name="header"><h:outputText value="Identificacao" /></f:facet>
-                                <p:commandLink ajax="false" value="#{tomada.nome}">
+                                <p:commandLink value="#{tomada.nome}" update=":formTomadaRemota :msgerro :gmensagem">
                                     <f:setPropertyActionListener value="#{tomada}" target="#{tomadaRemotaMB.tomadaRemota}" />
-                                    <f:ajax execute="@form" render=":formTomadaRemota :msgerro :gmensagem" />
                                 </p:commandLink>
                             </p:column>
                             <p:column><f:facet name="header"><h:outputText value="Conector" /></f:facet>
