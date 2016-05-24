@@ -17,11 +17,7 @@
                             <p:outputLabel for="descricao" value="Descrição" />
                             <p:inputText id="descricao" value="#{feriadoMovelMB.feriadoMovel.descricao}" size="100" maxlength="150" />
                             <p:outputLabel for="spinDiasPascoa" value="Dias em relação à Páscoa" />
-                            <h:panelGroup id="spinDiasPascoa">
-                                <p:inputText id="diasPascoa" value="#{feriadoMovelMB.feriadoMovel.diasPascoa}" size="2" maxlength="4" onkeyup="doCheckInteger(this)" />
-                                <p:commandButton process="@this" update=":formFeriadoMovel:diasPascoa" disabled="#{empty feriadoMovelMB.feriadoMovel.diasPascoa}" value="&lt;" actionListener="#{feriadoMovelMB.diaAnterior}" />
-                                <p:commandButton process="@this" update=":formFeriadoMovel:diasPascoa" disabled="#{empty feriadoMovelMB.feriadoMovel.diasPascoa}" value="&gt;" actionListener="#{feriadoMovelMB.diaSeguinte}" />
-                            </h:panelGroup>
+                            <p:spinner id="spinDiasPascoa" value="#{feriadoMovelMB.feriadoMovel.diasPascoa}" />
                             <p:outputLabel for="calendDataInstituicao" value="Data Instituição:" />
                             <p:calendar id="calendDataInstituicao" value="#{feriadoMovelMB.feriadoMovel.dataInstituicao}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
                             <p:outputLabel for="calendDataRevogacao" value="Data Revogação:" />

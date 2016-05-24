@@ -26,14 +26,6 @@ public class FeriadoMovelMB extends AbListaRestritaMB<FeriadoMovel> implements S
     
     public FeriadoMovelMB() {}
 
-    public void diaSeguinte(ActionEvent event) {
-        getFeriadoMovel().setDiasPascoa(getFeriadoMovel().getDiasPascoa()+1);
-    }
-
-    public void diaAnterior(ActionEvent event) {
-        getFeriadoMovel().setDiasPascoa(getFeriadoMovel().getDiasPascoa()-1);
-    }
-
     @Override
     public void salvar(ActionEvent event) {
         try {

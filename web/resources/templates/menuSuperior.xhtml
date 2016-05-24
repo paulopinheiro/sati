@@ -10,39 +10,6 @@
         <h:outputStylesheet library="css" name="default.css" />
         <h:outputStylesheet library="css" name="cssLayout.css" />
         <h:outputScript name="calendar_pt.js" library="js" /> 
-        <script language="javascript" type="text/javascript">
-            function doCheckNatural(field) {
-                try {
-                    if (isNaN(field.value)) {
-                        if (field.value.length === 1) {
-                            field.value = 0;
-                        } else {
-                            var fieldLength = field.value.length;
-                            field.value = field.value.substring(0, fieldLength - 1);
-                        }
-                    }
-                } catch (err) {
-                    alert(err.message);
-                }
-            }
-            function doCheckInteger(field) {
-                try {
-                    if (isNaN(field.value)) {
-                        if ((field.value.length !== 1) || (field.value !== "-")) {
-                            if (field.value.length === 1) {
-                                field.value = 0;
-                            } else {
-                                var fieldLength = field.value.length;
-                                field.value = field.value.substring(0, fieldLength - 1);
-                            }
-                        }
-                    }
-                } catch (err) {
-                    alert(err.message);
-                }
-            }
-        </script>
-
         <h:outputScript name="jsf.js" library="javax.faces"/>
         <title><ui:insert name="titulo">Título</ui:insert></title>
     </h:head>

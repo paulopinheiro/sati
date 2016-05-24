@@ -18,9 +18,9 @@
                             <p:inputText id="descricao" value="#{feriadoFixoMB.feriadoFixo.descricao}" size="100" maxlength="150" />
                             <p:outputLabel for="diaMes" value="Dia/Mês" />
                             <h:panelGroup id="diaMes" >
-                                <p:inputText id="dia" size="2" maxlength="2" value="#{feriadoFixoMB.feriadoFixo.dia}" onkeyup="doCheckNatural(this)"  />
+                                <p:inputMask id="dia" size="2" maxlength="2" value="#{feriadoFixoMB.feriadoFixo.dia}" placeHolder=" " mask="99" />
                                 /
-                                <p:inputText id="mes" size="2" maxlength="2" value="#{feriadoFixoMB.feriadoFixo.mes}" onkeyup="doCheckNatural(this)" />
+                                <p:inputMask id="mes" size="2" maxlength="2" value="#{feriadoFixoMB.feriadoFixo.mes}" placeHolder=" " mask="99"  />
                             </h:panelGroup>
                             <p:outputLabel for="calendDataInstituicao" value="Data Instituição:" />
                             <p:calendar id="calendDataInstituicao" value="#{feriadoFixoMB.feriadoFixo.dataInstituicao}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
