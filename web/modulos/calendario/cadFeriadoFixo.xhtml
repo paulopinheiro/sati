@@ -15,7 +15,7 @@
                         <p:panelGrid id="gridFormFeriadoFixo" columns="2">
                             <f:facet name="header"><b>Dados do Feriado</b></f:facet>
                             <p:outputLabel for="descricao" value="Descrição" />
-                            <p:inputText id="descricao" value="#{feriadoFixoMB.feriadoFixo.descricao}" size="100" onkeydown="limitText(this,150)" onkeyup="limitText(this,150)" />
+                            <p:inputText id="descricao" value="#{feriadoFixoMB.feriadoFixo.descricao}" size="100" maxlength="150" />
                             <p:outputLabel for="diaMes" value="Dia/Mês" />
                             <h:panelGroup id="diaMes" >
                                 <p:inputText id="dia" size="2" maxlength="2" value="#{feriadoFixoMB.feriadoFixo.dia}" onkeyup="doCheckNatural(this)"  />

@@ -59,8 +59,7 @@ public class PanelFacade extends AbstractFacade<Panel> {
     //Se não existir um panel com mesmo nome no rack, ou se a pesquisa retornar
     //o mesmo está tudo ok. Senão é violação de UNIQUE constraint
     private boolean isUnicoRackNomePanel(Panel panel, Panel pesq) {
-        if ((pesq==null) || (pesq.equals(panel))) return true;
-        return false;
+        return (pesq==null) || (pesq.equals(panel));
     }
 
     // Se codigo não for null, pesquisar o original e comparar a quantidade de portas
@@ -85,7 +84,7 @@ public class PanelFacade extends AbstractFacade<Panel> {
     }
 
     public List<Panel> findByRack(Rack rack) {
-        List<Panel> resposta = null;
+        List<Panel> resposta;
         Query query = getEntityManager().createNamedQuery("Panel.panelsByRack");
         query.setParameter("rack", rack);
         resposta = query.getResultList();
@@ -117,7 +116,7 @@ public class PanelFacade extends AbstractFacade<Panel> {
     }
 
     public List<TomadaPanel> getListaTomadas(Panel panel) {
-        List<TomadaPanel> resposta = null;
+        List<TomadaPanel> resposta;
         Query query = getEntityManager().createNamedQuery("TomadaPanel.tomadasPanelByPanel");
         query.setParameter("panel", panel);
         resposta = query.getResultList();

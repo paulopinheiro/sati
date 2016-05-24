@@ -19,15 +19,15 @@
                         <p:panelGrid id="gridFormUnidade" columns="2">
                             <f:facet name="header"><b>Dados da Unidade</b></f:facet>
                             <p:outputLabel id="labelNome" for="nome" value="Nome" />
-                            <p:inputText id="nome" value="#{unidadeMB.unidade.nome}" size="50" onkeydown="limitText(this, 50)" onkeyup="limitText(this, 50)" />
+                            <p:inputText id="nome" value="#{unidadeMB.unidade.nome}" size="50" maxlength="50" />
                             <p:outputLabel id="labelSigla" for="sigla" value="Sigla" />
-                            <p:inputText id="sigla" value="#{unidadeMB.unidade.sigla}" size="10" onkeydown="limitText(this, 10)" onkeyup="limitText(this, 10)" />
+                            <p:inputText id="sigla" value="#{unidadeMB.unidade.sigla}" size="10" maxlength="10" />
                             <p:outputLabel id="labelPrefixo" for="prefixo" value="Prefixo" />
-                            <p:inputText id="prefixo" value="#{unidadeMB.unidade.prefixo}" size="3" onkeydown="limitText(this, 3)" onkeyup="limitText(this, 3)" />
+                            <p:inputText id="prefixo" value="#{unidadeMB.unidade.prefixo}" size="3" maxlength="3" />
                             <p:outputLabel id="labelLocalizacao" for="localizacao" value="Localização:" />
-                            <p:inputTextarea id="localizacao" value="#{unidadeMB.unidade.localizacao}" cols="50" rows="5" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" />
+                            <p:inputTextarea id="localizacao" value="#{unidadeMB.unidade.localizacao}" cols="50" rows="5" maxlength="255" />
                             <p:outputLabel id="labelObservacao" for="observacao" value="Observação:" />
-                            <p:inputTextarea id="observacao" value="#{unidadeMB.unidade.observacao}" cols="50" rows="5" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" />
+                            <p:inputTextarea id="observacao" value="#{unidadeMB.unidade.observacao}" cols="50" rows="5" maxlength="255" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="4">
                             <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabUnidades" actionListener="#{unidadeMB.salvar}" icon="ui-icon-disk" />

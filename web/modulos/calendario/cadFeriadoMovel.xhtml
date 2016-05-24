@@ -15,7 +15,7 @@
                         <p:panelGrid id="gridFormFeriadoMovel" columns="2">
                             <f:facet name="header"><b>Dados do Feriado</b></f:facet>
                             <p:outputLabel for="descricao" value="Descrição" />
-                            <p:inputText id="descricao" value="#{feriadoMovelMB.feriadoMovel.descricao}" size="100" onkeydown="limitText(this,150)" onkeyup="limitText(this,150)" />
+                            <p:inputText id="descricao" value="#{feriadoMovelMB.feriadoMovel.descricao}" size="100" maxlength="150" />
                             <p:outputLabel for="spinDiasPascoa" value="Dias em relação à Páscoa" />
                             <h:panelGroup id="spinDiasPascoa">
                                 <p:inputText id="diasPascoa" value="#{feriadoMovelMB.feriadoMovel.diasPascoa}" size="2" maxlength="4" onkeyup="doCheckInteger(this)" />

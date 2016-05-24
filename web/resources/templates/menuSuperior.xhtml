@@ -11,11 +11,6 @@
         <h:outputStylesheet library="css" name="cssLayout.css" />
         <h:outputScript name="calendar_pt.js" library="js" /> 
         <script language="javascript" type="text/javascript">
-            function limitText(limitField, limitNum) {
-                if (limitField.value.length > limitNum) {
-                    limitField.value = limitField.value.substring(0, limitNum);
-                }
-            }
             function doCheckNatural(field) {
                 try {
                     if (isNaN(field.value)) {

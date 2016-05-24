@@ -22,9 +22,9 @@
                             <p:outputLabel for="descricao" value="Descrição: " />
                             <h:outputText id="descricao" value="#{tomadaPanelMB.tomadaPanel.descricao}" />
                             <p:outputLabel rendered="#{!tomadaPanelMB.tomadaPanel.dados}" for="ramal" value="Ramal: " />
-                            <p:inputText rendered="#{!tomadaPanelMB.tomadaPanel.dados}" id="ramal" size="10" value="#{tomadaPanelMB.tomadaPanel.ramal}" onkeydown="limitText(this,8)" onkeyup="limitText(this,8)" />
+                            <p:inputText rendered="#{!tomadaPanelMB.tomadaPanel.dados}" id="ramal" size="10" value="#{tomadaPanelMB.tomadaPanel.ramal}" maxlength="8" />
                             <p:outputLabel for="observacao" value="Observação: " />
-                            <p:inputTextarea rows="5" cols="50" id="observacao" value="#{tomadaPanelMB.tomadaPanel.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <p:inputTextarea rows="5" cols="50" id="observacao" value="#{tomadaPanelMB.tomadaPanel.observacao}" maxlength="255" />
                             <p:outputLabel value="Status:" />
                             <h:outputText rendered="#{tomadaPanelMB.tomadaPanel.voice}" value="Voice" />
                             <h:outputText rendered="#{tomadaPanelMB.tomadaPanel.irregular}" value="Irregular" />

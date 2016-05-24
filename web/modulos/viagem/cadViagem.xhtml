@@ -49,11 +49,11 @@
                         <p:panelGrid id="gridTarefa" columns="2" rendered="#{!viagemMB.novoElemento}">
                             <f:facet name="header"><b>Tarefa</b></f:facet>
                             <p:outputLabel id="labelDescricaoTarefa" for="descricaoTarefa" value="Descrição" />
-                            <p:inputTextarea id="descricaoTarefa" cols="60" rows="4" value="#{viagemMB.tarefa.descricao}" onkeydown="limitText(this, 255);" onkeyup="limitText(this, 255);" />
+                            <p:inputTextarea id="descricaoTarefa" cols="60" rows="4" value="#{viagemMB.tarefa.descricao}" maxlength="255" />
                             <p:outputLabel id="labelTomboequipTarefa" for="tomboequipTarefa" value="Tombo Equipamento" />
-                            <p:inputText id="tomboequipTarefa" value="#{viagemMB.tarefa.tomboequip}" onkeydown="limitText(this, 6);" onkeyup="limitText(this, 6);" />
+                            <p:inputText id="tomboequipTarefa" value="#{viagemMB.tarefa.tomboequip}" maxlength="6" />
                             <p:outputLabel id="labelNroTarefaRITM" for="nroTarefaRITM" value="Número da tarefa no RITM" />
-                            <p:inputText id="nroTarefaRITM" value="#{viagemMB.tarefa.nroTarefaRITM}" onkeydown="limitText(this, 9);" onkeyup="limitText(this, 9);"/>
+                            <p:inputText id="nroTarefaRITM" value="#{viagemMB.tarefa.nroTarefaRITM}" maxlength="9" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoesTarefa" columns="3" rendered="#{!viagemMB.novoElemento}">
                             <p:commandButton value="Salvar" process="@form" update=":formTarefa :formTabTarefas :msgerro :gmensagem" id="botaoSalvarTarefa" actionListener="#{viagemMB.salvarTarefa}" icon="ui-icon-disk" />

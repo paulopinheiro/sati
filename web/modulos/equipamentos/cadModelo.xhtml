@@ -13,9 +13,9 @@
             <h:form id="formModelo">
                 <p:panelGrid id="gridModelo" columns="2">
                     <p:outputLabel id="labelNome" for="nome" value="Nome" />
-                    <p:inputText id="nome" value="#{modeloMB.modelo.nome}" size="100" onkeydown="limitText(this, 150);" onkeyup="limitText(this, 150);"/>
+                    <p:inputText id="nome" value="#{modeloMB.modelo.nome}" size="100" maxlength="150" />
                     <p:outputLabel id="labelDescricao" for="descricao" value="Descriçao" />
-                    <p:inputTextarea id="descricao" cols="60" rows="5" value="#{modeloMB.modelo.descricao}" onkeydown="limitText(this, 256);" onkeyup="limitText(this, 256);" />
+                    <p:inputTextarea id="descricao" cols="60" rows="5" value="#{modeloMB.modelo.descricao}" maxlength="256"  />
                     <p:outputLabel id="labelTipoEquipamento" for="tipoEquipamento" value="Tipo Equipamento" />
                     <p:selectOneMenu id="tipoEquipamento" value="#{modeloMB.modelo.tipoEquipamento}" converter="converteTipoEquipamento">
                         <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o tipo ---" />

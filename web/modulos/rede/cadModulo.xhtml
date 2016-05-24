@@ -15,7 +15,7 @@
                         <p:panelGrid columns="2">
                             <f:facet name="header"><b>Dados do Módulo</b></f:facet>
                             <p:outputLabel for="identificacao" value="Identificação" />
-                            <p:inputText id="identificacao" value="#{moduloMB.modulo.identificacao}" size="10" onkeydown="limitText(this,10)" onkeyup="limitText(this,10)" />
+                            <p:inputText id="identificacao" value="#{moduloMB.modulo.identificacao}" size="10" maxlength="10" />
                             <p:outputLabel for="tipo" value="Tipo" />
                             <p:selectOneRadio id="tipo" label="Tipo" value="#{moduloMB.modulo.tipoModulo}" converter="converteTipoModulo">
                                 <f:selectItems id="sgiTipoModulo" value="#{moduloMB.tiposModulo}" var="tipoModulo" itemValue="#{tipoModulo}" itemLabel="#{tipoModulo}" />
@@ -26,11 +26,11 @@
                                 <f:selectItems id="sgiUnidade" value="#{moduloMB.unidades}" var="unidade" itemValue="#{unidade}" itemLabel="#{unidade}" />
                             </p:selectOneMenu>
                             <p:outputLabel for="descricao" value="Descrição" />
-                            <p:inputTextarea id="descricao" rows="4"  cols="50" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" value="#{moduloMB.modulo.descricao}" />
+                            <p:inputTextarea id="descricao" rows="4"  cols="50" maxlength="255" value="#{moduloMB.modulo.descricao}" />
                             <p:outputLabel for="localizacao" value="Localização" />
-                            <p:inputTextarea id="localizacao" rows="4"  cols="50" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" value="#{moduloMB.modulo.localizacao}" />
+                            <p:inputTextarea id="localizacao" rows="4"  cols="50" maxlength="255" value="#{moduloMB.modulo.localizacao}" />
                             <p:outputLabel for="observacao" value="Observação" />
-                            <p:inputTextarea id="observacao" rows="4"  cols="50" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" value="#{moduloMB.modulo.observacao}" />
+                            <p:inputTextarea id="observacao" rows="4"  cols="50" maxlength="255" value="#{moduloMB.modulo.observacao}" />
                         </p:panelGrid>
                         <p:panelGrid columns="3">
                             <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabModulos" actionListener="#{moduloMB.salvar}" icon="ui-icon-disk" />

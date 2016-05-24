@@ -21,11 +21,11 @@
                     <p:outputLabel id="labelDataHistorico" for="dataHistorico" value="Data" />
                     <p:calendar id="dataHistorico" value="#{historicoMB.historico.dataHistorico}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
                     <p:outputLabel id="labelDescricaoHistorico" for="descricaoHistorico" value="Descrição" />
-                    <p:inputTextarea id="descricaoHistorico" cols="80" rows="8" value="#{historicoMB.historico.descricao}" onkeydown="limitText(this, 600);" onkeyup="limitText(this, 600);" />
+                    <p:inputTextarea id="descricaoHistorico" cols="80" rows="8" value="#{historicoMB.historico.descricao}" maxlength="600" />
                     <p:outputLabel id="labelObservacaoHistorico" for="observacaoHistorico" value="Observação" />
-                    <p:inputTextarea id="observacaoHistorico" cols="60" rows="5" value="#{historicoMB.historico.observacao}" onkeydown="limitText(this, 255);" onkeyup="limitText(this, 255);"/>
+                    <p:inputTextarea id="observacaoHistorico" cols="60" rows="5" value="#{historicoMB.historico.observacao}" maxlength="255" />
                     <p:outputLabel id="labelIncidenteRitmHistorico" for="incidenteRitmHistorico" value="Incidente" />
-                    <p:inputText id="incidenteRitmHistorico" value="#{historicoMB.historico.incidenteRitm}" size="25" onkeydown="limitText(this, 10);" onkeyup="limitText(this, 10);" />
+                    <p:inputText id="incidenteRitmHistorico" value="#{historicoMB.historico.incidenteRitm}" size="25" maxlength="10" />
                 </p:panelGrid>
                 <p:panelGrid id="gridBotoesHistorico" columns="4">
                     <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem" actionListener="#{historicoMB.salvar}" icon="ui-icon-disk" />

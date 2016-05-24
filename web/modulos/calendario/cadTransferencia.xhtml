@@ -30,7 +30,7 @@
                             <p:outputLabel for="calendNovaData" value="Nova data:" />
                             <p:calendar id="calendNovaData" value="#{transferenciaMB.novaData}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
                             <p:outputLabel for="legislacao" value="Legislação" />
-                            <p:inputTextarea id="legislacao" cols="60" rows="4" value="#{transferenciaMB.transferencia.legislacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <p:inputTextarea id="legislacao" cols="60" rows="4" value="#{transferenciaMB.transferencia.legislacao}" maxlength="255" />
                             <p:outputLabel rendered="#{!transferenciaMB.transferencia.feriado.municipal}" for="municipio" value="Somente no município:" />
                             <p:selectOneMenu rendered="#{!transferenciaMB.transferencia.feriado.municipal}" id="municipio" value="#{transferenciaMB.transferencia.municipio}" converter="converteMunicipio">
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione um município ---" />

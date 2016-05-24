@@ -15,20 +15,20 @@
                         <p:panelGrid id="gridFormUsuario" columns="2">
                             <f:facet name="header"><b>Dados do usuário</b></f:facet>
                             <p:outputLabel id="labelNome" for="nome" value="Nome" />
-                            <p:inputText id="nome" value="#{usuarioFinalMB.usuarioFinal.nome}" size="80" onkeydown="limitText(this, 100)" onkeyup="limitText(this, 100)" />
+                            <p:inputText id="nome" value="#{usuarioFinalMB.usuarioFinal.nome}" size="80" maxlength="100" />
                             <p:outputLabel id="labelUnidade" for="unidade" value="Unidade" />
                             <p:selectOneMenu id="unidade" value="#{usuarioFinalMB.usuarioFinal.unidade}" converter="converteUnidade">
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione a unidade ---" />
                                 <f:selectItems id="sgiUnidade" value="#{usuarioFinalMB.unidades}" var="unidade" itemValue="#{unidade}" itemLabel="#{unidade}" />
                             </p:selectOneMenu>
                             <p:outputLabel id="labelMatricula" for="matricula" value="Matrícula" />
-                            <p:inputText id="matricula" value="#{usuarioFinalMB.usuarioFinal.matricula}" size="5" onkeydown="limitText(this, 10)" onkeyup="limitText(this, 10)" />
+                            <p:inputText id="matricula" value="#{usuarioFinalMB.usuarioFinal.matricula}" size="5" maxlength="10" />
                             <p:outputLabel id="labelEmail" for="email" value="e-mail" />
-                            <p:inputText id="email" value="#{usuarioFinalMB.usuarioFinal.email}" size="60" onkeydown="limitText(this, 60)" onkeyup="limitText(this, 60)" />
+                            <p:inputText id="email" value="#{usuarioFinalMB.usuarioFinal.email}" size="60" maxlength="60" />
                             <p:outputLabel id="labelFonecontato" for="fonecontato" value="Fone" />
-                            <p:inputText id="fonecontato" value="#{usuarioFinalMB.usuarioFinal.fonecontato}" size="20" onkeydown="limitText(this, 20)" onkeyup="limitText(this, 20)" />
+                            <p:inputText id="fonecontato" value="#{usuarioFinalMB.usuarioFinal.fonecontato}" size="20" maxlength="20" />
                             <p:outputLabel id="labelObservacao" for="observacao" value="Observação:" />
-                            <p:inputTextarea id="observacao" value="#{usuarioFinalMB.usuarioFinal.observacao}" cols="50" rows="5" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" />
+                            <p:inputTextarea id="observacao" value="#{usuarioFinalMB.usuarioFinal.observacao}" cols="50" rows="5" maxlength="255" />
                             <p:selectBooleanCheckbox id="ativo" label="Ativo" value="#{usuarioFinalMB.usuarioFinal.ativo}" />
                             <p:outputLabel id="labelAtivo" for="ativo" value="Ativo" /> 
                         </p:panelGrid>

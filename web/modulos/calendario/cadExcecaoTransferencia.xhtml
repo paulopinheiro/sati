@@ -23,7 +23,7 @@
                                 <f:selectItems id="sgiMunicipio" value="#{excecaoTransferenciaMB.municipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
                             </p:selectOneMenu>
                             <p:outputLabel for="observacao" value="Observação" />
-                            <p:inputTextarea id="observacao" rows="4"  cols="50" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" value="#{excecaoTransferenciaMB.excecaoTransferencia.observacao}" />
+                            <p:inputTextarea id="observacao" rows="4"  cols="50" maxlength="255" value="#{excecaoTransferenciaMB.excecaoTransferencia.observacao}" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="4">
                             <p:commandButton value="Salvar" process="@form" update="@form :msgerro :tabExcecoes" actionListener="#{excecaoTransferenciaMB.salvar}" icon="ui-icon-disk" />

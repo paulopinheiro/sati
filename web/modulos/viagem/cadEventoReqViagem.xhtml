@@ -25,7 +25,7 @@
                                 <f:selectItems id="siTipoEvento" value="#{eventoReqViagemMB.tiposEvento}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo}"  />
                             </p:selectOneMenu>
                             <p:outputLabel for="observacao" value="Observação:" />
-                            <p:inputTextarea id="observacao" cols="60" rows="4" value="#{eventoReqViagemMB.eventoReqViagem.observacao}" onkeydown="limitText(this, 255)" onkeyup="limitText(this, 255)" />
+                            <p:inputTextarea id="observacao" cols="60" rows="4" value="#{eventoReqViagemMB.eventoReqViagem.observacao}" maxlength="255" />
                         </p:panelGrid>
                         <p:panelGrid columns="4">
                             <p:commandButton value="Salvar" process="@form" update="@form :tabEventos :msgerro :gmensagem"  actionListener="#{eventoReqViagemMB.salvar}" icon="ui-icon-disk" />

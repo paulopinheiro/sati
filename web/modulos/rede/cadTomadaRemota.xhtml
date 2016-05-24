@@ -18,15 +18,15 @@
                         <p:panelGrid columns="2">
                             <f:facet name="header"><b>Dados da Tomada</b></f:facet>
                             <p:outputLabel for="nome" value="Nome" />
-                            <p:inputText id="nome" value="#{tomadaRemotaMB.tomadaRemota.nome}" size="10" onkeydown="limitText(this,10)" onkeyup="limitText(this,10)" />
+                            <p:inputText id="nome" value="#{tomadaRemotaMB.tomadaRemota.nome}" size="10" maxlength="10" />
                             <p:outputLabel for="tipo" value="Tipo" />
                             <p:selectOneRadio id="tipo" label="Tipo" value="#{tomadaRemotaMB.tomadaRemota.tipoConector}" converter="converteTipoConector" >
                                 <f:selectItems id="sgiTipoConector" value="#{tomadaRemotaMB.tiposConector}"  var="tipoConector" itemValue="#{tipoConector}" itemLabel="#{tipoConector}" />
                             </p:selectOneRadio>
                             <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputTextarea rows="6" cols="50" id="descricao" value="#{tomadaRemotaMB.tomadaRemota.descricao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <p:inputTextarea rows="6" cols="50" id="descricao" value="#{tomadaRemotaMB.tomadaRemota.descricao}" maxlength="255" />
                             <p:outputLabel for="observacao" value="Observação: " />
-                            <p:inputTextarea rows="6" cols="50" id="observacao" value="#{tomadaRemotaMB.tomadaRemota.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <p:inputTextarea rows="6" cols="50" id="observacao" value="#{tomadaRemotaMB.tomadaRemota.observacao}" maxlength="255" />
                         </p:panelGrid>
                         <p:panelGrid columns="4">
                             <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabTomadasRemotas" actionListener="#{tomadaRemotaMB.salvar}" icon="ui-icon-disk" />

@@ -15,7 +15,7 @@
                         <p:panelGrid id="gridFormAreaTI" columns="2">
                             <f:facet name="header"><b>Dados da Área</b></f:facet>
                             <p:outputLabel id="labelNome" for="nome" value="Nome" />
-                            <p:inputText id="nome" value="#{areaTIMB.areaTI.nome}" size="15" onkeydown="limitText(this,15)" onkeyup="limitText(this,15)" />
+                            <p:inputText id="nome" value="#{areaTIMB.areaTI.nome}" size="15" maxlength="15" />
                             <p:outputLabel id="labelMunicipioSede" for="municipioSede" value="Sede:" />
                             <p:selectOneMenu id="municipioSede" value="#{areaTIMB.areaTI.municipioSede}" converter="converteMunicipio">
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o município ---" />

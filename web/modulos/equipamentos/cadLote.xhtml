@@ -16,7 +16,7 @@
             <h:form id="formLote">
                 <p:panelGrid id="gridLote" columns="2">
                     <p:outputLabel id="labelNome" for="nome" value="Nome" />
-                    <p:inputText id="nome" value="#{loteMB.lote.nome}" size="100" onkeydown="limitText(this, 100);" onkeyup="limitText(this, 100);"/>
+                    <p:inputText id="nome" value="#{loteMB.lote.nome}" size="100" maxlength="100" />
                     <p:outputLabel id="labelDataFimGarantia" for="datafimgarantia" value="Garantia até" />
                     <p:calendar id="datafimgarantia" value="#{loteMB.lote.dataFimGarantia}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
                     <p:outputLabel id="labelModelo" for="modelo" value="Modelo equipamento:" />

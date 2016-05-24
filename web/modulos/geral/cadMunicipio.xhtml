@@ -15,7 +15,7 @@
                         <p:panelGrid id="gridFormMunicipio" columns="2">
                             <f:facet name="header"><b>Dados do Município</b></f:facet>
                             <p:outputLabel id="labelNome" for="nome" value="Nome" />
-                            <p:inputText id="nome" value="#{municipioMB.municipio.nome}" size="80" onkeydown="limitText(this,100)" onkeyup="limitText(this,100)" />
+                            <p:inputText id="nome" value="#{municipioMB.municipio.nome}" size="80" maxlength="100" />
                             <p:outputLabel id="labelAreaTI" for="areaTI" value="Área de TI" />
                             <p:selectOneMenu id="areaTI" value="#{municipioMB.municipio.areaTI}" converter="converteAreaTI">
                                 <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione a área ---" />
@@ -24,7 +24,7 @@
                             <p:outputLabel id="labelDtFundacaoUnidade" for="dtFundacaoUnidade" value="Data Fundação Unidade" />
                             <p:calendar id="dtFundacaoUnidade" value="#{municipioMB.municipio.dtFundacaoUnidade}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
                             <p:outputLabel id="labelObservacao" for="observacao" value="Observação:" />
-                            <p:inputTextarea id="observacao" value="#{municipioMB.municipio.observacao}" cols="50" rows="5" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <p:inputTextarea id="observacao" value="#{municipioMB.municipio.observacao}" cols="50" rows="5" maxlength="255" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="3">
                             <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabMunicipios" actionListener="#{municipioMB.salvar}" icon="ui-icon-disk" />

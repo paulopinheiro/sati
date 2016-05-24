@@ -28,13 +28,13 @@
                         </p:panelGrid>
                         <p:panelGrid id="gridFormPanel" columns="2">
                             <p:outputLabel for="nome" value="Nome: " />
-                            <p:inputText size="20" id="nome" value="#{panelMB.panel.nome}" onkeydown="limitText(this,15)" onkeyup="limitText(this,15)" />
+                            <p:inputText size="20" id="nome" value="#{panelMB.panel.nome}" maxlength="15" />
                             <p:outputLabel for="descricao" value="Descrição: " />
-                            <p:inputTextarea cols="50" rows="5" id="descricao" value="#{panelMB.panel.descricao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <p:inputTextarea cols="50" rows="5" id="descricao" value="#{panelMB.panel.descricao}" maxlength="255" />
                             <p:outputLabel for="rack" value="Rack: " />
                             <h:outputText id="rack" value="#{panelMB.rack}" />
                             <p:outputLabel for="observacao" value="Observação: " />
-                            <p:inputTextarea cols="50" rows="5" id="observacao" value="#{panelMB.panel.observacao}" onkeydown="limitText(this,255)" onkeyup="limitText(this,255)" />
+                            <p:inputTextarea cols="50" rows="5" id="observacao" value="#{panelMB.panel.observacao}" maxlength="255" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="4">
                             <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabPanels" actionListener="#{panelMB.salvar}" icon="ui-icon-disk" />

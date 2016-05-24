@@ -27,7 +27,7 @@
                 </p:panelGrid>
                 <p:panelGrid id="gridFiltros2" columns="3">
                     <p:outputLabel id="labelTombo" for="filtroTombo" value="Tombo" />
-                    <p:inputText id="filtroTombo" value="#{listaMicrocomputadoresMB.filtroTombo}" size="10" onkeydown="limitText(this, 6);" onkeyup="limitText(this, 6);"/>
+                    <p:inputText id="filtroTombo" value="#{listaMicrocomputadoresMB.filtroTombo}" size="10" maxlength="6" />
                     <p:commandButton value="Filtrar" process="@form" update=":tabMicrocomputadores :msgerro :gmensagem" actionListener="#{listaMicrocomputadoresMB.filtrar}" icon="ui-icon-search" />
                 </p:panelGrid>
                 <br />

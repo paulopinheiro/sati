@@ -35,7 +35,7 @@
                 </h:panelGrid>
                 <h:panelGrid id="gridFiltros2" columns="3">
                     <h:outputLabel id="labelTombo" for="filtroTombo" value="Tombo" />
-                    <h:inputText id="filtroTombo" value="#{listaEquipamentosMB.filtroTombo}" size="10" onkeydown="limitText(this, 6);" onkeyup="limitText(this, 6);"/>
+                    <h:inputText id="filtroTombo" value="#{listaEquipamentosMB.filtroTombo}" size="10" maxlength="6" />
                     <h:commandButton value="Filtrar" actionListener="#{listaEquipamentosMB.filtrar}">
                         <f:ajax execute="@form" render=":tabEquipamentos :msgerro" />
                     </h:commandButton>

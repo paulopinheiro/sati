@@ -15,13 +15,13 @@
                         <p:panelGrid id="gridFormRack" columns="2">
                             <f:facet name="header"><b>Dados do Rack</b></f:facet>
                             <p:outputLabel for="identificacao" value="Identificação:" />
-                            <p:inputText id="identificacao" size="50" value="#{rackMB.rack.identificacao}" onkeydown="limitText(this,50)" onkeyup="limitText(this,50)" />
+                            <p:inputText id="identificacao" size="50" value="#{rackMB.rack.identificacao}" maxlength="50" />
                             <p:outputLabel for="descricao" value="Descrição:" />
-                            <p:inputTextarea id="descricao" cols="50" onkeydown="limitText(this,50)" onkeyup="limitText(this,50)" value="#{rackMB.rack.descricao}" />
+                            <p:inputTextarea id="descricao" cols="50" maxlength="50" value="#{rackMB.rack.descricao}" />
                             <p:outputLabel for="localizacao" value="Localização:" />
-                            <p:inputTextarea id="localizacao" cols="50" onkeydown="limitText(this,50)" onkeyup="limitText(this,50)" value="#{rackMB.rack.localizacao}" />
+                            <p:inputTextarea id="localizacao" cols="50" maxlength="50" value="#{rackMB.rack.localizacao}" />
                             <p:outputLabel for="observacao" value="Observação:" />
-                            <p:inputTextarea id="observacao" cols="50" onkeydown="limitText(this,50)" onkeyup="limitText(this,50)" value="#{rackMB.rack.observacao}" />
+                            <p:inputTextarea id="observacao" cols="50" maxlength="50" value="#{rackMB.rack.observacao}" />
                         </p:panelGrid>
                         <p:panelGrid id="gridBotoes" columns="3">
                             <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabRacks" actionListener="#{rackMB.salvar}" icon="ui-icon-disk" />
