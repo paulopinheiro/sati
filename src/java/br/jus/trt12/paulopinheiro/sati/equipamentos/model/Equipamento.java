@@ -1,6 +1,7 @@
 package br.jus.trt12.paulopinheiro.sati.equipamentos.model;
 
 import br.jus.trt12.paulopinheiro.sati.geral.model.Unidade;
+import br.jus.trt12.paulopinheiro.sati.geral.model.UsuarioFinal;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -47,8 +48,6 @@ public class Equipamento implements Serializable, Comparable {
     private Integer codigo;
     @Column(nullable=false,length=6)
     private String tombo;
-    @Column(nullable=false,length=100)
-    private String usuario;
     @JoinColumn(nullable=false, name="cod_lote")
     @ManyToOne
     private Lote lote;
@@ -63,6 +62,11 @@ public class Equipamento implements Serializable, Comparable {
     private String localizacao;
     @Column(name="nro_serie")
     private String nroSerie;
+    @ManyToOne
+    @JoinTable(name = "equipamentos.equipamento_usuario", joinColumns = {@JoinColumn(name = "equipamento_cod")},
+                                                   inverseJoinColumns = {@JoinColumn(name = "usuario_id")
+    })
+    private UsuarioFinal usuarioEquipamento;
     @OneToMany(mappedBy = "equipamento")
     private List<Historico> listaHistoricos;
 
@@ -93,14 +97,6 @@ public class Equipamento implements Serializable, Comparable {
 
     public void setTombo(String tombo) {
         this.tombo = tombo;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     public Unidade getUnidade() {
@@ -143,6 +139,14 @@ public class Equipamento implements Serializable, Comparable {
         this.nroSerie = nroSerie;
     }
 
+    public UsuarioFinal getUsuarioEquipamento() {
+        return usuarioEquipamento;
+    }
+
+    public void setUsuarioEquipamento(UsuarioFinal usuarioEquipamento) {
+        this.usuarioEquipamento = usuarioEquipamento;
+    }
+
     public List<Historico> getListaHistoricos() {
         return listaHistoricos;
     }
@@ -173,8 +177,8 @@ public class Equipamento implements Serializable, Comparable {
 
     @Override
     public String toString() {
-        if (!this.ativo) return "Baixado: " + this.tombo + " (" + this.usuario + ")";
-        return this.tombo + " (" + this.usuario + ")";
+        if (!this.ativo) return "Baixado: " + this.tombo + " (" + this.getUsuarioEquipamento() + ")";
+        return this.tombo + " (" + this.getUsuarioEquipamento() + ")";
     }
 
     @Override

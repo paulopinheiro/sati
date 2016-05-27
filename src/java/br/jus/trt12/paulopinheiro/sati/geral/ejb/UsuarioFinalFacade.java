@@ -3,6 +3,7 @@ package br.jus.trt12.paulopinheiro.sati.geral.ejb;
 import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
+import br.jus.trt12.paulopinheiro.sati.geral.model.Unidade;
 import br.jus.trt12.paulopinheiro.sati.geral.model.UsuarioFinal;
 import java.util.Collections;
 import java.util.List;
@@ -104,5 +105,15 @@ public class UsuarioFinalFacade extends AbstractFacade<UsuarioFinal> {
         cq.where(nome,email,matricula,unidade,ativo,observacao,fonecontato,municipio);
 
         return cq;
+    }
+
+    public List<UsuarioFinal> findByUnidade(Unidade unidade) throws SatiLogicalException {
+        List<UsuarioFinal> resposta;
+        if (unidade==null) return null;
+        Query query = getEntityManager().createNamedQuery("UsuarioFinal.findByUnidade");
+        query.setParameter("unidade", unidade);
+        resposta = query.getResultList();
+        Collections.sort(resposta);
+        return resposta;
     }
 }

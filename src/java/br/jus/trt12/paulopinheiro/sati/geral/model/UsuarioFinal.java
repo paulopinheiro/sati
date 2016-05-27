@@ -20,7 +20,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "usuario_final", catalog = "sati", schema = "public")
 @NamedQueries({
-    @NamedQuery(name = "UsuarioFinal.findByMunicipio", query = "SELECT u FROM UsuarioFinal u WHERE u.unidade.municipio = :municipio order by u.nome")})
+    @NamedQuery(name = "UsuarioFinal.findByMunicipio", query = "SELECT u FROM UsuarioFinal u WHERE u.unidade.municipio = :municipio order by u.nome"),
+    @NamedQuery(name = "UsuarioFinal.findByUnidade", query = "SELECT u FROM UsuarioFinal u WHERE u.unidade = :unidade order by u.nome")
+})
 public class UsuarioFinal implements Serializable, Comparable {
 
     private static final long serialVersionUID = 1L;

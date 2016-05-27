@@ -5,12 +5,16 @@ import br.jus.trt12.paulopinheiro.sati.equipamentos.ejb.LoteFacade;
 import br.jus.trt12.paulopinheiro.sati.equipamentos.model.Equipamento;
 import br.jus.trt12.paulopinheiro.sati.equipamentos.model.Historico;
 import br.jus.trt12.paulopinheiro.sati.equipamentos.model.Lote;
+import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.UnidadeFacade;
+import br.jus.trt12.paulopinheiro.sati.geral.ejb.UsuarioFinalFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.jsf.GeralMB;
 import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbBasicoMB;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Unidade;
+import br.jus.trt12.paulopinheiro.sati.geral.model.UsuarioFinal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
@@ -24,10 +28,12 @@ public class EquipamentoMB extends AbBasicoMB<Equipamento> implements Serializab
     @EJB private EquipamentoFacade equipamentoFacade;
     @EJB private UnidadeFacade unidadeFacade;
     @EJB private LoteFacade loteFacade;
+    @EJB private UsuarioFinalFacade usuarioFacade;
     @Inject private GeralMB geralMB;
 
     private List<Unidade> listaUnidades;
     private List<Lote> listaLotes;
+    private List<UsuarioFinal> listaUsuarios;
 
     private Historico historico;
 
@@ -80,6 +86,29 @@ public class EquipamentoMB extends AbBasicoMB<Equipamento> implements Serializab
 
     public void setListaLotes(List<Lote> listaLotes) {
         this.listaLotes = listaLotes;
+    }
+
+    public List<UsuarioFinal> getListaUsuarios() {
+        if (listaUsuarios==null) {
+            if (getEquipamento().getUnidade()==null)
+                setListaUsuarios(new ArrayList<UsuarioFinal>());
+            else {
+                try {
+                    setListaUsuarios(usuarioFacade.findByUnidade(getEquipamento().getUnidade()));
+                } catch (SatiLogicalException ex) {
+                    mensagemErro(ex.getMessage());
+                }
+            }
+        }
+        return listaUsuarios;
+    }
+
+    public void atualizalistaUsuarios() {
+        setListaUsuarios(null);
+    }
+
+    public void setListaUsuarios(List<UsuarioFinal> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
     }
 
     @Override

@@ -36,8 +36,10 @@ public class EquipamentoFacade extends AbstractFacade<Equipamento> {
     public void salvar(Equipamento equipamento) throws SatiLogicalException {
         if (equipamento==null) equipamento = new Equipamento();
         if ((equipamento.getTombo()==null)||(equipamento.getTombo().trim().isEmpty())) throw new SatiLogicalException("Informe o tombo do equipamento (deve ser único no cadastro).");
-        if ((equipamento.getUsuario()==null)||(equipamento.getUsuario().trim().isEmpty())) throw new SatiLogicalException("Informe o principal usuário do equipamento.");
         if ((equipamento.getLote()==null)) throw new SatiLogicalException("Informe o lote no qual este equipamento foi adquirido.");
+        if ((equipamento.getUsuarioEquipamento()!=null)&&(equipamento.getUsuarioEquipamento().getUnidade()!=null)&&(!equipamento.getUsuarioEquipamento().getUnidade().equals(equipamento.getUnidade()))) {
+            throw new SatiLogicalException("O usuário deve pertencer à unidade informada");
+        }
         if (equipamento.getCodigo()==null) {
             equipamento.setAtivo(true);
             this.create(equipamento);
@@ -123,21 +125,17 @@ public class EquipamentoFacade extends AbstractFacade<Equipamento> {
         cq.select(root);
 
         Predicate tombo = getCb().conjunction();
-        Predicate usuario = getCb().conjunction();
         Predicate lote = getCb().conjunction();
         Predicate unidade = getCb().conjunction();
         Predicate ativo;
         Predicate observacao = getCb().conjunction();
         Predicate localizacao = getCb().conjunction();
         Predicate nroSerie = getCb().conjunction();
+        Predicate usuarioEquipamento = getCb().conjunction();
 
         if ((filtro.getTombo()!=null)&&(!filtro.getTombo().isEmpty())) {
             Expression<String> a_tombo = root.get("tombo");
             tombo = getCb().like(getCb().upper(a_tombo), filtro.getTombo().toUpperCase());
-        }
-        if ((filtro.getUsuario()!=null)&&(!filtro.getUsuario().isEmpty())) {
-            Expression<String> a_usuario = root.get("usuario");
-            usuario = getCb().like(getCb().upper(a_usuario), filtro.getUsuario().toUpperCase());
         }
         if (filtro.getLote()!=null) lote = getCb().equal(root.get("lote"), filtro.getLote());
         if (filtro.getUnidade()!=null) unidade = getCb().equal(root.get("unidade"), filtro.getUnidade());
@@ -154,8 +152,9 @@ public class EquipamentoFacade extends AbstractFacade<Equipamento> {
             Expression<String> a_nroSerie = root.get("nroSerie");
             nroSerie = getCb().like(getCb().upper(a_nroSerie), filtro.getNroSerie().toUpperCase());
         }
+        if (filtro.getUsuarioEquipamento()!=null) usuarioEquipamento = getCb().equal(root.get("usuarioEquipamento"), filtro.getUsuarioEquipamento());
 
-        cq.where(tombo,usuario,lote,unidade,ativo,observacao,localizacao,nroSerie);
+        cq.where(tombo,lote,unidade,ativo,observacao,localizacao,nroSerie,usuarioEquipamento);
 
         return cq;
     }
@@ -187,7 +186,7 @@ public class EquipamentoFacade extends AbstractFacade<Equipamento> {
         if (tiposIncompativeisEquipamento(equipTransfere,equipRecebe)) throw new SatiLogicalException("Equipamentos devem ser do mesmo tipo");
 
         equipRecebe.setUnidade(equipTransfere.getUnidade());
-        equipRecebe.setUsuario(equipTransfere.getUsuario());
+        equipRecebe.setUsuarioEquipamento(equipTransfere.getUsuarioEquipamento());
     }
 
     //Dois equipamentos são incompatíveis para troca se e somente seus tipos não forem nulos e não forem iguais

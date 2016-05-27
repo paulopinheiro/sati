@@ -49,7 +49,8 @@
                         <h:outputText id="campoUnidade" value="#{equipamento.unidade.sigla}" />
                     </p:column>
                     <p:column style="white-space: normal" id="colunaUsuario"><f:facet name="header"><h:outputText id="textoUsuario" value="Usuário" /></f:facet>
-                        <h:outputText id="campoUsuario" value="#{equipamento.usuario}" />
+                        <h:outputText id="campoUsuario" value="#{equipamento.observacao}" rendered="#{empty equipamento.usuarioEquipamento}" />
+                        <h:outputText id="campoUsuarioEquipamento" value="#{equipamento.usuarioEquipamento.nome}" rendered="#{!empty equipamento.usuarioEquipamento}" />
                     </p:column>
                     <p:column style="white-space: normal" id="colunaModelo"><f:facet name="header"><h:outputText id="textoModelo" value="Marca/modelo" /></f:facet>
                         <h:outputText id="campoModelo" value=" #{equipamento.lote.modelo.tipoEquipamento} #{equipamento.lote.modelo}" />

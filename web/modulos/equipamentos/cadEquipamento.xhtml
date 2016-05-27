@@ -23,16 +23,20 @@
                     </p:selectOneMenu>
                     <p:outputLabel id="labelTombo" for="tombo" value="Tombo" />
                     <p:inputText id="tombo" value="#{equipamentoMB.equipamento.tombo}" size="10" maxlength="6" />
-                    <p:outputLabel id="labelUsuario" for="usuario" value="Usuário" />
-                    <p:inputText id="usuario" value="#{equipamentoMB.equipamento.usuario}" size="80" maxlength="100" />
                     <h:outputLabel id="labelLocalizacao" for="localizacao" value="Localização" />
                     <p:inputTextarea id="localizacao" cols="60" rows="5" value="#{equipamentoMB.equipamento.localizacao}" maxlength="255"  />
                     <p:outputLabel id="labelObservacao" for="observacao" value="Observação" />
                     <p:inputTextarea id="observacao" cols="60" rows="5" value="#{equipamentoMB.equipamento.observacao}" maxlength="255" />
                     <p:outputLabel id="labelUnidade" for="unidade" value="Unidade" />
                     <p:selectOneMenu id="unidade" value="#{equipamentoMB.equipamento.unidade}" converter="converteUnidade">
+                        <p:ajax event="change" process="@this" update="usuarioEquipamento" listener="#{equipamentoMB.atualizalistaUsuarios}" />
                         <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione a unidade ---" />
                         <f:selectItems id="sgiUnidade" value="#{equipamentoMB.listaUnidades}" var="unidade" itemValue="#{unidade}" itemLabel="#{unidade}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel id="labelUsuarioEquipamento" for="usuarioEquipamento" value="Usuário" />
+                    <p:selectOneMenu id="usuarioEquipamento" value="#{equipamentoMB.equipamento.usuarioEquipamento}" converter="converteUsuarioFinal">
+                        <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o usuário ---" />
+                        <f:selectItems id="sgiUsuario" value="#{equipamentoMB.listaUsuarios}" var="usuario" itemValue="#{usuario}" itemLabel="#{usuario.nome}" />
                     </p:selectOneMenu>
                     <p:outputLabel id="labelNroSerie" for="nroSerie" value="Série" />
                     <p:inputText id="nroSerie" value="#{equipamentoMB.equipamento.nroSerie}" size="65" maxlength="50" />
