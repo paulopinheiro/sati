@@ -103,6 +103,7 @@ public class Modelo implements Serializable, Comparable {
 
     @Override
     public String toString() {
+        if (this.getTipoEquipamento()!=null) return this.getTipoEquipamento() + " " + this.getNome();
         return this.nome;
     }
 

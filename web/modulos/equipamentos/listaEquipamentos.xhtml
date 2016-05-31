@@ -5,63 +5,61 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:viewParam id="tipoEquipamentoCod" name="tipoEquipamentoCod" value="#{listaEquipamentosMB.tipoEquipamento}" converter="#{tipoEquipamentoConverterMB}" required="false" />
+    </f:metadata>
     <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
-        <ui:define name="titulo">Lista de Equipamentos Cadastrados - #{listaEquipamentosMB.municipioSessao}</ui:define>
-        <ui:define name="top">Lista de Equipamentos Cadastrados - #{listaEquipamentosMB.municipioSessao}</ui:define>
+        <ui:define name="titulo">Lista de Equipamentos Cadastrados (#{listaEquipamentosMB.tipoEquipamento}) - #{listaEquipamentosMB.municipioSessao}</ui:define>
+        <ui:define name="top">Lista de Equipamentos Cadastrados (#{listaEquipamentosMB.tipoEquipamento}) - #{listaEquipamentosMB.municipioSessao}</ui:define>
 
         <ui:define name="content">
             <h:form id="formFiltraEquipamento">
-                <h:panelGrid id="gridFiltros" columns="4">
+                <p:panelGrid id="gridFiltros" columns="4">
                     <f:facet name="header"><h:outputText value="Filtrar Equipamentos" /></f:facet>
-                    <h:outputLabel for="filtroTipoEquipamento" id="labelTipoEquipamento" value="Tipo" />
-                    <h:selectOneMenu id="filtroTipoEquipamento" label="labelTipoEquipamento" value="#{listaEquipamentosMB.filtroTipoEquipamento}" converter="converteTipoEquipamento" >
-                        <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Todos os tipos --" />
-                        <f:selectItems value="#{listaEquipamentosMB.listaTiposEquipamento}" var="tipoEquipamento" itemValue="#{tipoEquipamento}" itemLabel="#{tipoEquipamento}" />
-                        <f:ajax event="change" listener="#{listaEquipamentosMB.alteracaoTipoEquipamento}" execute="@this" render=":formFiltraEquipamento:filtroModelo :formFiltraEquipamento:filtroLote :msgerro" />
-                    </h:selectOneMenu>
-                    <h:outputText id="placeHolder1" value="" />
-                    <h:outputText id="placeHolder2" value="" />
-                    <h:outputLabel id="labelModelo" for="filtroModelo" value="Modelo" />
-                    <h:selectOneMenu id="filtroModelo" label="Modelo" value="#{listaEquipamentosMB.filtroModelo}" converter="converteModelo" >
+                    <p:outputLabel id="labelModelo" for="filtroModelo" value="Modelo" />
+                    <p:selectOneMenu id="filtroModelo" label="Modelo" value="#{listaEquipamentosMB.filtroModelo}" converter="converteModelo" >
                         <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Todos os modelos --" />
-                        <f:selectItems value="#{listaEquipamentosMB.listaModelos}" var="modelo" itemValue="#{modelo}" itemLabel="#{modelo}" />
+                        <f:selectItems value="#{listaEquipamentosMB.listaModelos}" var="modelo" itemValue="#{modelo}" itemLabel="#{modelo.nome}" />
                         <f:ajax event="change" listener="#{listaEquipamentosMB.alteracaoModelo}" execute="@this" render="formFiltraEquipamento:filtroLote" />
-                    </h:selectOneMenu>
-                    <h:outputLabel id="labelFiltroLote" for="filtroLote" value="Lote" />
-                    <h:selectOneMenu id="filtroLote" label="Lotes" value="#{listaEquipamentosMB.filtroLote}" converter="converteLote" >
+                    </p:selectOneMenu>
+                    <p:outputLabel id="labelFiltroLote" for="filtroLote" value="Lote" />
+                    <p:selectOneMenu id="filtroLote" label="Lotes" value="#{listaEquipamentosMB.filtroLote}" converter="converteLote" >
                         <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Todos os lotes --" />
                         <f:selectItems value="#{listaEquipamentosMB.listaLotes}" var="lote" itemValue="#{lote}" itemLabel="#{lote.nome}" />
-                    </h:selectOneMenu>
-                </h:panelGrid>
-                <h:panelGrid id="gridFiltros2" columns="3">
-                    <h:outputLabel id="labelTombo" for="filtroTombo" value="Tombo" />
-                    <h:inputText id="filtroTombo" value="#{listaEquipamentosMB.filtroTombo}" size="10" maxlength="6" />
-                    <h:commandButton value="Filtrar" actionListener="#{listaEquipamentosMB.filtrar}">
-                        <f:ajax execute="@form" render=":tabEquipamentos :msgerro" />
-                    </h:commandButton>
-                </h:panelGrid>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <p:panelGrid id="gridFiltros2" columns="3">
+                    <p:outputLabel id="labelTombo" for="filtroTombo" value="Tombo" />
+                    <p:inputText id="filtroTombo" value="#{listaEquipamentosMB.filtroTombo}" size="10" maxlength="6" />
+                    <p:commandButton value="Filtrar" process="@form" update=":tabEquipamentos :msgerro :gmensagem" actionListener="#{listaEquipamentosMB.filtrar}" icon="ui-icon-search" />
+                </p:panelGrid>
                 <br />
                 <h:panelGrid id="outrasFuncoes" columns="1" border="1">
-                    <h:commandLink id="linkNovaEquipamento" value="Novo Equipamento" action="cadEquipamento.xhtml" />
+                    <p:button id="novoEquipamento" value="Novo Equipamento" outcome="/modulos/equipamentos/cadEquipamento.xhtml" icon="ui-icon-newwin">
+                        <f:param name="tipoEquipamentoCod" value="#{listaEquipamentosMB.tipoEquipamento.codigo}" />
+                    </p:button>
                 </h:panelGrid>
             </h:form>
+            <p:growl id="gmensagem" globalOnly="true" />
             <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
             <h:form id="tabEquipamentos">
                 <p:dataTable id="tabelaEquipamentos" var="equipamento" value="#{listaEquipamentosMB.listaEquipamentos}" paginator="true" rows="10" paginatorPosition="bottom">
                     <f:facet name="header"><h:outputText value="Equipamentos cadastrados" /></f:facet>
                     <p:column id="colunaNome"><f:facet name="header"><h:outputText id="textoNome" value="Tombo" /></f:facet>
-                        <h:link id="linkTombo" outcome="cadEquipamento" value="#{equipamento.tombo}">
+                        <p:link id="linkTombo" outcome="/modulos/equipamentos/cadEquipamento.xhtml" value="#{equipamento.tombo}">
                             <f:param name="equipamentoCod" value="#{equipamento.codigo}" />
-                        </h:link>
+                            <f:param name="tipoEquipamentoCod" value="#{listaEquipamentosMB.tipoEquipamento.codigo}" />
+                        </p:link>
                     </p:column>
                     <p:column style="white-space: normal" id="colunaUnidade"><f:facet name="header"><h:outputText id="textoUnidade" value="Unidade" /></f:facet>
                         <h:outputText id="campoUnidade" value="#{equipamento.unidade.sigla}" />
                     </p:column>
                     <p:column style="white-space: normal" id="colunaUsuario"><f:facet name="header"><h:outputText id="textoUsuario" value="Usuário" /></f:facet>
-                        <h:outputText id="campoUsuario" value="#{equipamento.usuarioEquipamento}" />
+                        <h:outputText id="campoUsuario" value="#{equipamento.observacao}" rendered="#{empty equipamento.usuarioEquipamento}" />
+                        <h:outputText id="campoUsuarioEquipamento" value="#{equipamento.usuarioEquipamento.nome}" rendered="#{!empty equipamento.usuarioEquipamento}" />
                     </p:column>
                     <p:column style="white-space: normal" id="colunaModelo"><f:facet name="header"><h:outputText id="textoModelo" value="Marca/modelo" /></f:facet>
-                        <h:outputText id="campoModelo" value=" #{equipamento.lote.modelo.tipoEquipamento} #{equipamento.lote.modelo}" />
+                        <h:outputText id="campoModelo" value=" #{equipamento.lote.modelo.tipoEquipamento} #{equipamento.lote.modelo.nome}" />
                     </p:column>                    
                     <p:column id="colunaGarantia"><f:facet name="header"><h:outputText id="textoGarantia" value="Garantia até" /></f:facet>
                         <h:outputText id="campoGarantia" value="#{equipamento.lote.dataFimGarantia}">

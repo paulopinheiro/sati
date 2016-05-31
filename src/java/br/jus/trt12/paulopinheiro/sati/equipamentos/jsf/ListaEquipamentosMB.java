@@ -30,9 +30,9 @@ public class ListaEquipamentosMB implements Serializable {
     @EJB private TipoEquipamentoFacade tipoEquipamentoFacade;
     @Inject private GeralMB geralMB;
 
+    private TipoEquipamento tipoEquipamento;
     private List<Equipamento> listaEquipamentos;
 
-    private TipoEquipamento filtroTipoEquipamento;
     private Modelo filtroModelo;
     private Lote filtroLote;
 
@@ -47,7 +47,7 @@ public class ListaEquipamentosMB implements Serializable {
 
         public void filtrar(ActionEvent evt) {
         try {
-            this.listaEquipamentos = this.equipamentoFacade.findAtivosFiltro(filtroTipoEquipamento, filtroModelo, filtroLote, filtroTombo, this.getMunicipioSessao());
+            this.listaEquipamentos = this.equipamentoFacade.findAtivosFiltro(tipoEquipamento, filtroModelo, filtroLote, filtroTombo, this.getMunicipioSessao());
         } catch (Exception ex) {
             mensagemErro(ex.getMessage());
         }
@@ -59,7 +59,7 @@ public class ListaEquipamentosMB implements Serializable {
     }
 
     public List<Equipamento> getListaEquipamentos() {
-        if (this.listaEquipamentos==null) this.listaEquipamentos = this.equipamentoFacade.findAtivosByMunicipio(this.getMunicipioSessao());
+        if (this.listaEquipamentos==null) this.listaEquipamentos = this.equipamentoFacade.findAtivosByMunicipioTipoEquipamento(this.getMunicipioSessao(),this.getTipoEquipamento());
         return listaEquipamentos;
     }
 
@@ -85,7 +85,7 @@ public class ListaEquipamentosMB implements Serializable {
     }
 
     public List<Modelo> getListaModelos() {
-        if (this.listaModelos==null) this.listaModelos = this.modeloFacade.findByTipoEquipamento(this.getFiltroTipoEquipamento());
+        if (this.listaModelos==null) this.listaModelos = this.modeloFacade.findByTipoEquipamento(this.getTipoEquipamento());
         return listaModelos;
     }
 
@@ -100,14 +100,6 @@ public class ListaEquipamentosMB implements Serializable {
 
     public void setListaLotes(List<Lote> listaLotes) {
         this.listaLotes = listaLotes;
-    }
-
-    public TipoEquipamento getFiltroTipoEquipamento() {
-        return filtroTipoEquipamento;
-    }
-
-    public void setFiltroTipoEquipamento(TipoEquipamento filtroTipoEquipamento) {
-        this.filtroTipoEquipamento = filtroTipoEquipamento;
     }
 
     public Modelo getFiltroModelo() {
@@ -147,17 +139,19 @@ public class ListaEquipamentosMB implements Serializable {
         ContextoJSF.getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,mensagem,null));
     }
 
-    /**
-     * @return the geralMB
-     */
     public GeralMB getGeralMB() {
         return geralMB;
     }
 
-    /**
-     * @param geralMB the geralMB to set
-     */
     public void setGeralMB(GeralMB geralMB) {
         this.geralMB = geralMB;
+    }
+
+    public TipoEquipamento getTipoEquipamento() {
+        return tipoEquipamento;
+    }
+
+    public void setTipoEquipamento(TipoEquipamento tipoEquipamento) {
+        this.tipoEquipamento = tipoEquipamento;
     }
 }

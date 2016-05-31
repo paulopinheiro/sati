@@ -5,6 +5,7 @@ import br.jus.trt12.paulopinheiro.sati.equipamentos.ejb.LoteFacade;
 import br.jus.trt12.paulopinheiro.sati.equipamentos.model.Equipamento;
 import br.jus.trt12.paulopinheiro.sati.equipamentos.model.Historico;
 import br.jus.trt12.paulopinheiro.sati.equipamentos.model.Lote;
+import br.jus.trt12.paulopinheiro.sati.equipamentos.model.TipoEquipamento;
 import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.UnidadeFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.UsuarioFinalFacade;
@@ -36,6 +37,8 @@ public class EquipamentoMB extends AbBasicoMB<Equipamento> implements Serializab
     private List<UsuarioFinal> listaUsuarios;
 
     private String linkVoltar;
+    private TipoEquipamento tipoEquipamento;
+
     private Historico historico;
 
     public EquipamentoMB() {}
@@ -127,16 +130,10 @@ public class EquipamentoMB extends AbBasicoMB<Equipamento> implements Serializab
         return new Equipamento();
     }
 
-    /**
-     * @return the geralMB
-     */
     public GeralMB getGeralMB() {
         return geralMB;
     }
 
-    /**
-     * @param geralMB the geralMB to set
-     */
     public void setGeralMB(GeralMB geralMB) {
         this.geralMB = geralMB;
     }
@@ -147,6 +144,14 @@ public class EquipamentoMB extends AbBasicoMB<Equipamento> implements Serializab
 
     public void setLinkVoltar(String linkVoltar) {
         this.linkVoltar = linkVoltar;
+    }
+
+    public TipoEquipamento getTipoEquipamento() {
+        return tipoEquipamento;
+    }
+
+    public void setTipoEquipamento(TipoEquipamento tipoEquipamento) {
+        this.tipoEquipamento = tipoEquipamento;
     }
 
 }

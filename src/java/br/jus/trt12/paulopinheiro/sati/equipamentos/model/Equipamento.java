@@ -178,7 +178,8 @@ public class Equipamento implements Serializable, Comparable {
     @Override
     public String toString() {
         if (!this.ativo) return "Baixado: " + this.tombo + " (" + this.getUsuarioEquipamento() + ")";
-        return this.tombo + " (" + this.getUsuarioEquipamento() + ")";
+        if (this.usuarioEquipamento != null) return this.getLote().getModelo() + " tombo " + this.getTombo() + " (" + this.getUsuarioEquipamento().getNome() + ")";
+        return this.getLote().getModelo() + " tombo " + this.getTombo();
     }
 
     @Override
