@@ -32,7 +32,9 @@
                 </p:panelGrid>
                 <br />
                 <p:panelGrid id="outrasFuncoes" columns="1">
-                    <p:button id="linkNovaEquipamento" value="Novo Microcomputador" outcome="cadEquipamento" icon="ui-icon-newwin" />
+                    <p:button id="linkNovaEquipamento" value="Novo Microcomputador" outcome="cadEquipamento" icon="ui-icon-newwin">
+                        <f:param name="linkVoltar" value="/modulos/equipamentos/listaMicrocomputadores" />
+                    </p:button>
                 </p:panelGrid>
             </h:form>
             <p:growl id="gmensagem" globalOnly="true" />
@@ -43,6 +45,7 @@
                     <p:column id="colunaNome"><f:facet name="header"><h:outputText id="textoNome" value="Tombo" /></f:facet>
                         <p:link id="linkTombo" outcome="cadEquipamento" value="#{equipamento.tombo}">
                             <f:param name="equipamentoCod" value="#{equipamento.codigo}" />
+                            <f:param name="linkVoltar" value="/modulos/equipamentos/listaMicrocomputadores" />
                         </p:link>
                     </p:column>
                     <p:column style="white-space: normal" id="colunaUnidade"><f:facet name="header"><h:outputText id="textoUnidade" value="Unidade" /></f:facet>

@@ -8,6 +8,7 @@
     <f:metadata>
         <f:viewParam id="equipamentoCod" name="equipamentoCod" value="#{historicoMB.equipamento}" converter="#{equipamentoConverterMB}" required="false" />
         <f:viewParam id="historicoCod" name="historicoCod" value="#{historicoMB.historico}" converter="#{historicoConverterMB}" required="false" />
+        <f:viewParam id="linkVoltarEquipamento" name="linkVoltarEquipamento" value="#{historicoMB.linkVoltarEquipamento}" />
     </f:metadata>
 
     <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
@@ -33,6 +34,7 @@
                     <p:commandButton value="Excluir" process="@form" update="@form :msgerro :gmensagem" disabled="#{historicoMB.novoElemento}" actionListener="#{historicoMB.excluir}" icon="ui-icon-trash" />
                     <p:button value="Voltar" outcome="cadEquipamento.xhtml" icon="ui-icon-arrowreturn-1-w">
                         <f:param name="equipamentoCod" value="#{historicoMB.equipamento.codigo}" />
+                        <f:param name="linkVoltar" value="#{historicoMB.linkVoltarEquipamento}" />
                     </p:button>
                 </p:panelGrid>
             </h:form>

@@ -23,7 +23,7 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-public class ListaMicrocomputadoresMB implements Serializable {
+public class ListaImpressorasMB implements Serializable {
     @EJB private EquipamentoFacade equipamentoFacade;
     @EJB private TipoEquipamentoFacade tipoEquipamentoFacade;
     @EJB private LoteFacade loteFacade;
@@ -31,37 +31,36 @@ public class ListaMicrocomputadoresMB implements Serializable {
     @Inject private GeralMB geralMB;
     private TipoEquipamento tipoEquipamento;
 
-    private List<Equipamento> listaMicrocomputadores;
+    private List<Equipamento> listaImpressoras;
     private Modelo filtroModelo;
     private Lote filtroLote;
     private String filtroTombo;
     
     private List<Modelo> listaModelos;
     private List<Lote> listaLotes;
-    
 
-    public ListaMicrocomputadoresMB() {}
+    public ListaImpressorasMB() {}
 
     public void filtrar(ActionEvent evt) {
         try {
-            this.listaMicrocomputadores = this.equipamentoFacade.findAtivosFiltro(this.getTipoEquipamento(),this.getFiltroModelo(),this.getFiltroLote(),this.getFiltroTombo(),this.getMunicipioSessao());
+            this.listaImpressoras = this.equipamentoFacade.findAtivosFiltro(this.getTipoEquipamento(),this.getFiltroModelo(),this.getFiltroLote(),this.getFiltroTombo(),this.getMunicipioSessao());
         } catch (Exception ex) {
             mensagemErro(ex.getMessage());
         }
     }
 
     public int getQuantLista() {
-        if (getListaMicrocomputadores() == null) return 0;
-        return getListaMicrocomputadores().size();
+        if (getListaImpressoras() == null) return 0;
+        return getListaImpressoras().size();
     }
 
-    public List<Equipamento> getListaMicrocomputadores() {
-        if (this.listaMicrocomputadores==null) this.listaMicrocomputadores = equipamentoFacade.findAtivosByMunicipioTipoEquipamento(this.getMunicipioSessao(), this.getTipoEquipamento());
-        return listaMicrocomputadores;
+    public List<Equipamento> getListaImpressoras() {
+        if (this.listaImpressoras==null) this.listaImpressoras = equipamentoFacade.findAtivosByMunicipioTipoEquipamento(this.getMunicipioSessao(), this.getTipoEquipamento());
+        return listaImpressoras;
     }
 
-    public void setListaMicrocomputadores(List<Equipamento> listaMicrocomputadores) {
-        this.listaMicrocomputadores = listaMicrocomputadores;
+    public void setListaImpressoras(List<Equipamento> listaImpressoras) {
+        this.listaImpressoras = listaImpressoras;
     }
 
     public Modelo getFiltroModelo() {
@@ -121,20 +120,14 @@ public class ListaMicrocomputadoresMB implements Serializable {
     }
 
     public TipoEquipamento getTipoEquipamento() {
-        if (this.tipoEquipamento == null) this.tipoEquipamento = tipoEquipamentoFacade.find(1);
+        if (this.tipoEquipamento == null) this.tipoEquipamento = tipoEquipamentoFacade.find(2);
         return tipoEquipamento;
     }
 
-    /**
-     * @return the geralMB
-     */
     public GeralMB getGeralMB() {
         return geralMB;
     }
 
-    /**
-     * @param geralMB the geralMB to set
-     */
     public void setGeralMB(GeralMB geralMB) {
         this.geralMB = geralMB;
     }

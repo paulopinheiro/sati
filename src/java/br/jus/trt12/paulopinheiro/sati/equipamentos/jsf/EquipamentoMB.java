@@ -35,6 +35,7 @@ public class EquipamentoMB extends AbBasicoMB<Equipamento> implements Serializab
     private List<Lote> listaLotes;
     private List<UsuarioFinal> listaUsuarios;
 
+    private String linkVoltar;
     private Historico historico;
 
     public EquipamentoMB() {}
@@ -138,6 +139,14 @@ public class EquipamentoMB extends AbBasicoMB<Equipamento> implements Serializab
      */
     public void setGeralMB(GeralMB geralMB) {
         this.geralMB = geralMB;
+    }
+
+    public String getLinkVoltar() {
+        return linkVoltar;
+    }
+
+    public void setLinkVoltar(String linkVoltar) {
+        this.linkVoltar = linkVoltar;
     }
 
 }

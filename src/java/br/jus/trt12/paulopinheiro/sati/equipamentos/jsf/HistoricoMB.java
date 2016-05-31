@@ -16,6 +16,7 @@ public class HistoricoMB extends AbBasicoMB<Historico> implements Serializable {
     @EJB private HistoricoFacade historicoFacade;
 
     private Equipamento equipamento;
+    private String linkVoltarEquipamento;
 
     public HistoricoMB() {}
 
@@ -49,4 +50,13 @@ public class HistoricoMB extends AbBasicoMB<Historico> implements Serializable {
     public void setEquipamento(Equipamento equipamento) {
         this.equipamento = equipamento;
     }
+
+    public String getLinkVoltarEquipamento() {
+        return linkVoltarEquipamento;
+    }
+
+    public void setLinkVoltarEquipamento(String linkVoltarEquipamento) {
+        this.linkVoltarEquipamento = linkVoltarEquipamento;
+    }
+
 }
