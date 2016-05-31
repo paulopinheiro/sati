@@ -17,6 +17,12 @@
         <ui:define name="content">
             <h:form id="formEquipamento">
                 <p:panelGrid id="gridEquipamento" columns="2">
+                    <p:outputLabel id="labelModelo" for="filtroModelo" value="Modelo" />
+                    <p:selectOneMenu id="filtroModelo" value="#{equipamentoMB.filtroModelo}" converter="converteModelo" >
+                        <p:ajax event="change" listener="#{equipamentoMB.atualizaListaLotes}" process="@this" update="lote" />
+                        <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Selecione o modelo --" />
+                        <f:selectItems value="#{equipamentoMB.listaModelos}" var="modelo" itemValue="#{modelo}" itemLabel="#{modelo.nome}" />
+                    </p:selectOneMenu>
                     <p:outputLabel id="labelLote" for="lote" value="Lote" />
                     <p:selectOneMenu id="lote" value="#{equipamentoMB.equipamento.lote}" converter="converteLote">
                         <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o lote ---" />

@@ -2,9 +2,11 @@ package br.jus.trt12.paulopinheiro.sati.equipamentos.jsf;
 
 import br.jus.trt12.paulopinheiro.sati.equipamentos.ejb.EquipamentoFacade;
 import br.jus.trt12.paulopinheiro.sati.equipamentos.ejb.LoteFacade;
+import br.jus.trt12.paulopinheiro.sati.equipamentos.ejb.ModeloFacade;
 import br.jus.trt12.paulopinheiro.sati.equipamentos.model.Equipamento;
 import br.jus.trt12.paulopinheiro.sati.equipamentos.model.Historico;
 import br.jus.trt12.paulopinheiro.sati.equipamentos.model.Lote;
+import br.jus.trt12.paulopinheiro.sati.equipamentos.model.Modelo;
 import br.jus.trt12.paulopinheiro.sati.equipamentos.model.TipoEquipamento;
 import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.UnidadeFacade;
@@ -18,8 +20,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -29,15 +32,18 @@ public class EquipamentoMB extends AbBasicoMB<Equipamento> implements Serializab
     @EJB private EquipamentoFacade equipamentoFacade;
     @EJB private UnidadeFacade unidadeFacade;
     @EJB private LoteFacade loteFacade;
+    @EJB private ModeloFacade modeloFacade;
     @EJB private UsuarioFinalFacade usuarioFacade;
     @Inject private GeralMB geralMB;
 
     private List<Unidade> listaUnidades;
+    private List<Modelo> listaModelos;
     private List<Lote> listaLotes;
     private List<UsuarioFinal> listaUsuarios;
 
     private String linkVoltar;
     private TipoEquipamento tipoEquipamento;
+    private Modelo filtroModelo;
 
     private Historico historico;
 
@@ -84,7 +90,9 @@ public class EquipamentoMB extends AbBasicoMB<Equipamento> implements Serializab
     }
 
     public List<Lote> getListaLotes() {
-        if (this.listaLotes==null) this.listaLotes = this.loteFacade.findAll();
+        if (this.listaLotes==null) {
+            this.listaLotes = this.loteFacade.findByModelo(getFiltroModelo());
+        }
         return listaLotes;
     }
 
@@ -154,4 +162,25 @@ public class EquipamentoMB extends AbBasicoMB<Equipamento> implements Serializab
         this.tipoEquipamento = tipoEquipamento;
     }
 
+    public Modelo getFiltroModelo() {
+        if ((!this.isNovoElemento())&&filtroModelo==null) filtroModelo=getElemento().getLote().getModelo();
+        return filtroModelo;
+    }
+
+    public void setFiltroModelo(Modelo filtroModelo) {
+        this.filtroModelo = filtroModelo;
+    }
+
+    public List<Modelo> getListaModelos() {
+        if (listaModelos==null) return modeloFacade.findByTipoEquipamento(getTipoEquipamento());
+        return listaModelos;
+    }
+
+    public void setListaModelos(List<Modelo> listaModelos) {
+        this.listaModelos = listaModelos;
+    }
+
+    public void atualizaListaLotes(AjaxBehaviorEvent evt) {
+        this.setListaLotes(null);
+    }
 }
