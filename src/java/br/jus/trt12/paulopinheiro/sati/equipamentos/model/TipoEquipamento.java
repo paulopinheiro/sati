@@ -79,9 +79,10 @@ public class TipoEquipamento implements Serializable, Comparable {
 
     @Override
     public int compareTo(Object o) {
+        if (o==null) return 0;
         TipoEquipamento outro = (TipoEquipamento) o;
+        if ((this.getNome()==null)||(outro.getNome()==null)) return 0;
         Collator col = Collator.getInstance(Locale.getDefault());
         return col.compare(this.getNome().toUpperCase(), outro.getNome().toUpperCase());
     }
-    
 }

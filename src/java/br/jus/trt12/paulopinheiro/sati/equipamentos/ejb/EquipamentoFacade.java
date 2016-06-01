@@ -58,6 +58,13 @@ public class EquipamentoFacade extends AbstractFacade<Equipamento> {
         this.edit(equipamento);
     }
 
+    public void reativar(Equipamento equipamento) throws SatiLogicalException {
+        if ((equipamento==null)||(equipamento.getCodigo()==null)) throw new SatiLogicalException("Não é possível reativar um equipamento ainda não cadastrado");
+        if (equipamento.isAtivo()) throw new SatiLogicalException("Equipamento não está baixado");
+        equipamento.setAtivo(true);
+        this.edit(equipamento);
+    }
+
     public List<Equipamento> findAtivos() {
         List<Equipamento> resposta;
         Query query = getEntityManager().createNamedQuery("Equipamento.findAtivos");
@@ -115,6 +122,25 @@ public class EquipamentoFacade extends AbstractFacade<Equipamento> {
 
         if (resposta!=null) Collections.sort(resposta);
 
+        return resposta;
+    }
+
+    public List<Equipamento> findBaixadosByTipo(TipoEquipamento tipo) {
+        List<Equipamento> resposta;
+        Query query = getEntityManager().createNamedQuery("Equipamento.findBaixadosByTipo");
+        query.setParameter("tipoEquipamento", tipo);
+        resposta = query.getResultList();
+        if (resposta!=null) Collections.sort(resposta);
+        System.out.println(resposta.size() + " equipamentos baixados encontrados");
+        return resposta;
+    }
+
+    public Equipamento findBaixadoByTombo(String tombo) throws SatiLogicalException {
+        Equipamento resposta;
+        Query query = getEntityManager().createNamedQuery("Equipamento.findBaixadoByTombo");
+        query.setParameter("tombo", tombo);
+        resposta = (Equipamento) query.getSingleResult();
+        if (resposta==null) throw new SatiLogicalException("Não encontrado equipamento baixado de tombo " + tombo);
         return resposta;
     }
 

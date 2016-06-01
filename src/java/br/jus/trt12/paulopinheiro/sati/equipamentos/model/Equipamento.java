@@ -27,8 +27,8 @@ import javax.persistence.Table;
     @NamedQuery(name="Equipamento.findAtivosByUnidade", query="Select e From Equipamento e where e.unidade=:unidade And e.ativo=TRUE order by e.tombo"),
     @NamedQuery(name="Equipamento.findAtivosByMunicipio", query="Select e From Equipamento e where e.unidade.municipio=:municipio And e.ativo=TRUE order by e.tombo"),
     @NamedQuery(name="Equipamento.findAtivosByMunicipioTipoEquipamento", query="Select e From Equipamento e where e.unidade.municipio=:municipio And e.lote.modelo.tipoEquipamento = :tipoEquipamento And e.ativo=TRUE order by e.tombo"),
-    @NamedQuery(name="Equipamento.findBaixados", query="Select e From Equipamento e where e.ativo=FALSE order by e.tombo"),
-
+    @NamedQuery(name="Equipamento.findBaixadosByTipo", query="Select e From Equipamento e where e.ativo=FALSE and e.lote.modelo.tipoEquipamento=:tipoEquipamento order by e.tombo"),
+    @NamedQuery(name="Equipamento.findBaixadoByTombo", query="Select e From Equipamento e where e.ativo=FALSE and e.tombo=:tombo"),
     @NamedQuery(name="Equipamento.findAtivosByTombo", query="SELECT e FROM Equipamento e WHERE UPPER(e.tombo) LIKE :tombo_maiusculo AND e.ativo=true"),
     @NamedQuery(name="Equipamento.findAtivosByTipoEquipamentoTombo", query="SELECT e FROM Equipamento e WHERE UPPER(e.tombo) LIKE :tombo_maiusculo AND e.lote.modelo.tipoEquipamento = :tipoEquipamento AND e.ativo=true"),
     @NamedQuery(name="Equipamento.findAtivosByModeloTombo", query="SELECT e FROM Equipamento e WHERE UPPER(e.tombo) LIKE :tombo_maiusculo AND e.lote.modelo = :modelo AND e.ativo=true"),
