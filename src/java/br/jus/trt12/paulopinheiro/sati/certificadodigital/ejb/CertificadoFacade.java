@@ -60,6 +60,35 @@ public class CertificadoFacade extends AbstractFacade<Certificado> {
         return resposta;
     }
 
+    public List<Certificado> findByMunicipioVencimentoDeAte(Municipio municipio, Date vencimentoMin, Date vencimentoMax) throws SatiLogicalException {
+        if ((vencimentoMax==null)||(vencimentoMin==null)) throw new SatiLogicalException("Informe o intervalo de datas");
+        if (vencimentoMax.before(vencimentoMin)) throw new SatiLogicalException("Data máxima deve ser maior que a mínima");
+        List<Certificado> resposta;
+        Query query;
+        if ((municipio==null)||(municipio.getCodigo()==null)) query = getEntityManager().createNamedQuery("Certificado.findByDateInterval");
+        else {
+            query = getEntityManager().createNamedQuery("Certificado.findByMunicipioDateInterval");
+            query.setParameter("municipio", municipio);
+        }
+
+        query.setParameter("minDate", vencimentoMin);
+        query.setParameter("maxDate", vencimentoMax);
+        resposta = query.getResultList();
+        return resposta;
+    }
+
+    public List<Certificado> findByMunicipioVencimentoAte(Municipio municipio, Date vencimento) throws SatiLogicalException {
+        return findByMunicipioVencimentoDeAte(municipio,new Date(), vencimento);
+    }
+
+    public List<Certificado> findVencimentoAte(Date vencimentoMax) throws SatiLogicalException {
+        return findByMunicipioVencimentoDeAte(null,new Date(),vencimentoMax);
+    }
+
+    public List<Certificado> findVencimentoDeAte(Date vencimentoMin, Date vencimentoMax) throws SatiLogicalException {
+        return findByMunicipioVencimentoDeAte(null,vencimentoMin,vencimentoMax);
+    }
+
     public List<MarcaEtoken> getListaMarcaEtoken() {
         List<MarcaEtoken> resposta;
         Query query = getEntityManager().createNamedQuery("MarcaEtoken.findAll");

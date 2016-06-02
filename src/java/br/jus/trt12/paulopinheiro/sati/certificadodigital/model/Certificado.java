@@ -20,7 +20,9 @@ import javax.persistence.Temporal;
 @Table(name = "certificado", catalog = "sati", schema = "certificacao")
 @NamedQueries({
     @NamedQuery(name = "Certificado.findAll", query = "SELECT c FROM Certificado c"),
-    @NamedQuery(name = "Certificado.findByMunicipio", query = "SELECT c FROM Certificado c where c.usuario.unidade.municipio = :municipio")
+    @NamedQuery(name = "Certificado.findByMunicipio", query = "SELECT c FROM Certificado c where c.usuario.unidade.municipio = :municipio"),
+    @NamedQuery(name = "Certificado.findByDateInterval", query = "SELECT c FROM Certificado c WHERE c.dataValidade BETWEEN :minDate AND :maxDate ORDER BY c.dataValidade"),
+    @NamedQuery(name = "Certificado.findByMunicipioDateInterval", query = "SELECT c FROM Certificado c WHERE c.usuario.unidade.municipio = :municipio AND c.dataValidade BETWEEN :minDate AND :maxDate ORDER BY c.dataValidade")
 })
 public class Certificado implements Serializable, Comparable {
     @Id

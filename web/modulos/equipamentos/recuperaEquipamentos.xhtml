@@ -18,10 +18,10 @@
                         <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="-- Selecione o tipo --" />
                         <f:selectItems value="#{recuperaEquipamentosMB.listaTiposEquipamento}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo}" />
                     </p:selectOneMenu>
-                    <p:commandButton value="Filtrar" process="@form" update=":tabEquipamentos :msgerro :gmensagem" id="btFiltrar" actionListener="#{recuperaEquipamentosMB.atualizaTipo}" />
+                    <p:commandButton value="Filtrar" process="@form" update=":tabEquipamentos :msgerro :gmensagem" id="btFiltrar" actionListener="#{recuperaEquipamentosMB.atualizaTipo}" icon="ui-icon-search" />
                     <p:outputLabel id="labelTombo" for="filtroTombo" value="Tombo" />
                     <p:inputText id="filtroTombo" value="#{recuperaEquipamentosMB.filtroTombo}" size="10" maxlength="6" />
-                    <p:commandButton value="Buscar" process="@form" update=":formEquipamento :tabEquipamentos :msgerro :gmensagem" id="btBuscar" actionListener="#{recuperaEquipamentosMB.buscarPorTombo}" />
+                    <p:commandButton value="Buscar" process="@form" update=":formEquipamento :tabEquipamentos :msgerro :gmensagem" id="btBuscar" actionListener="#{recuperaEquipamentosMB.buscarPorTombo}" icon="ui-icon-play" />
                 </p:panelGrid>
             </h:form>
             <br />

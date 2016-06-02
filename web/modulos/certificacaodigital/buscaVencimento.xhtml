@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <body>
+            <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+                <ui:define name="titulo">Busca de certificados digitais a vencer</ui:define>
+                <ui:define name="top">Busca de certificados digitais a vencer</ui:define>
+                <ui:define name="content">
+                    <h:form id="formCertificados">
+                        <p:panelGrid id="gridFormCertificado" columns="2">
+                            <f:facet name="header"><b>Dados de Busca</b></f:facet>
+                            <p:outputLabel id="labelMunicipio" for="municipio" value="Certificados do Município de" />
+                            <p:selectOneMenu id="municipio" value="#{buscaVencimentoMB.municipio}" converter="converteMunicipio">
+                                <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Todos os municípios ---" />
+                                <f:selectItems id="sgiMunicipio" value="#{buscaVencimentoMB.listaMunicipios}" var="municipio" itemValue="#{municipio}" itemLabel="#{municipio}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel id="labelPeriodo" for="periodo" value="Período" />
+                            <p:selectOneRadio id="periodo" value="#{buscaVencimentoMB.escolhaPeriodo}">
+                                <p:ajax event="change" process="@this" update="@form" listener="#{buscaVencimentoMB.alteraEscolhaPeriodo}" />
+                                <f:selectItem itemValue="0" itemLabel="Nos próximos 30 dias" />
+                                <f:selectItem itemValue="1" itemLabel="No intervalo de datas" />
+                            </p:selectOneRadio>
+                            <p:outputLabel id="labelIntervalo" for="intervalo" value="Intervalo" rendered="#{buscaVencimentoMB.escolhaPeriodo == 1}" />
+                            <h:panelGroup id="intervalo" rendered="#{buscaVencimentoMB.escolhaPeriodo == 1}">
+                                <p:outputLabel id="labelDataMin" for="dataMin" value="De " />
+                                <p:calendar id="dataMin" value="#{buscaVencimentoMB.dataMin}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
+                                <p:outputLabel id="labelDataMax" for="dataMax" value="  Até " />
+                                <p:calendar id="dataMax" value="#{buscaVencimentoMB.dataMax}" showOn="button" locale="pt" showButtonPanel="true" navigator="true" />
+                            </h:panelGroup>
+                        </p:panelGrid>
+                        <p:panelGrid id="gridBotoes" columns="1">
+                            <p:commandButton value="Filtrar" process="@form" update=":tabCertificados :msgerro :gmensagem" actionListener="#{buscaVencimentoMB.buscarCertificados}" icon="ui-icon-search" />
+                        </p:panelGrid>
+                        <br />
+                    </h:form>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
+                    <h:form id="tabCertificados">
+                        <p:dataTable rows="10" paginator="true" id="tabelaCertificados" var="certificado" value="#{buscaVencimentoMB.listaCertificados}">
+                            <f:facet name="header"><h:outputText id="headerDtCertificado" value="Certificados cadastrados" /></f:facet>
+                            <p:column id="colunaUsuario">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoUsuario" value="Usuário" /></f:facet>
+                                <h:outputText id="labelUsuario" value="#{certificado.usuario}" />
+                            </p:column>
+                            <p:column id="colunaMarcaEtoken">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoMarcaEtoken" value="e-token" /></f:facet>
+                                <h:outputText id="labelMarcaEtoken"  value="#{certificado.marcaEtoken}" />
+                            </p:column>
+                            <p:column id="colunaStatus">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoStatus" value="Status" /></f:facet>
+                                <h:outputText id="labelStatus"  value="#{certificado.status}" />
+                            </p:column>
+                            <p:column id="colunaDtValidade">
+                                <f:facet name="header"><h:outputText style="text-align: center;" id="textoDtValidade" value="Validade" /></f:facet>
+                                <h:outputText id="labelDtValidade"  value="#{certificado.dataValidade}">
+                                    <f:convertDateTime parent="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <f:facet name="footer"><h:outputText id="footerDtCertificados" value="Total: #{buscaVencimentoMB.quantLista}" /></f:facet>
+                        </p:dataTable>
+                    </h:form>
+                </ui:define>
+            </ui:composition>
+        </body>
+    </f:view>
+</html>
