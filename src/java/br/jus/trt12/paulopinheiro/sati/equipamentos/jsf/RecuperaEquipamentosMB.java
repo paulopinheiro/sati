@@ -108,6 +108,10 @@ public class RecuperaEquipamentosMB implements Serializable {
         this.tipo = tipo;
     }
 
+    public boolean isVazioEquip() {
+        return ((this.getEquipamento().getCodigo()==null)||(this.getEquipamento().getCodigo()==0));
+    }
+
     protected void mensagemErro(String mensagem) {
         ContextoJSF.getFacesContext().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,mensagem,null));
     }

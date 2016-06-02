@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
@@ -40,11 +41,27 @@ public class EquipamentoFacade extends AbstractFacade<Equipamento> {
         if ((equipamento.getUsuarioEquipamento()!=null)&&(equipamento.getUsuarioEquipamento().getUnidade()!=null)&&(!equipamento.getUsuarioEquipamento().getUnidade().equals(equipamento.getUnidade()))) {
             throw new SatiLogicalException("O usuário deve pertencer à unidade informada");
         }
+        validarUnicidadeTombo(equipamento);
+
         if (equipamento.getCodigo()==null) {
             equipamento.setAtivo(true);
             this.create(equipamento);
         }
         else this.edit(equipamento);
+    }
+
+    private void validarUnicidadeTombo(Equipamento equipamento) throws SatiLogicalException {
+        Equipamento compara = findByTombo(equipamento.getTombo());
+        String mensagem;
+        if (compara!=null) {
+            if (compara.getTombo().equals(equipamento.getTombo())) {
+                if (!compara.getCodigo().equals(equipamento.getCodigo())) {
+                    mensagem = compara.isAtivo() ? "Encontra-se na unidade: " + compara.getUnidade() 
+                                                 : "É equipamento baixado";
+                    throw new SatiLogicalException("Já existe um equipamento cadastrado com o tombo " + equipamento.getTombo() + ". " + mensagem);
+                }
+            }
+        }
     }
 
     @Override
@@ -131,7 +148,6 @@ public class EquipamentoFacade extends AbstractFacade<Equipamento> {
         query.setParameter("tipoEquipamento", tipo);
         resposta = query.getResultList();
         if (resposta!=null) Collections.sort(resposta);
-        System.out.println(resposta.size() + " equipamentos baixados encontrados");
         return resposta;
     }
 
@@ -139,9 +155,24 @@ public class EquipamentoFacade extends AbstractFacade<Equipamento> {
         Equipamento resposta;
         Query query = getEntityManager().createNamedQuery("Equipamento.findBaixadoByTombo");
         query.setParameter("tombo", tombo);
-        resposta = (Equipamento) query.getSingleResult();
-        if (resposta==null) throw new SatiLogicalException("Não encontrado equipamento baixado de tombo " + tombo);
-        return resposta;
+        try {
+            resposta = (Equipamento) query.getSingleResult();
+            return resposta;
+        } catch (NoResultException ex) {
+            throw new SatiLogicalException("Não encontrado equipamento baixado de tombo " + tombo);
+        }
+    }
+
+    public Equipamento findByTombo(String tombo) {
+        Equipamento resposta;
+        Query query = getEntityManager().createNamedQuery("Equipamento.findByTombo");
+        query.setParameter("tombo", tombo);
+        try {
+            resposta = (Equipamento) query.getSingleResult();
+            return resposta;
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override

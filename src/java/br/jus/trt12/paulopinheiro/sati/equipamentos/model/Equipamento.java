@@ -28,6 +28,7 @@ import javax.persistence.Table;
     @NamedQuery(name="Equipamento.findAtivosByMunicipio", query="Select e From Equipamento e where e.unidade.municipio=:municipio And e.ativo=TRUE order by e.tombo"),
     @NamedQuery(name="Equipamento.findAtivosByMunicipioTipoEquipamento", query="Select e From Equipamento e where e.unidade.municipio=:municipio And e.lote.modelo.tipoEquipamento = :tipoEquipamento And e.ativo=TRUE order by e.tombo"),
     @NamedQuery(name="Equipamento.findBaixadosByTipo", query="Select e From Equipamento e where e.ativo=FALSE and e.lote.modelo.tipoEquipamento=:tipoEquipamento order by e.tombo"),
+    @NamedQuery(name="Equipamento.findByTombo", query="Select e From Equipamento e WHERE e.tombo=:tombo"),
     @NamedQuery(name="Equipamento.findBaixadoByTombo", query="Select e From Equipamento e where e.ativo=FALSE and e.tombo=:tombo"),
     @NamedQuery(name="Equipamento.findAtivosByTombo", query="SELECT e FROM Equipamento e WHERE UPPER(e.tombo) LIKE :tombo_maiusculo AND e.ativo=true"),
     @NamedQuery(name="Equipamento.findAtivosByTipoEquipamentoTombo", query="SELECT e FROM Equipamento e WHERE UPPER(e.tombo) LIKE :tombo_maiusculo AND e.lote.modelo.tipoEquipamento = :tipoEquipamento AND e.ativo=true"),

@@ -41,7 +41,7 @@
                     <h:outputText id="nroSerie" value="#{recuperaEquipamentosMB.equipamento.nroSerie}" />
                 </p:panelGrid>
                 <p:panelGrid id="botoesEquipamento" columns="5">
-                    <p:commandButton value="Recuperar" process="@form" update="@form :msgerro :gmensagem :tabEquipamentos" id="btRecuperar" actionListener="#{recuperaEquipamentosMB.recuperar}" icon="ui-icon-disk" disabled="#{empty recuperaEquipamentosMB.equipamento}" />
+                    <p:commandButton value="Recuperar" process="@form" update="@form :msgerro :gmensagem :tabEquipamentos" id="btRecuperar" actionListener="#{recuperaEquipamentosMB.recuperar}" icon="ui-icon-disk" disabled="#{recuperaEquipamentosMB.vazioEquip}" />
                     <p:commandButton value="Limpar" update="@form :formBuscaEquipamento :msgerro :gmensagem :tabEquipamentos" id="btLimpar" actionListener="#{recuperaEquipamentosMB.limpar}" icon="ui-icon-document" />
                 </p:panelGrid>
             </h:form>
