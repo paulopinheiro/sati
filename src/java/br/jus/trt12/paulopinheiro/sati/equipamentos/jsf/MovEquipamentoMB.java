@@ -9,7 +9,6 @@ import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
 import br.jus.trt12.paulopinheiro.sati.util.ContextoJSF;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -56,12 +55,9 @@ public class MovEquipamentoMB implements Serializable {
         }
     }
 
-    public void movimentar(ActionEvent evt) {
+    public void movimentar() {
         try {
-            // Não está atualizando a ordem da lista quando movimentamos os objetos já dentro target
-            for (Equipamento e:this.getDlmEquipamentos().getTarget()) System.out.println(e);
-            System.out.println("--------------" + new Date());
-            //this.equipamentoFacade.movimentar(this.getDlmEquipamentos().getTarget(), this.isCircular());
+            this.equipamentoFacade.movimentar(this.getDlmEquipamentos().getTarget(), this.isCircular());
             this.setDlmEquipamentos(null);
             mensagemSucesso("Equipamentos movimentados com sucesso.");
         } catch (Exception ex) {
@@ -92,17 +88,11 @@ public class MovEquipamentoMB implements Serializable {
         this.tipoEquipamento = tipoEquipamento;
     }
 
-    /**
-     * @return the tiposEquipamento
-     */
     public List<TipoEquipamento> getTiposEquipamento() {
         if (this.tiposEquipamento==null) this.tiposEquipamento = tipoEquipamentoFacade.findAll();
         return tiposEquipamento;
     }
 
-    /**
-     * @param tiposEquipamento the tiposEquipamento to set
-     */
     public void setTiposEquipamento(List<TipoEquipamento> tiposEquipamento) {
         this.tiposEquipamento = tiposEquipamento;
     }
@@ -134,16 +124,10 @@ public class MovEquipamentoMB implements Serializable {
                this.getDlmEquipamentos().getTarget().size()>1;
     }
 
-    /**
-     * @return the geralMB
-     */
     public GeralMB getGeralMB() {
         return geralMB;
     }
 
-    /**
-     * @param geralMB the geralMB to set
-     */
     public void setGeralMB(GeralMB geralMB) {
         this.geralMB = geralMB;
     }

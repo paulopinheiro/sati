@@ -11,6 +11,7 @@
         <h:outputStylesheet library="css" name="cssLayout.css" />
         <h:outputScript name="calendar_pt.js" library="js" /> 
         <h:outputScript name="jsf.js" library="javax.faces"/>
+        <script name="jquery/jquery.js" library="primefaces"></script>
         <title><ui:insert name="titulo">Título</ui:insert></title>
     </h:head>
     <h:body>
@@ -100,6 +101,9 @@
                                     <p:separator />
                                     <p:menuitem id="recuperaEquipamentos">
                                         <h:link outcome="/modulos/equipamentos/recuperaEquipamentos" value="Recuperar baixados" />
+                                    </p:menuitem>
+                                    <p:menuitem id="movimentaEquipamentos">
+                                        <h:link outcome="/modulos/equipamentos/movimentaEquipamentos" value="Movimentar" />
                                     </p:menuitem>
                                     <p:separator />
                                     <p:menuitem id="cadModelo">

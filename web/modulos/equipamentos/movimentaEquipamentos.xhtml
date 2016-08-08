@@ -11,23 +11,22 @@
 
         <ui:define name="content">
             <h:form id="formMovimenta">
-                <h:panelGrid id="gridMovimenta" columns="3">
-                    <h:outputLabel id="labelTipoEquipamento" for="tipoEquipamento" value="Tipo Equipamento" />
-                    <h:selectOneMenu id="tipoEquipamento" value="#{movEquipamentoMB.tipoEquipamento}" converter="converteTipoEquipamento">
+                <p:panelGrid id="gridMovimenta" columns="3">
+                    <p:outputLabel id="labelTipoEquipamento" for="tipoEquipamento" value="Tipo Equipamento" />
+                    <p:selectOneMenu id="tipoEquipamento" value="#{movEquipamentoMB.tipoEquipamento}" converter="converteTipoEquipamento">
                         <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o tipo ---" />
                         <f:selectItems id="sgiTipoEquipamento" value="#{movEquipamentoMB.tiposEquipamento}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo}" />
-                        <f:ajax execute="@this" render="btFiltrar :msgerro" />
-                    </h:selectOneMenu>
-                    <h:commandButton id="btFiltrar" value="Filtrar" actionListener="#{movEquipamentoMB.filtrar}" disabled="#{!movEquipamentoMB.listaLiberada}">
-                        <f:ajax execute="@form" render=":formPickList :msgerro" />
-                    </h:commandButton>
-                    <h:outputLabel id="labelCircular" for="circular" value="Circular" />
-                    <h:selectBooleanCheckbox id="circular" label="Circular" value="#{movEquipamentoMB.circular}" />
-                </h:panelGrid>
+                        <f:ajax execute="@this" render="btFiltrar :msgerro :gmensagem" />
+                    </p:selectOneMenu>
+                    <p:commandButton update=":formPickList :msgerro :gmensagem" id="btFiltrar" value="Filtrar" actionListener="#{movEquipamentoMB.filtrar}" disabled="#{!movEquipamentoMB.listaLiberada}" />
+                    <p:outputLabel id="labelCircular" for="circular" value="Circular" />
+                    <p:selectBooleanCheckbox id="circular" label="Circular" value="#{movEquipamentoMB.circular}" />
+                </p:panelGrid>
             </h:form>
+            <p:growl id="gmensagem" globalOnly="true" />
             <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
             <h:form id="formPickList">
-                <h:panelGrid id="gridPickList" columns="1" rendered="#{movEquipamentoMB.listaLiberada}">
+                <p:panelGrid id="gridPickList" columns="1" rendered="#{movEquipamentoMB.listaLiberada}">
                     <p:pickList id="plEquipamentos"  value="#{movEquipamentoMB.dlmEquipamentos}" var="equipamento"
                                 itemValue="#{equipamento}" itemLabel="#{equipamento}" showSourceControls="false" showTargetControls="true"
                                 showSourceFilter="true" showTargetFilter="true" converter="converteEquipamentoPL">
@@ -38,10 +37,8 @@
                         </p:column>
                         <p:ajax event="transfer" update="btMovimentar" />
                     </p:pickList>
-                    <h:commandButton id="btMovimentar" value="Movimentar" actionListener="#{movEquipamentoMB.movimentar}" disabled="#{!movEquipamentoMB.prontoMovimentar}">
-                        <f:ajax execute="@this" render=":formPickList :msgerro" />
-                    </h:commandButton>
-                </h:panelGrid>                
+                    <p:commandButton update=":formPickList :msgerro :gmensagem" id="btMovimentar" value="Movimentar" action="#{movEquipamentoMB.movimentar}" disabled="#{!movEquipamentoMB.prontoMovimentar}" />
+                </p:panelGrid>                
             </h:form>
         </ui:define>
     </ui:composition>
