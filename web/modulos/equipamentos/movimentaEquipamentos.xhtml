@@ -37,7 +37,7 @@
                         </p:column>
                         <p:ajax event="transfer" update="btMovimentar" />
                     </p:pickList>
-                    <p:commandButton update=":formPickList :msgerro :gmensagem" id="btMovimentar" value="Movimentar" action="#{movEquipamentoMB.movimentar}" disabled="#{!movEquipamentoMB.prontoMovimentar}" />
+                    <p:commandButton process=":formPickList :formMovimenta:circular" update=":formPickList :msgerro :gmensagem" id="btMovimentar" value="Movimentar" action="#{movEquipamentoMB.movimentar}" disabled="#{!movEquipamentoMB.prontoMovimentar}" />
                 </p:panelGrid>                
             </h:form>
         </ui:define>

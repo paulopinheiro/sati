@@ -244,6 +244,8 @@ public class EquipamentoFacade extends AbstractFacade<Equipamento> {
 
         equipRecebe.setUnidade(equipTransfere.getUnidade());
         equipRecebe.setUsuarioEquipamento(equipTransfere.getUsuarioEquipamento());
+        equipRecebe.setLocalizacao(equipTransfere.getLocalizacao());
+        equipRecebe.setObservacao(equipTransfere.getObservacao());
     }
 
     //Dois equipamentos são incompatíveis para troca se e somente seus tipos não forem nulos e não forem iguais
