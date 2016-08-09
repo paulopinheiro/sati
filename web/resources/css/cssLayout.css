@@ -66,3 +66,9 @@
   font-style: italic;
   background-color: white;
 }
+
+.estiloWarning {
+  color: red;
+  font-weight: 900;
+  font-family: Georgia,'Times New Roman',times,serif;
+}

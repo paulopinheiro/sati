@@ -46,7 +46,7 @@ public class MovEquipamentoMB implements Serializable {
         this.circular = circular;
     }
 
-    public void filtrar(ActionEvent evt) {
+    public void filtrar() {
         try {
             this.setListaEquipamentos(this.equipamentoFacade.findAtivosByMunicipioTipoEquipamento(this.getMunicipioSessao(),this.getTipoEquipamento()));
             setDlmEquipamentos(null);
@@ -58,7 +58,7 @@ public class MovEquipamentoMB implements Serializable {
     public void movimentar() {
         try {
             this.equipamentoFacade.movimentar(this.getDlmEquipamentos().getTarget(), this.isCircular());
-            this.setDlmEquipamentos(null);
+            filtrar();
             mensagemSucesso("Equipamentos movimentados com sucesso.");
         } catch (Exception ex) {
             mensagemErro(ex.getMessage());

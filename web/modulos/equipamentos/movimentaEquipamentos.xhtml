@@ -18,9 +18,11 @@
                         <f:selectItems id="sgiTipoEquipamento" value="#{movEquipamentoMB.tiposEquipamento}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo}" />
                         <f:ajax execute="@this" render="btFiltrar :msgerro :gmensagem" />
                     </p:selectOneMenu>
-                    <p:commandButton update=":formPickList :msgerro :gmensagem" id="btFiltrar" value="Filtrar" actionListener="#{movEquipamentoMB.filtrar}" disabled="#{!movEquipamentoMB.listaLiberada}" />
+                    <p:commandButton update=":formPickList :msgerro :gmensagem" id="btFiltrar" value="Filtrar" action="#{movEquipamentoMB.filtrar}" disabled="#{!movEquipamentoMB.listaLiberada}" icon="ui-icon-search" />
                     <p:outputLabel id="labelCircular" for="circular" value="Circular" />
-                    <p:selectBooleanCheckbox id="circular" label="Circular" value="#{movEquipamentoMB.circular}" />
+                    <p:selectBooleanCheckbox id="circular" label="Circular" value="#{movEquipamentoMB.circular}">
+                        <p:ajax update=":formPickList:dlgConfirmaMov" />
+                    </p:selectBooleanCheckbox>
                 </p:panelGrid>
             </h:form>
             <p:growl id="gmensagem" globalOnly="true" />
@@ -35,10 +37,22 @@
                         <p:column>
                             <h:outputText value="#{equipamento}" />
                         </p:column>
-                        <p:ajax event="transfer" update="btMovimentar" />
+                        <p:ajax event="transfer" update="btMovimentar :formPickList:dlgConfirmaMov" />
                     </p:pickList>
-                    <p:commandButton process=":formPickList :formMovimenta:circular" update=":formPickList :msgerro :gmensagem" id="btMovimentar" value="Movimentar" action="#{movEquipamentoMB.movimentar}" disabled="#{!movEquipamentoMB.prontoMovimentar}" />
-                </p:panelGrid>                
+                    <p:button id="btMovimentar" value="Movimentar" onclick="PF('dlgConfirmaMov').show(); return false;" disabled="#{!movEquipamentoMB.prontoMovimentar}" icon="ui-icon-transferthick-e-w" />
+                </p:panelGrid>
+
+                <p:dialog header="Confirmar Movimentação de Equipamentos" id="dlgConfirmaMov" widgetVar="dlgConfirmaMov" resizable="false" showEffect="bounce" hideEffect="bounce">
+                    <h:panelGrid columns="1">
+                        <h:outputText styleClass="estiloWarning" value="Atenção! O último equipamento da lista será baixado no sistema (movimentação não é circular)." rendered="#{!movEquipamentoMB.circular}" />
+                        <h:outputText value="Confirmar movimentação dos equipamentos na ordem apresentada ?" />
+                    </h:panelGrid>
+                    <br />
+                    <p:panelGrid columns="2">
+                        <p:commandButton id="btConfirmarMov" process=":formPickList :formMovimenta" update=":formPickList :msgerro :gmensagem" value="Confirmar" action="#{movEquipamentoMB.movimentar}" disabled="#{!movEquipamentoMB.prontoMovimentar}" oncomplete="PF('dlgConfirmaMov').hide();" icon="ui-icon-check" />
+                        <p:commandButton id="btCancelarMov" value="Cancelar" onclick="PF('dlgConfirmaMov').hide();" immediate="true" icon="ui-icon-cancel" />
+                    </p:panelGrid>
+                </p:dialog>
             </h:form>
         </ui:define>
     </ui:composition>
