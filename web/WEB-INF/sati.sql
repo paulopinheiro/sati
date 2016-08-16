@@ -1528,6 +1528,25 @@ ALTER SEQUENCE segmento_codigo_seq OWNED BY segmento.codigo;
 
 
 --
+-- Name: segmento_tomada; Type: TABLE; Schema: redes; Owner: sati; Tablespace: 
+--
+
+CREATE TABLE segmento_tomada (
+    cod_tomada bigint NOT NULL,
+    cod_segmento bigint NOT NULL
+);
+
+
+ALTER TABLE redes.segmento_tomada OWNER TO sati;
+
+--
+-- Name: TABLE segmento_tomada; Type: COMMENT; Schema: redes; Owner: sati
+--
+
+COMMENT ON TABLE segmento_tomada IS 'JOIN: Segmento que une a tomada a outra';
+
+
+--
 -- Name: servidor; Type: TABLE; Schema: redes; Owner: sati; Tablespace: 
 --
 
@@ -1621,7 +1640,6 @@ CREATE TABLE tomada (
     nome character varying(10) NOT NULL,
     descricao character varying(255),
     observacao character varying(255),
-    cod_segmento bigint,
     tipo character(1) DEFAULT 'R'::bpchar,
     CONSTRAINT chktipo_tomada CHECK ((tipo = ANY (ARRAY['R'::bpchar, 'P'::bpchar, 'V'::bpchar])))
 );
@@ -4108,6 +4126,14 @@ SELECT pg_catalog.setval('segmento_codigo_seq', 14, true);
 
 
 --
+-- Data for Name: segmento_tomada; Type: TABLE DATA; Schema: redes; Owner: sati
+--
+
+COPY segmento_tomada (cod_tomada, cod_segmento) FROM stdin;
+\.
+
+
+--
 -- Data for Name: servidor; Type: TABLE DATA; Schema: redes; Owner: sati
 --
 
@@ -4155,585 +4181,585 @@ SELECT pg_catalog.setval('tipomodulo_codigo_seq', 18, true);
 -- Data for Name: tomada; Type: TABLE DATA; Schema: redes; Owner: sati
 --
 
-COPY tomada (codigo, nome, descricao, observacao, cod_segmento, tipo) FROM stdin;
-28	T16	\N	\N	\N	P
-29	T10	\N	\N	\N	P
-30	T17	\N	\N	\N	P
-31	T02	\N	\N	\N	P
-32	T20	\N	\N	\N	P
-33	T11	\N	\N	\N	P
-34	T19	\N	\N	\N	P
-122	T03	\N	\N	\N	P
-123	T18	\N	\N	\N	P
-246	T21	\N	\N	\N	P
-252	T24	\N	\N	\N	P
-253	T23	\N	\N	\N	P
-260	T22	\N	\N	\N	P
-268	T16	\N	\N	\N	P
-269	T19	\N	\N	\N	P
-270	T18	\N	\N	\N	P
-272	T12	\N	\N	\N	P
-273	T20	\N	\N	\N	P
-274	T23	\N	\N	\N	P
-275	T15	\N	\N	\N	P
-280	T10	\N	\N	\N	P
-282	T09	\N	\N	\N	P
-283	T24	\N	\N	\N	P
-285	T17	\N	\N	\N	P
-286	T13	\N	\N	\N	P
-287	T14	\N	\N	\N	P
-288	T21	\N	\N	\N	P
-289	T22	\N	\N	\N	P
-291	T11	\N	\N	\N	P
-241	T02	\N		\N	P
-243	T09	\N		\N	P
-242	T19	\N		\N	P
-251	T01	\N		\N	P
-247	T02	\N		\N	P
-249	T03	\N		\N	P
-262	T04	\N		\N	P
-258	T05	\N		\N	P
-264	T06	\N		\N	P
-250	T07	\N		\N	P
-259	T08	\N		\N	P
-256	T09	\N		\N	P
-263	T10	\N		\N	P
-265	T11	\N		\N	P
-261	T12	\N		\N	P
-267	T13	\N		\N	P
-245	T14	\N		\N	P
-266	T15	\N		\N	P
-248	T16	\N		\N	P
-244	T17	\N		\N	P
-254	T18	\N		\N	P
-255	T19	\N		\N	P
-284	T01	\N		\N	P
-290	T02	\N		\N	P
-281	T03	\N		\N	P
-278	T04	\N		\N	P
-279	T05	\N		\N	P
-276	T06	\N		\N	P
-277	T07	\N		\N	P
-323	T20	\N	Antiga linha de dados	\N	P
-293	T11	\N	\N	\N	P
-294	T12	\N	\N	\N	P
-10	T03	\N	\N	\N	P
-11	T11	\N	\N	\N	P
-12	T22	\N	\N	\N	P
-13	T23	\N	\N	\N	P
-14	T16	\N	\N	\N	P
-15	T14	\N	\N	\N	P
-16	T04	\N	\N	\N	P
-17	T15	\N	\N	\N	P
-19	T18	\N	\N	\N	P
-20	T07	\N	\N	\N	P
-21	T05	\N	\N	\N	P
-22	T21	\N	\N	\N	P
-23	T10	\N	\N	\N	P
-24	T17	\N	\N	\N	P
-25	T12	\N	\N	\N	P
-35	T13	\N	\N	\N	P
-36	T21	\N	\N	\N	P
-37	T07	\N	\N	\N	P
-38	T18	\N	\N	\N	P
-39	T04	\N	\N	\N	P
-40	T08	\N	\N	\N	P
-41	T15	\N	\N	\N	P
-42	T01	\N	\N	\N	P
-43	T14	\N	\N	\N	P
-44	T09	\N	\N	\N	P
-45	T22	\N	\N	\N	P
-46	T05	\N	\N	\N	P
-47	T03	\N	\N	\N	P
-48	T06	\N	\N	\N	P
-50	T23	\N	\N	\N	P
-51	T12	\N	\N	\N	P
-52	T20	\N	\N	\N	P
-53	T13	\N	\N	\N	P
-54	T21	\N	\N	\N	P
-55	T07	\N	\N	\N	P
-56	T23	\N	\N	\N	P
-57	T22	\N	\N	\N	P
-58	T19	\N	\N	\N	P
-59	T11	\N	\N	\N	P
-60	T12	\N	\N	\N	P
-61	T18	\N	\N	\N	P
-62	T17	\N	\N	\N	P
-63	T02	\N	\N	\N	P
-64	T04	\N	\N	\N	P
-65	T08	\N	\N	\N	P
-66	T05	\N	\N	\N	P
-67	T24	\N	\N	\N	P
-68	T16	\N	\N	\N	P
-69	T10	\N	\N	\N	P
-70	T01	\N	\N	\N	P
-71	T03	\N	\N	\N	P
-72	T06	\N	\N	\N	P
-73	T09	\N	\N	\N	P
-74	T15	\N	\N	\N	P
-75	T14	\N	\N	\N	P
-76	T19	\N	\N	\N	P
-77	T24	\N	\N	\N	P
-78	T16	\N	\N	\N	P
-79	T12	\N	\N	\N	P
-80	T23	\N	\N	\N	P
-81	T20	\N	\N	\N	P
-82	T22	\N	\N	\N	P
-83	T03	\N	\N	\N	P
-84	T04	\N	\N	\N	P
-85	T08	\N	\N	\N	P
-86	T21	\N	\N	\N	P
-87	T11	\N	\N	\N	P
-88	T07	\N	\N	\N	P
-89	T05	\N	\N	\N	P
-90	T06	\N	\N	\N	P
-295	T14	\N	\N	\N	P
-299	T15	\N	\N	\N	P
-300	T06	\N	\N	\N	P
-301	T23	\N	\N	\N	P
-303	T07	\N	\N	\N	P
-304	T24	\N	\N	\N	P
-305	T21	\N	\N	\N	P
-306	T22	\N	\N	\N	P
-309	T13	\N	\N	\N	P
-310	T04	\N	\N	\N	P
-315	T16	\N	\N	\N	P
-316	T05	\N	\N	\N	P
-318	T14	\N	\N	\N	P
-320	T08	\N	\N	\N	P
-321	T07	\N	\N	\N	P
-322	T04	\N	\N	\N	P
-325	T15	\N	\N	\N	P
-326	T16	\N	\N	\N	P
-327	T24	\N	\N	\N	P
-330	T21	\N	\N	\N	P
-331	T13	\N	\N	\N	P
-332	T09	\N	\N	\N	P
-333	T23	\N	\N	\N	P
-334	T03	\N	\N	\N	P
-335	T22	\N	\N	\N	P
-336	T12	\N	\N	\N	P
-339	T06	\N	\N	\N	P
-91	T10	\N	\N	\N	P
-92	T09	\N	\N	\N	P
-93	T17	\N	\N	\N	P
-94	T15	\N	\N	\N	P
-95	T18	\N	\N	\N	P
-96	T01	\N	\N	\N	P
-97	T02	\N	\N	\N	P
-98	T14	\N	\N	\N	P
-99	T13	\N	\N	\N	P
-100	T06	\N	\N	\N	P
-101	T05	\N	\N	\N	P
-102	T17	\N	\N	\N	P
-103	T23	\N	\N	\N	P
-104	T14	\N	\N	\N	P
-105	T20	\N	\N	\N	P
-106	T01	\N	\N	\N	P
-107	T08	\N	\N	\N	P
-108	T09	\N	\N	\N	P
-109	T16	\N	\N	\N	P
-110	T11	\N	\N	\N	P
-111	T13	\N	\N	\N	P
-112	T22	\N	\N	\N	P
-113	T10	\N	\N	\N	P
-114	T24	\N	\N	\N	P
-115	T02	\N	\N	\N	P
-116	T12	\N	\N	\N	P
-117	T21	\N	\N	\N	P
-118	T19	\N	\N	\N	P
-119	T04	\N	\N	\N	P
-120	T15	\N	\N	\N	P
-121	T07	\N	\N	\N	P
-2	T09	\N	\N	\N	P
-18	T24	\N		\N	P
-49	T24	\N		\N	P
-3	T19	\N	\N	\N	P
-4	T06	\N	\N	\N	P
-6	T08	\N	\N	\N	P
-7	T20	\N	\N	\N	P
-8	T13	\N	\N	\N	P
-9	T02	\N	\N	\N	P
-124	T11	\N	\N	\N	P
-125	T20	\N	\N	\N	P
-126	T13	\N	\N	\N	P
-127	T15	\N	\N	\N	P
-128	T08	\N	\N	\N	P
-129	T01	\N	\N	\N	P
-130	T03	\N	\N	\N	P
-131	T17	\N	\N	\N	P
-132	T06	\N	\N	\N	P
-133	T21	\N	\N	\N	P
-134	T22	\N	\N	\N	P
-135	T09	\N	\N	\N	P
-136	T14	\N	\N	\N	P
-137	T02	\N	\N	\N	P
-138	T24	\N	\N	\N	P
-139	T07	\N	\N	\N	P
-140	T10	\N	\N	\N	P
-141	T18	\N	\N	\N	P
-142	T05	\N	\N	\N	P
-143	T16	\N	\N	\N	P
-144	T23	\N	\N	\N	P
-145	T19	\N	\N	\N	P
-146	T04	\N	\N	\N	P
-147	T12	\N	\N	\N	P
-148	T21	\N	\N	\N	P
-149	T16	\N	\N	\N	P
-150	T14	\N	\N	\N	P
-151	T20	\N	\N	\N	P
-152	T24	\N	\N	\N	P
-153	T07	\N	\N	\N	P
-154	T11	\N	\N	\N	P
-155	T23	\N	\N	\N	P
-156	T15	\N	\N	\N	P
-157	T06	\N	\N	\N	P
-158	T05	\N	\N	\N	P
-159	T08	\N	\N	\N	P
-160	T13	\N	\N	\N	P
-161	T02	\N	\N	\N	P
-162	T22	\N	\N	\N	P
-163	T12	\N	\N	\N	P
-164	T03	\N	\N	\N	P
-165	T19	\N	\N	\N	P
-166	T10	\N	\N	\N	P
-167	T09	\N	\N	\N	P
-168	T18	\N	\N	\N	P
-169	T01	\N	\N	\N	P
-170	T04	\N	\N	\N	P
-171	T17	\N	\N	\N	P
-172	T07	\N	\N	\N	P
-173	T09	\N	\N	\N	P
-174	T02	\N	\N	\N	P
-175	T06	\N	\N	\N	P
-176	T22	\N	\N	\N	P
-177	T04	\N	\N	\N	P
-178	T20	\N	\N	\N	P
-179	T21	\N	\N	\N	P
-180	T08	\N	\N	\N	P
-181	T14	\N	\N	\N	P
-182	T18	\N	\N	\N	P
-183	T13	\N	\N	\N	P
-184	T03	\N	\N	\N	P
-185	T01	\N	\N	\N	P
-186	T05	\N	\N	\N	P
-187	T10	\N	\N	\N	P
-188	T15	\N	\N	\N	P
-189	T12	\N	\N	\N	P
-190	T23	\N	\N	\N	P
-191	T11	\N	\N	\N	P
-192	T19	\N	\N	\N	P
-193	T16	\N	\N	\N	P
-194	T17	\N	\N	\N	P
-195	T24	\N	\N	\N	P
-196	T07	\N	\N	\N	P
-197	T06	\N	\N	\N	P
-198	T04	\N	\N	\N	P
-199	T09	\N	\N	\N	P
-200	T23	\N	\N	\N	P
-201	T20	\N	\N	\N	P
-202	T15	\N	\N	\N	P
-203	T08	\N	\N	\N	P
-204	T11	\N	\N	\N	P
-205	T05	\N	\N	\N	P
-206	T14	\N	\N	\N	P
-207	T18	\N	\N	\N	P
-208	T21	\N	\N	\N	P
-209	T03	\N	\N	\N	P
-211	T13	\N	\N	\N	P
-212	T22	\N	\N	\N	P
-213	T17	\N	\N	\N	P
-214	T16	\N	\N	\N	P
-215	T02	\N	\N	\N	P
-216	T10	\N	\N	\N	P
-217	T24	\N	\N	\N	P
-218	T12	\N	\N	\N	P
-219	T19	\N	\N	\N	P
-223	T24	\N	\N	\N	P
-228	T21	\N	\N	\N	P
-231	T23	\N	\N	\N	P
-240	T22	\N	\N	\N	P
-239	T04	\N		\N	P
-234	T05	\N		\N	P
-220	T06	\N		\N	P
-225	T07	\N		\N	P
-238	T08	\N		\N	P
-221	T10	\N		\N	P
-226	T11	\N		\N	P
-233	T12	\N		\N	P
-232	T13	\N		\N	P
-236	T14	\N		\N	P
-235	T15	\N		\N	P
-230	T16	\N		\N	P
-237	T17	\N		\N	P
-224	T18	\N		\N	P
-227	T20	\N		\N	P
-210	T01	\N		\N	P
-222	T03	\N		\N	P
-298	T18	\N	A ser desativado	\N	P
-312	T17	\N	A ser desativado	\N	P
-308	T19	\N	A ser desativado	\N	P
-296	T20	\N	A ser desativado	\N	P
-317	T01	\N	A ser desativado	\N	P
-337	T02	\N	A ser desativado	\N	P
-311	T09	\N	A ser desativado	\N	P
-302	T10	\N	A ser desativado	\N	P
-324	T11	\N	A ser desativado	\N	P
-329	T19	\N	A ser desativado	\N	P
-297	T02	\N	A ser desativado	\N	P
-313	T03	\N	A ser desativado	\N	P
-314	T05	\N	A ser desativado	\N	P
-338	T18	\N	A ser desativado	\N	P
-292	T08	\N	A ser desativado	\N	P
-307	T01	\N	A ser desativado	\N	P
-328	T17	\N	A ser desativado	\N	P
-319	T10	\N	Linha telefone da OAB	\N	P
-5	T01	\N		\N	P
-348	T19	Tomada 19 do panel P1	\N	\N	P
-352	T09	Tomada 9 do panel P1	\N	\N	P
-360	T10	Tomada 10 do panel P1	\N	\N	P
-365	T11	Tomada 11 do panel P1	\N	\N	P
-397	T43	Tomada 43 do panel P2	\N	\N	P
-398	T44	Tomada 44 do panel P2	\N	\N	P
-401	T47	Tomada 47 do panel P2	\N	\N	P
-405	T42	Tomada 42 do panel P2	\N	\N	P
-406	T46	Tomada 46 do panel P2	\N	\N	P
-416	T45	Tomada 45 do panel P2	\N	\N	P
-418	T48	Tomada 48 do panel P2	\N	\N	P
-436	T24	Tomada 24 do panel V1	\N	\N	P
-437	T04	Tomada 4 do panel V1	\N	\N	P
-438	T17	Tomada 17 do panel V1	\N	\N	P
-439	T02	Tomada 2 do panel V1	\N	\N	P
-440	T19	Tomada 19 do panel V1	\N	\N	P
-441	T06	Tomada 6 do panel V1	\N	\N	P
-442	T09	Tomada 9 do panel V1	\N	\N	P
-443	T08	Tomada 8 do panel V1	\N	\N	P
-444	T22	Tomada 22 do panel V1	\N	\N	P
-445	T21	Tomada 21 do panel V1	\N	\N	P
-446	T07	Tomada 7 do panel V1	\N	\N	P
-447	T16	Tomada 16 do panel V1	\N	\N	P
-448	T01	Tomada 1 do panel V1	\N	\N	P
-449	T20	Tomada 20 do panel V1	\N	\N	P
-450	T05	Tomada 5 do panel V1	\N	\N	P
-451	T11	Tomada 11 do panel V1	\N	\N	P
-452	T03	Tomada 3 do panel V1	\N	\N	P
-453	T18	Tomada 18 do panel V1	\N	\N	P
-454	T13	Tomada 13 do panel V1	\N	\N	P
-455	T23	Tomada 23 do panel V1	\N	\N	P
-456	T12	Tomada 12 do panel V1	\N	\N	P
-457	T14	Tomada 14 do panel V1	\N	\N	P
-458	T15	Tomada 15 do panel V1	\N	\N	P
-459	T10	Tomada 10 do panel V1	\N	\N	P
-460	T05	Tomada 5 do panel V2	\N	\N	P
-344	T04	Tomada 4 do panel P1	V2-08 (pto 04)	\N	P
-347	T05	Tomada 5 do panel P1	A1-19 (pto 05)	\N	P
-368	T06	Tomada 6 do panel P1	(desativado)	\N	P
-359	T08	Tomada 8 do panel P1	A1-15 (pto 08)	\N	P
-380	T12	Tomada 12 do panel P1	A2-06 (pto 12)	\N	P
-370	T07	Tomada 7 do panel P1	V1-08 (pto 07)	\N	P
-374	T13	Tomada 13 do panel P1	V1-07 (pto 13)	\N	P
-355	T15	Tomada 15 do panel P1	A1-20 (pto 15)	\N	P
-351	T16	Tomada 16 do panel P1	(pto 16)	\N	P
-383	T18	Tomada 18 do panel P1	A2-03 (pto 18)	\N	P
-363	T21	Tomada 21 do panel P1	A2-08 (pto 21)	\N	P
-369	T22	Tomada 22 do panel P1	A3-06 (pto 22)	\N	P
-386	T23	Tomada 23 do panel P1	A2-14 (pto 23)	\N	P
-357	T24	Tomada 24 do panel P1	V1-03 (pto 24)	\N	P
-341	T26	Tomada 26 do panel P1	A) A3-02\r\nB) A4-03\r\n(pto 26)	\N	P
-353	T27	Tomada 27 do panel P1	A1-18 (pto 27)	\N	P
-385	T29	Tomada 29 do panel P1	V2-09 (pto 29)	\N	P
-381	T30	Tomada 30 do panel P1	A1-05 (pto 30)	\N	P
-378	T31	Tomada 31 do panel P1	V2-07 (pto 31)	\N	P
-371	T33	Tomada 33 do panel P1	A2-15 (pto 33)	\N	P
-384	T34	Tomada 34 do panel P1	V1-10 (pto 34)	\N	P
-367	T36	Tomada 36 do panel P1	A2-05 (pto 36)	\N	P
-354	T37	Tomada 37 do panel P1	A2-04 (pto 37)	\N	P
-350	T38	Tomada 38 do panel P1	A1-12 (pto 38)	\N	P
-387	T39	Tomada 39 do panel P1	(pto 39)	\N	P
-379	T40	Tomada 40 do panel P1	A2-18 (pto 40)	\N	P
-346	T42	Tomada 42 do panel P1	A3-11 (pto 42) (patch cable 43)	\N	P
-364	T43	Tomada 43 do panel P1	(pto 43)	\N	P
-349	T44	Tomada 44 do panel P1	A3-05 (pto 44)	\N	P
-375	T46	Tomada 46 do panel P1	V1-06 (pto 46)	\N	P
-373	T47	Tomada 47 do panel P1	A1-10 (pto 47)	\N	P
-377	T48	Tomada 48 do panel P1	A1-21 (pto 48)	\N	P
-425	T02	Tomada 2 do panel P2	A1-06 (pto 50)	\N	P
-393	T03	Tomada 3 do panel P2	V2-05 (pto 51)	\N	P
-432	T04	Tomada 4 do panel P2	A4-01 (pto 52)	\N	P
-424	T06	Tomada 6 do panel P2	A3-07 (pto 54)	\N	P
-391	T07	Tomada 7 do panel P2	A1-13 (pto 55)	\N	P
-422	T09	Tomada 9 do panel P2	A1-11 (pto 57)	\N	P
-421	T11	Tomada 11 do panel P2	A1-14 (pto 59)	\N	P
-388	T10	Tomada 10 do panel P2	V2-04 (pto 58)	\N	P
-415	T12	Tomada 12 do panel P2	(pto 60)	\N	P
-430	T13	Tomada 13 do panel P2	A2-20 (pto 61)	\N	P
-408	T15	Tomada 15 do panel P2	A2-17 (pto 63)	\N	P
-399	T16	Tomada 16 do panel P2	A) A2-10\r\nB) A3-10\r\n(pto 64)	\N	P
-426	T18	Tomada 18 do panel P2	A3-08 (pto 66)	\N	P
-427	T19	Tomada 19 do panel P2	A2-07 (pto 67)	\N	P
-417	T20	Tomada 20 do panel P2	(pto 68)	\N	P
-404	T21	Tomada 21 do panel P2	A2-16 (pto 69)	\N	P
-429	T23	Tomada 23 do panel P2	(pto 70)	\N	P
-410	T24	Tomada 24 do panel P2	V2-01 (pto 72)	\N	P
-392	T25	Tomada 25 do panel P2	A1-09 (pto 73)	\N	P
-435	T27	Tomada 27 do panel P2	A3-04 (pto 75)	\N	P
-396	T28	Tomada 28 do panel P2	V2-06 (pto 76)	\N	P
-402	T29	Tomada 29 do panel P2	A1-03 (pto 77)	\N	P
-412	T30	Tomada 30 do panel P2	(pto 78)	\N	P
-407	T32	Tomada 32 do panel P2	V2-11 (pto 79)	\N	P
-413	T33	Tomada 33 do panel P2	A1-02 (pto 81)	\N	P
-411	T34	Tomada 34 do panel P2	(pto 81?)	\N	P
-389	T35	Tomada 35 do panel P2	A1-08 (pto 82)	\N	P
-400	T37	Tomada 37 do panel P2	(pto 84?)	\N	P
-428	T38	Tomada 38 do panel P2	(pto 87)	\N	P
-414	T39	Tomada 39 do panel P2	(pto 86)	\N	P
-390	T40	Tomada 40 do panel P2	A3-09 (pto 89)	\N	P
-461	T14	Tomada 14 do panel V2	\N	\N	P
-462	T09	Tomada 9 do panel V2	\N	\N	P
-463	T22	Tomada 22 do panel V2	\N	\N	P
-464	T37	Tomada 37 do panel V2	\N	\N	P
-465	T25	Tomada 25 do panel V2	\N	\N	P
-466	T23	Tomada 23 do panel V2	\N	\N	P
-467	T41	Tomada 41 do panel V2	\N	\N	P
-468	T01	Tomada 1 do panel V2	\N	\N	P
-469	T24	Tomada 24 do panel V2	\N	\N	P
-470	T28	Tomada 28 do panel V2	\N	\N	P
-471	T13	Tomada 13 do panel V2	\N	\N	P
-472	T39	Tomada 39 do panel V2	\N	\N	P
-473	T46	Tomada 46 do panel V2	\N	\N	P
-474	T32	Tomada 32 do panel V2	\N	\N	P
-475	T20	Tomada 20 do panel V2	\N	\N	P
-476	T45	Tomada 45 do panel V2	\N	\N	P
-477	T36	Tomada 36 do panel V2	\N	\N	P
-478	T29	Tomada 29 do panel V2	\N	\N	P
-479	T31	Tomada 31 do panel V2	\N	\N	P
-480	T21	Tomada 21 do panel V2	\N	\N	P
-481	T11	Tomada 11 do panel V2	\N	\N	P
-482	T27	Tomada 27 do panel V2	\N	\N	P
-483	T15	Tomada 15 do panel V2	\N	\N	P
-484	T12	Tomada 12 do panel V2	\N	\N	P
-485	T06	Tomada 6 do panel V2	\N	\N	P
-486	T16	Tomada 16 do panel V2	\N	\N	P
-487	T47	Tomada 47 do panel V2	\N	\N	P
-488	T44	Tomada 44 do panel V2	\N	\N	P
-489	T18	Tomada 18 do panel V2	\N	\N	P
-490	T07	Tomada 7 do panel V2	\N	\N	P
-491	T43	Tomada 43 do panel V2	\N	\N	P
-492	T34	Tomada 34 do panel V2	\N	\N	P
-493	T35	Tomada 35 do panel V2	\N	\N	P
-494	T38	Tomada 38 do panel V2	\N	\N	P
-495	T10	Tomada 10 do panel V2	\N	\N	P
-496	T02	Tomada 2 do panel V2	\N	\N	P
-497	T48	Tomada 48 do panel V2	\N	\N	P
-498	T40	Tomada 40 do panel V2	\N	\N	P
-499	T08	Tomada 8 do panel V2	\N	\N	P
-500	T03	Tomada 3 do panel V2	\N	\N	P
-501	T26	Tomada 26 do panel V2	\N	\N	P
-502	T17	Tomada 17 do panel V2	\N	\N	P
-503	T30	Tomada 30 do panel V2	\N	\N	P
-504	T42	Tomada 42 do panel V2	\N	\N	P
-505	T33	Tomada 33 do panel V2	\N	\N	P
-506	T04	Tomada 4 do panel V2	\N	\N	P
-507	T19	Tomada 19 do panel V2	\N	\N	P
-508	T07	Tomada 7 do panel V2	\N	\N	P
-509	T06	Tomada 6 do panel V2	\N	\N	P
-510	T21	Tomada 21 do panel V2	\N	\N	P
-511	T24	Tomada 24 do panel V2	\N	\N	P
-512	T04	Tomada 4 do panel V2	\N	\N	P
-513	T11	Tomada 11 do panel V2	\N	\N	P
-514	T02	Tomada 2 do panel V2	\N	\N	P
-515	T10	Tomada 10 do panel V2	\N	\N	P
-516	T08	Tomada 8 do panel V2	\N	\N	P
-517	T17	Tomada 17 do panel V2	\N	\N	P
-518	T14	Tomada 14 do panel V2	\N	\N	P
-519	T05	Tomada 5 do panel V2	\N	\N	P
-520	T01	Tomada 1 do panel V2	\N	\N	P
-521	T16	Tomada 16 do panel V2	\N	\N	P
-522	T03	Tomada 3 do panel V2	\N	\N	P
-523	T18	Tomada 18 do panel V2	\N	\N	P
-524	T09	Tomada 9 do panel V2	\N	\N	P
-525	T19	Tomada 19 do panel V2	\N	\N	P
-526	T23	Tomada 23 do panel V2	\N	\N	P
-527	T22	Tomada 22 do panel V2	\N	\N	P
-528	T12	Tomada 12 do panel V2	\N	\N	P
-529	T13	Tomada 13 do panel V2	\N	\N	P
-530	T20	Tomada 20 do panel V2	\N	\N	P
-531	T15	Tomada 15 do panel V2	\N	\N	P
-382	T01	Tomada 1 do panel P1	A1-23 (pto 01)	\N	P
-366	T02	Tomada 2 do panel P1	A1-22 (pto 02)	\N	P
-362	T03	Tomada 3 do panel P1	A1-04 (pto 03)	\N	P
-345	T14	Tomada 14 do panel P1	A) A3-12\r\nB) A2-09\r\n(pto 14)	\N	P
-340	T17	Tomada 17 do panel P1	(pto 19)	\N	P
-342	T20	Tomada 20 do panel P1	A3-03 (pto 20)	\N	P
-376	T25	Tomada 25 do panel P1	V1-05 (pto 25)	\N	P
-356	T28	Tomada 28 do panel P1	V2-08 (pto 28)	\N	P
-372	T32	Tomada 32 do panel P1	A1-16 (pto 32)	\N	P
-361	T35	Tomada 35 do panel P1	A2-13 (pto 35)	\N	P
-343	T41	Tomada 41 do panel P1	V1-02 (pto 41)	\N	P
-358	T45	Tomada 45 do panel P1	A2-19 (pto 45)	\N	P
-395	T01	Tomada 1 do panel P2	(pto 49)	\N	P
-423	T05	Tomada 5 do panel P2	V1-04 (pto 53)	\N	P
-434	T08	Tomada 8 do panel P2	? (algum voice) (pto 56)	\N	P
-409	T14	Tomada 14 do panel P2	A1-17 (pto 62)	\N	P
-420	T17	Tomada 17 do panel P2	V1-01 (pto 65)	\N	P
-403	T22	Tomada 22 do panel P2	A1-07 (pto 71)	\N	P
-419	T26	Tomada 26 do panel P2	A) A2-22\r\nB) A1-01\r\n(pto 74)	\N	P
-394	T31	Tomada 31 do panel P2	V2-03 (pto 80)	\N	P
-433	T36	Tomada 36 do panel P2	V2-12 (pto 83) (copa)	\N	P
-431	T41	Tomada 41 do panel P2	A) A4-02\r\nB) A2-21\r\n(pto 88)	\N	P
-533	P02-T01	Mesa de testes		\N	R
-534	P02-T16	Micro TI	Ponto dividido - micro do TI no 16A\nO 16B é para equipamentos em teste	\N	R
-535	Lab01	Fone TI	A outra ponta do segmento não foi crimpada. O cabo segue até o rack com jack RJ-45. No momento está ativado em ramal telefônico.	\N	R
-536	P08-T01	Telefone Norival		\N	R
-537	P08-T02	Brother MFC-8820D		\N	R
-538	P08-T03	Microcomputador Norival		\N	R
-539	P08-T04	Samsung ML-4550		\N	R
-540	P08-T07	Microcomputador Elias		\N	R
-541	P08-T08	Desligado: ao lado do P08-T07		\N	R
-542	P08-T09	Microcomputador Moacir		\N	R
-543	P08-T10	Desligado: no totem do P08-T09		\N	R
-544	P08-T05	Microcomputador Eliete		\N	R
-545	P08-T06	Telefone Eliete		\N	R
-546	P08-T11	Telefone diretor		\N	R
-547	P08-T12	Microcomputador diretor		\N	R
-549	P08-T22			\N	R
-550	P08-T19			\N	R
-551	P08-T20			\N	R
-552	P08-T13			\N	R
-553	P08-T14			\N	R
-554	P08-T15			\N	R
-555	P08-T16			\N	R
-556	P08-T17			\N	R
-271	T08	\N	Ramal do alarme	\N	P
-229	T01	\N		\N	P
-557	P08-T18		Fone Central de Mandados	\N	R
-257	T20	\N	Ligada para os agentes de segurança	\N	P
-577	T20	\N	\N	\N	P
-560	T03	\N	\N	\N	P
-566	T09	\N	\N	\N	P
-563	T06	\N	\N	\N	P
-567	T10	\N	\N	\N	P
-578	T21	\N	\N	\N	P
-564	T07	\N	\N	\N	P
-559	T02	\N	\N	\N	P
-572	T15	\N	\N	\N	P
-576	T19	\N	\N	\N	P
-569	T12	\N	\N	\N	P
-568	T11	\N	\N	\N	P
-561	T04	\N	\N	\N	P
-579	T22	\N	\N	\N	P
-570	T13	\N	\N	\N	P
-562	T05	\N	\N	\N	P
-580	T23	\N	\N	\N	P
-575	T18	\N	\N	\N	P
-571	T14	\N	\N	\N	P
-574	T17	\N	\N	\N	P
-581	T24	\N	\N	\N	P
-565	T08	\N	\N	\N	P
-573	T16	\N	\N	\N	P
-548	P08-T21	Tomada P08-T21 do módulo MCDM01		\N	R
-558	T01	\N		\N	P
-532	P02-T18	Servidor de rede		\N	R
+COPY tomada (codigo, nome, descricao, observacao, tipo) FROM stdin;
+28	T16	\N	\N	P
+29	T10	\N	\N	P
+30	T17	\N	\N	P
+31	T02	\N	\N	P
+32	T20	\N	\N	P
+33	T11	\N	\N	P
+34	T19	\N	\N	P
+122	T03	\N	\N	P
+123	T18	\N	\N	P
+246	T21	\N	\N	P
+252	T24	\N	\N	P
+253	T23	\N	\N	P
+260	T22	\N	\N	P
+268	T16	\N	\N	P
+269	T19	\N	\N	P
+270	T18	\N	\N	P
+272	T12	\N	\N	P
+273	T20	\N	\N	P
+274	T23	\N	\N	P
+275	T15	\N	\N	P
+280	T10	\N	\N	P
+282	T09	\N	\N	P
+283	T24	\N	\N	P
+285	T17	\N	\N	P
+286	T13	\N	\N	P
+287	T14	\N	\N	P
+288	T21	\N	\N	P
+289	T22	\N	\N	P
+291	T11	\N	\N	P
+241	T02	\N		P
+243	T09	\N		P
+242	T19	\N		P
+251	T01	\N		P
+247	T02	\N		P
+249	T03	\N		P
+262	T04	\N		P
+258	T05	\N		P
+264	T06	\N		P
+250	T07	\N		P
+259	T08	\N		P
+256	T09	\N		P
+263	T10	\N		P
+265	T11	\N		P
+261	T12	\N		P
+267	T13	\N		P
+245	T14	\N		P
+266	T15	\N		P
+248	T16	\N		P
+244	T17	\N		P
+254	T18	\N		P
+255	T19	\N		P
+284	T01	\N		P
+290	T02	\N		P
+281	T03	\N		P
+278	T04	\N		P
+279	T05	\N		P
+276	T06	\N		P
+277	T07	\N		P
+323	T20	\N	Antiga linha de dados	P
+293	T11	\N	\N	P
+294	T12	\N	\N	P
+10	T03	\N	\N	P
+11	T11	\N	\N	P
+12	T22	\N	\N	P
+13	T23	\N	\N	P
+14	T16	\N	\N	P
+15	T14	\N	\N	P
+16	T04	\N	\N	P
+17	T15	\N	\N	P
+19	T18	\N	\N	P
+20	T07	\N	\N	P
+21	T05	\N	\N	P
+22	T21	\N	\N	P
+23	T10	\N	\N	P
+24	T17	\N	\N	P
+25	T12	\N	\N	P
+35	T13	\N	\N	P
+36	T21	\N	\N	P
+37	T07	\N	\N	P
+38	T18	\N	\N	P
+39	T04	\N	\N	P
+40	T08	\N	\N	P
+41	T15	\N	\N	P
+42	T01	\N	\N	P
+43	T14	\N	\N	P
+44	T09	\N	\N	P
+45	T22	\N	\N	P
+46	T05	\N	\N	P
+47	T03	\N	\N	P
+48	T06	\N	\N	P
+50	T23	\N	\N	P
+51	T12	\N	\N	P
+52	T20	\N	\N	P
+53	T13	\N	\N	P
+54	T21	\N	\N	P
+55	T07	\N	\N	P
+56	T23	\N	\N	P
+57	T22	\N	\N	P
+58	T19	\N	\N	P
+59	T11	\N	\N	P
+60	T12	\N	\N	P
+61	T18	\N	\N	P
+62	T17	\N	\N	P
+63	T02	\N	\N	P
+64	T04	\N	\N	P
+65	T08	\N	\N	P
+66	T05	\N	\N	P
+67	T24	\N	\N	P
+68	T16	\N	\N	P
+69	T10	\N	\N	P
+70	T01	\N	\N	P
+71	T03	\N	\N	P
+72	T06	\N	\N	P
+73	T09	\N	\N	P
+74	T15	\N	\N	P
+75	T14	\N	\N	P
+76	T19	\N	\N	P
+77	T24	\N	\N	P
+78	T16	\N	\N	P
+79	T12	\N	\N	P
+80	T23	\N	\N	P
+81	T20	\N	\N	P
+82	T22	\N	\N	P
+83	T03	\N	\N	P
+84	T04	\N	\N	P
+85	T08	\N	\N	P
+86	T21	\N	\N	P
+87	T11	\N	\N	P
+88	T07	\N	\N	P
+89	T05	\N	\N	P
+90	T06	\N	\N	P
+295	T14	\N	\N	P
+299	T15	\N	\N	P
+300	T06	\N	\N	P
+301	T23	\N	\N	P
+303	T07	\N	\N	P
+304	T24	\N	\N	P
+305	T21	\N	\N	P
+306	T22	\N	\N	P
+309	T13	\N	\N	P
+310	T04	\N	\N	P
+315	T16	\N	\N	P
+316	T05	\N	\N	P
+318	T14	\N	\N	P
+320	T08	\N	\N	P
+321	T07	\N	\N	P
+322	T04	\N	\N	P
+325	T15	\N	\N	P
+326	T16	\N	\N	P
+327	T24	\N	\N	P
+330	T21	\N	\N	P
+331	T13	\N	\N	P
+332	T09	\N	\N	P
+333	T23	\N	\N	P
+334	T03	\N	\N	P
+335	T22	\N	\N	P
+336	T12	\N	\N	P
+339	T06	\N	\N	P
+91	T10	\N	\N	P
+92	T09	\N	\N	P
+93	T17	\N	\N	P
+94	T15	\N	\N	P
+95	T18	\N	\N	P
+96	T01	\N	\N	P
+97	T02	\N	\N	P
+98	T14	\N	\N	P
+99	T13	\N	\N	P
+100	T06	\N	\N	P
+101	T05	\N	\N	P
+102	T17	\N	\N	P
+103	T23	\N	\N	P
+104	T14	\N	\N	P
+105	T20	\N	\N	P
+106	T01	\N	\N	P
+107	T08	\N	\N	P
+108	T09	\N	\N	P
+109	T16	\N	\N	P
+110	T11	\N	\N	P
+111	T13	\N	\N	P
+112	T22	\N	\N	P
+113	T10	\N	\N	P
+114	T24	\N	\N	P
+115	T02	\N	\N	P
+116	T12	\N	\N	P
+117	T21	\N	\N	P
+118	T19	\N	\N	P
+119	T04	\N	\N	P
+120	T15	\N	\N	P
+121	T07	\N	\N	P
+2	T09	\N	\N	P
+18	T24	\N		P
+49	T24	\N		P
+3	T19	\N	\N	P
+4	T06	\N	\N	P
+6	T08	\N	\N	P
+7	T20	\N	\N	P
+8	T13	\N	\N	P
+9	T02	\N	\N	P
+124	T11	\N	\N	P
+125	T20	\N	\N	P
+126	T13	\N	\N	P
+127	T15	\N	\N	P
+128	T08	\N	\N	P
+129	T01	\N	\N	P
+130	T03	\N	\N	P
+131	T17	\N	\N	P
+132	T06	\N	\N	P
+133	T21	\N	\N	P
+134	T22	\N	\N	P
+135	T09	\N	\N	P
+136	T14	\N	\N	P
+137	T02	\N	\N	P
+138	T24	\N	\N	P
+139	T07	\N	\N	P
+140	T10	\N	\N	P
+141	T18	\N	\N	P
+142	T05	\N	\N	P
+143	T16	\N	\N	P
+144	T23	\N	\N	P
+145	T19	\N	\N	P
+146	T04	\N	\N	P
+147	T12	\N	\N	P
+148	T21	\N	\N	P
+149	T16	\N	\N	P
+150	T14	\N	\N	P
+151	T20	\N	\N	P
+152	T24	\N	\N	P
+153	T07	\N	\N	P
+154	T11	\N	\N	P
+155	T23	\N	\N	P
+156	T15	\N	\N	P
+157	T06	\N	\N	P
+158	T05	\N	\N	P
+159	T08	\N	\N	P
+160	T13	\N	\N	P
+161	T02	\N	\N	P
+162	T22	\N	\N	P
+163	T12	\N	\N	P
+164	T03	\N	\N	P
+165	T19	\N	\N	P
+166	T10	\N	\N	P
+167	T09	\N	\N	P
+168	T18	\N	\N	P
+169	T01	\N	\N	P
+170	T04	\N	\N	P
+171	T17	\N	\N	P
+172	T07	\N	\N	P
+173	T09	\N	\N	P
+174	T02	\N	\N	P
+175	T06	\N	\N	P
+176	T22	\N	\N	P
+177	T04	\N	\N	P
+178	T20	\N	\N	P
+179	T21	\N	\N	P
+180	T08	\N	\N	P
+181	T14	\N	\N	P
+182	T18	\N	\N	P
+183	T13	\N	\N	P
+184	T03	\N	\N	P
+185	T01	\N	\N	P
+186	T05	\N	\N	P
+187	T10	\N	\N	P
+188	T15	\N	\N	P
+189	T12	\N	\N	P
+190	T23	\N	\N	P
+191	T11	\N	\N	P
+192	T19	\N	\N	P
+193	T16	\N	\N	P
+194	T17	\N	\N	P
+195	T24	\N	\N	P
+196	T07	\N	\N	P
+197	T06	\N	\N	P
+198	T04	\N	\N	P
+199	T09	\N	\N	P
+200	T23	\N	\N	P
+201	T20	\N	\N	P
+202	T15	\N	\N	P
+203	T08	\N	\N	P
+204	T11	\N	\N	P
+205	T05	\N	\N	P
+206	T14	\N	\N	P
+207	T18	\N	\N	P
+208	T21	\N	\N	P
+209	T03	\N	\N	P
+211	T13	\N	\N	P
+212	T22	\N	\N	P
+213	T17	\N	\N	P
+214	T16	\N	\N	P
+215	T02	\N	\N	P
+216	T10	\N	\N	P
+217	T24	\N	\N	P
+218	T12	\N	\N	P
+219	T19	\N	\N	P
+223	T24	\N	\N	P
+228	T21	\N	\N	P
+231	T23	\N	\N	P
+240	T22	\N	\N	P
+239	T04	\N		P
+234	T05	\N		P
+220	T06	\N		P
+225	T07	\N		P
+238	T08	\N		P
+221	T10	\N		P
+226	T11	\N		P
+233	T12	\N		P
+232	T13	\N		P
+236	T14	\N		P
+235	T15	\N		P
+230	T16	\N		P
+237	T17	\N		P
+224	T18	\N		P
+227	T20	\N		P
+210	T01	\N		P
+222	T03	\N		P
+298	T18	\N	A ser desativado	P
+312	T17	\N	A ser desativado	P
+308	T19	\N	A ser desativado	P
+296	T20	\N	A ser desativado	P
+317	T01	\N	A ser desativado	P
+337	T02	\N	A ser desativado	P
+311	T09	\N	A ser desativado	P
+302	T10	\N	A ser desativado	P
+324	T11	\N	A ser desativado	P
+329	T19	\N	A ser desativado	P
+297	T02	\N	A ser desativado	P
+313	T03	\N	A ser desativado	P
+314	T05	\N	A ser desativado	P
+338	T18	\N	A ser desativado	P
+292	T08	\N	A ser desativado	P
+307	T01	\N	A ser desativado	P
+328	T17	\N	A ser desativado	P
+319	T10	\N	Linha telefone da OAB	P
+5	T01	\N		P
+348	T19	Tomada 19 do panel P1	\N	P
+352	T09	Tomada 9 do panel P1	\N	P
+360	T10	Tomada 10 do panel P1	\N	P
+365	T11	Tomada 11 do panel P1	\N	P
+397	T43	Tomada 43 do panel P2	\N	P
+398	T44	Tomada 44 do panel P2	\N	P
+401	T47	Tomada 47 do panel P2	\N	P
+405	T42	Tomada 42 do panel P2	\N	P
+406	T46	Tomada 46 do panel P2	\N	P
+416	T45	Tomada 45 do panel P2	\N	P
+418	T48	Tomada 48 do panel P2	\N	P
+436	T24	Tomada 24 do panel V1	\N	P
+437	T04	Tomada 4 do panel V1	\N	P
+438	T17	Tomada 17 do panel V1	\N	P
+439	T02	Tomada 2 do panel V1	\N	P
+440	T19	Tomada 19 do panel V1	\N	P
+441	T06	Tomada 6 do panel V1	\N	P
+442	T09	Tomada 9 do panel V1	\N	P
+443	T08	Tomada 8 do panel V1	\N	P
+444	T22	Tomada 22 do panel V1	\N	P
+445	T21	Tomada 21 do panel V1	\N	P
+446	T07	Tomada 7 do panel V1	\N	P
+447	T16	Tomada 16 do panel V1	\N	P
+448	T01	Tomada 1 do panel V1	\N	P
+449	T20	Tomada 20 do panel V1	\N	P
+450	T05	Tomada 5 do panel V1	\N	P
+451	T11	Tomada 11 do panel V1	\N	P
+452	T03	Tomada 3 do panel V1	\N	P
+453	T18	Tomada 18 do panel V1	\N	P
+454	T13	Tomada 13 do panel V1	\N	P
+455	T23	Tomada 23 do panel V1	\N	P
+456	T12	Tomada 12 do panel V1	\N	P
+457	T14	Tomada 14 do panel V1	\N	P
+458	T15	Tomada 15 do panel V1	\N	P
+459	T10	Tomada 10 do panel V1	\N	P
+460	T05	Tomada 5 do panel V2	\N	P
+344	T04	Tomada 4 do panel P1	V2-08 (pto 04)	P
+347	T05	Tomada 5 do panel P1	A1-19 (pto 05)	P
+368	T06	Tomada 6 do panel P1	(desativado)	P
+359	T08	Tomada 8 do panel P1	A1-15 (pto 08)	P
+380	T12	Tomada 12 do panel P1	A2-06 (pto 12)	P
+370	T07	Tomada 7 do panel P1	V1-08 (pto 07)	P
+374	T13	Tomada 13 do panel P1	V1-07 (pto 13)	P
+355	T15	Tomada 15 do panel P1	A1-20 (pto 15)	P
+351	T16	Tomada 16 do panel P1	(pto 16)	P
+383	T18	Tomada 18 do panel P1	A2-03 (pto 18)	P
+363	T21	Tomada 21 do panel P1	A2-08 (pto 21)	P
+369	T22	Tomada 22 do panel P1	A3-06 (pto 22)	P
+386	T23	Tomada 23 do panel P1	A2-14 (pto 23)	P
+357	T24	Tomada 24 do panel P1	V1-03 (pto 24)	P
+341	T26	Tomada 26 do panel P1	A) A3-02\r\nB) A4-03\r\n(pto 26)	P
+353	T27	Tomada 27 do panel P1	A1-18 (pto 27)	P
+385	T29	Tomada 29 do panel P1	V2-09 (pto 29)	P
+381	T30	Tomada 30 do panel P1	A1-05 (pto 30)	P
+378	T31	Tomada 31 do panel P1	V2-07 (pto 31)	P
+371	T33	Tomada 33 do panel P1	A2-15 (pto 33)	P
+384	T34	Tomada 34 do panel P1	V1-10 (pto 34)	P
+367	T36	Tomada 36 do panel P1	A2-05 (pto 36)	P
+354	T37	Tomada 37 do panel P1	A2-04 (pto 37)	P
+350	T38	Tomada 38 do panel P1	A1-12 (pto 38)	P
+387	T39	Tomada 39 do panel P1	(pto 39)	P
+379	T40	Tomada 40 do panel P1	A2-18 (pto 40)	P
+346	T42	Tomada 42 do panel P1	A3-11 (pto 42) (patch cable 43)	P
+364	T43	Tomada 43 do panel P1	(pto 43)	P
+349	T44	Tomada 44 do panel P1	A3-05 (pto 44)	P
+375	T46	Tomada 46 do panel P1	V1-06 (pto 46)	P
+373	T47	Tomada 47 do panel P1	A1-10 (pto 47)	P
+377	T48	Tomada 48 do panel P1	A1-21 (pto 48)	P
+425	T02	Tomada 2 do panel P2	A1-06 (pto 50)	P
+393	T03	Tomada 3 do panel P2	V2-05 (pto 51)	P
+432	T04	Tomada 4 do panel P2	A4-01 (pto 52)	P
+424	T06	Tomada 6 do panel P2	A3-07 (pto 54)	P
+391	T07	Tomada 7 do panel P2	A1-13 (pto 55)	P
+422	T09	Tomada 9 do panel P2	A1-11 (pto 57)	P
+421	T11	Tomada 11 do panel P2	A1-14 (pto 59)	P
+388	T10	Tomada 10 do panel P2	V2-04 (pto 58)	P
+415	T12	Tomada 12 do panel P2	(pto 60)	P
+430	T13	Tomada 13 do panel P2	A2-20 (pto 61)	P
+408	T15	Tomada 15 do panel P2	A2-17 (pto 63)	P
+399	T16	Tomada 16 do panel P2	A) A2-10\r\nB) A3-10\r\n(pto 64)	P
+426	T18	Tomada 18 do panel P2	A3-08 (pto 66)	P
+427	T19	Tomada 19 do panel P2	A2-07 (pto 67)	P
+417	T20	Tomada 20 do panel P2	(pto 68)	P
+404	T21	Tomada 21 do panel P2	A2-16 (pto 69)	P
+429	T23	Tomada 23 do panel P2	(pto 70)	P
+410	T24	Tomada 24 do panel P2	V2-01 (pto 72)	P
+392	T25	Tomada 25 do panel P2	A1-09 (pto 73)	P
+435	T27	Tomada 27 do panel P2	A3-04 (pto 75)	P
+396	T28	Tomada 28 do panel P2	V2-06 (pto 76)	P
+402	T29	Tomada 29 do panel P2	A1-03 (pto 77)	P
+412	T30	Tomada 30 do panel P2	(pto 78)	P
+407	T32	Tomada 32 do panel P2	V2-11 (pto 79)	P
+413	T33	Tomada 33 do panel P2	A1-02 (pto 81)	P
+411	T34	Tomada 34 do panel P2	(pto 81?)	P
+389	T35	Tomada 35 do panel P2	A1-08 (pto 82)	P
+400	T37	Tomada 37 do panel P2	(pto 84?)	P
+428	T38	Tomada 38 do panel P2	(pto 87)	P
+414	T39	Tomada 39 do panel P2	(pto 86)	P
+390	T40	Tomada 40 do panel P2	A3-09 (pto 89)	P
+461	T14	Tomada 14 do panel V2	\N	P
+462	T09	Tomada 9 do panel V2	\N	P
+463	T22	Tomada 22 do panel V2	\N	P
+464	T37	Tomada 37 do panel V2	\N	P
+465	T25	Tomada 25 do panel V2	\N	P
+466	T23	Tomada 23 do panel V2	\N	P
+467	T41	Tomada 41 do panel V2	\N	P
+468	T01	Tomada 1 do panel V2	\N	P
+469	T24	Tomada 24 do panel V2	\N	P
+470	T28	Tomada 28 do panel V2	\N	P
+471	T13	Tomada 13 do panel V2	\N	P
+472	T39	Tomada 39 do panel V2	\N	P
+473	T46	Tomada 46 do panel V2	\N	P
+474	T32	Tomada 32 do panel V2	\N	P
+475	T20	Tomada 20 do panel V2	\N	P
+476	T45	Tomada 45 do panel V2	\N	P
+477	T36	Tomada 36 do panel V2	\N	P
+478	T29	Tomada 29 do panel V2	\N	P
+479	T31	Tomada 31 do panel V2	\N	P
+480	T21	Tomada 21 do panel V2	\N	P
+481	T11	Tomada 11 do panel V2	\N	P
+482	T27	Tomada 27 do panel V2	\N	P
+483	T15	Tomada 15 do panel V2	\N	P
+484	T12	Tomada 12 do panel V2	\N	P
+485	T06	Tomada 6 do panel V2	\N	P
+486	T16	Tomada 16 do panel V2	\N	P
+487	T47	Tomada 47 do panel V2	\N	P
+488	T44	Tomada 44 do panel V2	\N	P
+489	T18	Tomada 18 do panel V2	\N	P
+490	T07	Tomada 7 do panel V2	\N	P
+491	T43	Tomada 43 do panel V2	\N	P
+492	T34	Tomada 34 do panel V2	\N	P
+493	T35	Tomada 35 do panel V2	\N	P
+494	T38	Tomada 38 do panel V2	\N	P
+495	T10	Tomada 10 do panel V2	\N	P
+496	T02	Tomada 2 do panel V2	\N	P
+497	T48	Tomada 48 do panel V2	\N	P
+498	T40	Tomada 40 do panel V2	\N	P
+499	T08	Tomada 8 do panel V2	\N	P
+500	T03	Tomada 3 do panel V2	\N	P
+501	T26	Tomada 26 do panel V2	\N	P
+502	T17	Tomada 17 do panel V2	\N	P
+503	T30	Tomada 30 do panel V2	\N	P
+504	T42	Tomada 42 do panel V2	\N	P
+505	T33	Tomada 33 do panel V2	\N	P
+506	T04	Tomada 4 do panel V2	\N	P
+507	T19	Tomada 19 do panel V2	\N	P
+508	T07	Tomada 7 do panel V2	\N	P
+509	T06	Tomada 6 do panel V2	\N	P
+510	T21	Tomada 21 do panel V2	\N	P
+511	T24	Tomada 24 do panel V2	\N	P
+512	T04	Tomada 4 do panel V2	\N	P
+513	T11	Tomada 11 do panel V2	\N	P
+514	T02	Tomada 2 do panel V2	\N	P
+515	T10	Tomada 10 do panel V2	\N	P
+516	T08	Tomada 8 do panel V2	\N	P
+517	T17	Tomada 17 do panel V2	\N	P
+518	T14	Tomada 14 do panel V2	\N	P
+519	T05	Tomada 5 do panel V2	\N	P
+520	T01	Tomada 1 do panel V2	\N	P
+521	T16	Tomada 16 do panel V2	\N	P
+522	T03	Tomada 3 do panel V2	\N	P
+523	T18	Tomada 18 do panel V2	\N	P
+524	T09	Tomada 9 do panel V2	\N	P
+525	T19	Tomada 19 do panel V2	\N	P
+526	T23	Tomada 23 do panel V2	\N	P
+527	T22	Tomada 22 do panel V2	\N	P
+528	T12	Tomada 12 do panel V2	\N	P
+529	T13	Tomada 13 do panel V2	\N	P
+530	T20	Tomada 20 do panel V2	\N	P
+531	T15	Tomada 15 do panel V2	\N	P
+382	T01	Tomada 1 do panel P1	A1-23 (pto 01)	P
+366	T02	Tomada 2 do panel P1	A1-22 (pto 02)	P
+362	T03	Tomada 3 do panel P1	A1-04 (pto 03)	P
+345	T14	Tomada 14 do panel P1	A) A3-12\r\nB) A2-09\r\n(pto 14)	P
+340	T17	Tomada 17 do panel P1	(pto 19)	P
+342	T20	Tomada 20 do panel P1	A3-03 (pto 20)	P
+376	T25	Tomada 25 do panel P1	V1-05 (pto 25)	P
+356	T28	Tomada 28 do panel P1	V2-08 (pto 28)	P
+372	T32	Tomada 32 do panel P1	A1-16 (pto 32)	P
+361	T35	Tomada 35 do panel P1	A2-13 (pto 35)	P
+343	T41	Tomada 41 do panel P1	V1-02 (pto 41)	P
+358	T45	Tomada 45 do panel P1	A2-19 (pto 45)	P
+395	T01	Tomada 1 do panel P2	(pto 49)	P
+423	T05	Tomada 5 do panel P2	V1-04 (pto 53)	P
+434	T08	Tomada 8 do panel P2	? (algum voice) (pto 56)	P
+409	T14	Tomada 14 do panel P2	A1-17 (pto 62)	P
+420	T17	Tomada 17 do panel P2	V1-01 (pto 65)	P
+403	T22	Tomada 22 do panel P2	A1-07 (pto 71)	P
+419	T26	Tomada 26 do panel P2	A) A2-22\r\nB) A1-01\r\n(pto 74)	P
+394	T31	Tomada 31 do panel P2	V2-03 (pto 80)	P
+433	T36	Tomada 36 do panel P2	V2-12 (pto 83) (copa)	P
+431	T41	Tomada 41 do panel P2	A) A4-02\r\nB) A2-21\r\n(pto 88)	P
+533	P02-T01	Mesa de testes		R
+534	P02-T16	Micro TI	Ponto dividido - micro do TI no 16A\nO 16B é para equipamentos em teste	R
+535	Lab01	Fone TI	A outra ponta do segmento não foi crimpada. O cabo segue até o rack com jack RJ-45. No momento está ativado em ramal telefônico.	R
+536	P08-T01	Telefone Norival		R
+537	P08-T02	Brother MFC-8820D		R
+538	P08-T03	Microcomputador Norival		R
+539	P08-T04	Samsung ML-4550		R
+540	P08-T07	Microcomputador Elias		R
+541	P08-T08	Desligado: ao lado do P08-T07		R
+542	P08-T09	Microcomputador Moacir		R
+543	P08-T10	Desligado: no totem do P08-T09		R
+544	P08-T05	Microcomputador Eliete		R
+545	P08-T06	Telefone Eliete		R
+546	P08-T11	Telefone diretor		R
+547	P08-T12	Microcomputador diretor		R
+549	P08-T22			R
+550	P08-T19			R
+551	P08-T20			R
+552	P08-T13			R
+553	P08-T14			R
+554	P08-T15			R
+555	P08-T16			R
+556	P08-T17			R
+271	T08	\N	Ramal do alarme	P
+229	T01	\N		P
+557	P08-T18		Fone Central de Mandados	R
+257	T20	\N	Ligada para os agentes de segurança	P
+577	T20	\N	\N	P
+560	T03	\N	\N	P
+566	T09	\N	\N	P
+563	T06	\N	\N	P
+567	T10	\N	\N	P
+578	T21	\N	\N	P
+564	T07	\N	\N	P
+559	T02	\N	\N	P
+572	T15	\N	\N	P
+576	T19	\N	\N	P
+569	T12	\N	\N	P
+568	T11	\N	\N	P
+561	T04	\N	\N	P
+579	T22	\N	\N	P
+570	T13	\N	\N	P
+562	T05	\N	\N	P
+580	T23	\N	\N	P
+575	T18	\N	\N	P
+571	T14	\N	\N	P
+574	T17	\N	\N	P
+581	T24	\N	\N	P
+565	T08	\N	\N	P
+573	T16	\N	\N	P
+548	P08-T21	Tomada P08-T21 do módulo MCDM01		R
+558	T01	\N		P
+532	P02-T18	Servidor de rede		R
 \.
 
 
@@ -7540,6 +7566,14 @@ ALTER TABLE ONLY rede_municipio
 
 
 --
+-- Name: pk_segmento_tomada; Type: CONSTRAINT; Schema: redes; Owner: sati; Tablespace: 
+--
+
+ALTER TABLE ONLY segmento_tomada
+    ADD CONSTRAINT pk_segmento_tomada PRIMARY KEY (cod_tomada);
+
+
+--
 -- Name: pkcategoriaelementorede; Type: CONSTRAINT; Schema: redes; Owner: sati; Tablespace: 
 --
 
@@ -8298,6 +8332,22 @@ ALTER TABLE ONLY rede_municipio
 
 
 --
+-- Name: fk_segmento_tomada_segmento; Type: FK CONSTRAINT; Schema: redes; Owner: sati
+--
+
+ALTER TABLE ONLY segmento_tomada
+    ADD CONSTRAINT fk_segmento_tomada_segmento FOREIGN KEY (cod_segmento) REFERENCES segmento(codigo) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_segmento_tomada_tomada; Type: FK CONSTRAINT; Schema: redes; Owner: sati
+--
+
+ALTER TABLE ONLY segmento_tomada
+    ADD CONSTRAINT fk_segmento_tomada_tomada FOREIGN KEY (cod_tomada) REFERENCES tomada(codigo) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: modulo_tipomodulo; Type: FK CONSTRAINT; Schema: redes; Owner: sati
 --
 
@@ -8351,14 +8401,6 @@ ALTER TABLE ONLY servidor
 
 ALTER TABLE ONLY servidor
     ADD CONSTRAINT servidor_unidade FOREIGN KEY (cod_unidade) REFERENCES public.unidade(codigo);
-
-
---
--- Name: tomada_segmento; Type: FK CONSTRAINT; Schema: redes; Owner: sati
---
-
-ALTER TABLE ONLY tomada
-    ADD CONSTRAINT tomada_segmento FOREIGN KEY (cod_segmento) REFERENCES segmento(codigo);
 
 
 --
@@ -9073,6 +9115,16 @@ REVOKE ALL ON TABLE segmento FROM PUBLIC;
 REVOKE ALL ON TABLE segmento FROM sati;
 GRANT ALL ON TABLE segmento TO sati;
 GRANT ALL ON TABLE segmento TO PUBLIC;
+
+
+--
+-- Name: segmento_tomada; Type: ACL; Schema: redes; Owner: sati
+--
+
+REVOKE ALL ON TABLE segmento_tomada FROM PUBLIC;
+REVOKE ALL ON TABLE segmento_tomada FROM sati;
+GRANT ALL ON TABLE segmento_tomada TO sati;
+GRANT ALL ON TABLE segmento_tomada TO PUBLIC;
 
 
 --

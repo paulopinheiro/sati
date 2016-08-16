@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -31,7 +32,9 @@ public class Tomada implements Serializable, Comparable {
     private String descricao;
     private String observacao;
     @ManyToOne
-    @JoinColumn(name="cod_segmento")
+    @JoinTable(name = "redes.segmento_tomada", joinColumns = {@JoinColumn(name = "cod_tomada")},
+                                               inverseJoinColumns = {@JoinColumn(name = "cod_segmento")
+    })
     private Segmento segmento;
 
     public Tomada() {}
