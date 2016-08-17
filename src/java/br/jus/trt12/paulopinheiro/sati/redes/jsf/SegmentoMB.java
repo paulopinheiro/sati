@@ -37,7 +37,6 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     @Inject private GeralMB geralMB;
 
-
     private Tomada tomada1;
 
     private Tomada tomada2;

@@ -28,6 +28,13 @@
                             <h:outputText id="tomada2" value="#{segmentoMB.tomada2}" />
                         </p:panelGrid>
                         <br />
+                        <p:panelGrid id="gridSegmento" columns="2">
+                            <f:facet name="header">Detalhes do segmento de cabo</f:facet>
+                            <p:outputLabel for="extensao" value="Extensão (em cm)" />
+                            <p:inputNumber id="extensao" value="#{segmentoMB.segmento.extensao}" dir="RTL" minValue="0" maxValue="99999" thousandSeparator="" />
+                            <p:outputLabel id="labelObservacao" for="observacao" value="Observação:" />
+                            <p:inputTextarea id="observacao" value="#{segmentoMB.segmento.observacao}" cols="50" rows="5" maxlength="255" />
+                        </p:panelGrid>
                         <p:dialog header="Dados da Tomada Remota" id="dlgTomadaRemota" widgetVar="dlgTomadaRemota" resizable="false" showEffect="bounce" hideEffect="bounce">
                             <p:panelGrid id="gridTomadaRemota" columns="2" rendered="#{segmentoMB.tipoTomada eq 0}">
                                 <p:outputLabel for="unidade" value="Unidade judiciária" />

@@ -25,7 +25,6 @@ public class SegmentoFacade extends AbstractFacade<Segmento> {
     @Override
     public void salvar(Segmento segmento) throws SatiLogicalException {
         if (segmento != null) {
-            if (segmento.getNome()==null||segmento.getNome().trim().isEmpty()) throw new SatiLogicalException("Informe um nome para o segmento");
             if (segmento.getExtensao()!=null && segmento.getExtensao() < 0) throw new SatiLogicalException("A extensão do segmento não pode ser negativa");
 
             // Segmento deve possuir duas e somente duas tomadas

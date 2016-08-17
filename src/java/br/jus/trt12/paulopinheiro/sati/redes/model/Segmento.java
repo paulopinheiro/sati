@@ -22,19 +22,8 @@ public class Segmento implements Serializable, Comparable {
     private Long codigo;
     private Integer extensao;
     private String observacao;
-    private String descricao;
-    @Basic(optional = false)
-    private String nome;
     @OneToMany(mappedBy = "segmento")
     private List<Tomada> tomadas;
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
 
     public Integer getExtensao() {
         return extensao;
@@ -42,14 +31,6 @@ public class Segmento implements Serializable, Comparable {
 
     public void setExtensao(Integer extensao) {
         this.extensao = extensao;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getObservacao() {
@@ -101,14 +82,15 @@ public class Segmento implements Serializable, Comparable {
 
     @Override
     public String toString() {
-        return getNome();
+        return "Segmento tomada " + getTomadas().get(0) + " a " + getTomadas().get(1);
     }
 
     @Override
     public int compareTo(Object o) {
+        if (o==null) return 0;
         Segmento outro = (Segmento) o;
-        Collator col = Collator.getInstance(Locale.getDefault());
-        return col.compare(this.getNome().toUpperCase(), outro.getNome().toUpperCase());
+        if (this.getExtensao()==null || outro.getExtensao()==null) return 0;
+        return this.getExtensao().compareTo(outro.getExtensao());
     }
 
 }
