@@ -49,7 +49,7 @@
                                 </p:selectOneMenu>
                                 <f:facet name="footer">
                                     <center>
-                                        <p:commandButton id="btConfirmarTomadaRemota" process=":formSegmento" update=":formSegmento" value="Confirmar" action="#{segmentoMB.alteraTomadaRemota}" disabled="#{empty segmentoMB.tomadaRemota}" oncomplete="PF('dlgTomadaRemota').hide();" icon="ui-icon-check" /> 
+                                        <p:commandButton id="btConfirmarTomadaRemota" process=":formSegmento:gridTomadaRemota" update=":formSegmento:tomada2" value="Confirmar" action="#{segmentoMB.alteraTomadaRemota}" disabled="#{empty segmentoMB.tomadaRemota}" oncomplete="PF('dlgTomadaRemota').hide();" icon="ui-icon-check" /> 
                                         <p:commandButton id="btCancelarTomadaRemota" value="Cancelar" onclick="PF('dlgTomadaRemota').hide();" immediate="true" icon="ui-icon-cancel" />
                                     </center>
                                 </f:facet>
@@ -57,7 +57,29 @@
                         </p:dialog>
                         <p:dialog header="Dados da Tomada de Painel" id="dlgTomadaPanel" widgetVar="dlgTomadaPanel" resizable="false" showEffect="bounce" hideEffect="bounce">
                             <p:panelGrid id="gridTomadaPanel" columns="2" rendered="#{segmentoMB.tipoTomada eq 1}">
-                                <h:outputText value="Grid tomada de panel" />
+                                <p:outputLabel for="rack" value="Rack" />
+                                <p:selectOneMenu id="rack" value="#{segmentoMB.rack}" converter="converteRack">
+                                    <p:ajax event="change" process="@this" update=":formSegmento:panel" listener="#{segmentoMB.alteraRack}" />
+                                    <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione um rack ---" />
+                                    <f:selectItems id="sgiRack" value="#{segmentoMB.racks}" var="rack" itemValue="#{rack}" itemLabel="#{rack}" />
+                                </p:selectOneMenu>
+                                <p:outputLabel for="panel" value="Painel" />
+                                <p:selectOneMenu id="panel" value="#{segmentoMB.panel}" converter="convertePanel">
+                                    <p:ajax event="change" process="@this" update=":formSegmento:tomadaPanel" listener="#{segmentoMB.alteraPanel}" />
+                                    <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione um painel ---" />
+                                    <f:selectItems id="sgiPanel" value="#{segmentoMB.panels}" var="panel" itemValue="#{panel}" itemLabel="#{panel}" />
+                                </p:selectOneMenu>
+                                <p:outputLabel for="tomadaPanel" value="Tomada" />
+                                <p:selectOneMenu id="tomadaPanel" value="#{segmentoMB.tomadaPanel}" converter="converteTomada">
+                                    <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione uma tomada ---" />
+                                    <f:selectItems id="sgiTomadaPanel" value="#{segmentoMB.tomadasPanel}" var="tomadaPanel" itemValue="#{tomadaPanel}" itemLabel="#{tomadaPanel.nome}" />
+                                </p:selectOneMenu>
+                                <f:facet name="footer">
+                                    <center>
+                                        <p:commandButton id="btConfirmarTomadaPanel" process=":formSegmento:gridTomadaPanel" update=":formSegmento:tomada2 :gmensagem :msgerro" value="Confirmar" action="#{segmentoMB.alteraTomadaPanel}" disabled="#{empty segmentoMB.tomadaPanel}" oncomplete="PF('dlgTomadaPanel').hide();" icon="ui-icon-check" /> 
+                                        <p:commandButton id="btCancelarTomadaPanel" value="Cancelar" onclick="PF('dlgTomadaPanel').hide();" immediate="true" icon="ui-icon-cancel" />
+                                    </center>
+                                </f:facet>
                             </p:panelGrid>
                         </p:dialog>
                     </h:form>

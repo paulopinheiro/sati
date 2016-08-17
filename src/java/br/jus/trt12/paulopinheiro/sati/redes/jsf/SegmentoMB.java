@@ -7,11 +7,16 @@ import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbBasicoMB;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Unidade;
 import br.jus.trt12.paulopinheiro.sati.redes.ejb.ModuloFacade;
+import br.jus.trt12.paulopinheiro.sati.redes.ejb.PanelFacade;
+import br.jus.trt12.paulopinheiro.sati.redes.ejb.RackFacade;
 import br.jus.trt12.paulopinheiro.sati.redes.ejb.SegmentoFacade;
 import br.jus.trt12.paulopinheiro.sati.redes.ejb.TomadaRemotaFacade;
 import br.jus.trt12.paulopinheiro.sati.redes.model.Modulo;
+import br.jus.trt12.paulopinheiro.sati.redes.model.Panel;
+import br.jus.trt12.paulopinheiro.sati.redes.model.Rack;
 import br.jus.trt12.paulopinheiro.sati.redes.model.Segmento;
 import br.jus.trt12.paulopinheiro.sati.redes.model.Tomada;
+import br.jus.trt12.paulopinheiro.sati.redes.model.TomadaPanel;
 import br.jus.trt12.paulopinheiro.sati.redes.model.TomadaRemota;
 import java.io.Serializable;
 import java.util.List;
@@ -27,6 +32,8 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
     @EJB private ModuloFacade moduloFacade;
     @EJB private TomadaRemotaFacade tomadaRemotaFacade;
     @EJB private UnidadeFacade unidadeFacade;
+    @EJB private RackFacade rackFacade;
+    @EJB private PanelFacade panelFacade;
 
     @Inject private GeralMB geralMB;
 
@@ -39,12 +46,17 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     private List<Unidade> unidades;
     private Unidade unidade;
-
     private List<Modulo> modulos;
     private Modulo modulo;
-
     private List<TomadaRemota> tomadasRemotas;
     private TomadaRemota tomadaRemota;
+
+    private List<Rack> racks;
+    private Rack rack;
+    private List<Panel> panels;
+    private Panel panel;
+    private List<TomadaPanel> tomadasPanel;
+    private TomadaPanel tomadaPanel;
 
     public SegmentoMB() {}
 
@@ -116,6 +128,72 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     public void alteraTomadaRemota() {
         setTomada2(getTomadaRemota());
+    }
+
+    public List<Rack> getRacks() {
+        if (this.racks==null) this.racks = this.rackFacade.findByMunicipio(this.getMunicipio());
+        return racks;
+    }
+
+    public void setRacks(List<Rack> racks) {
+        this.racks = racks;
+    }
+
+    public void alteraRack() {
+        setPanels(null);
+    }
+
+    public Rack getRack() {
+        if (this.rack==null) this.rack = new Rack();
+        return rack;
+    }
+
+    public void setRack(Rack rack) {
+        this.rack = rack;
+    }
+
+    public List<Panel> getPanels() {
+        if (this.panels==null) this.panels = this.panelFacade.findByRack(this.getRack());
+        return panels;
+    }
+
+    public void setPanels(List<Panel> panels) {
+        this.panels = panels;
+    }
+
+    public Panel getPanel() {
+        if (this.panel==null) this.panel = new Panel();
+        return panel;
+    }
+
+    public void setPanel(Panel panel) {
+        this.panel = panel;
+    }
+
+    public void alteraPanel() {
+        setTomadasPanel(null);
+    }
+
+    public List<TomadaPanel> getTomadasPanel() {
+        if (this.tomadasPanel==null) this.tomadasPanel = this.panelFacade.getListaTomadas(this.getPanel());
+        return tomadasPanel;
+    }
+
+    public void setTomadasPanel(List<TomadaPanel> tomadasPanel) {
+        this.tomadasPanel = tomadasPanel;
+    }
+
+    public TomadaPanel getTomadaPanel() {
+        if (this.tomadaPanel==null) this.tomadaPanel = new TomadaPanel();
+        return tomadaPanel;
+    }
+
+    public void setTomadaPanel(TomadaPanel tomadaPanel) {
+        this.tomadaPanel = tomadaPanel;
+    }
+
+    public void alteraTomadaPanel() {
+        this.setTomada2(this.getTomadaPanel());
     }
 
     public Integer getTipoTomada() {

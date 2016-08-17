@@ -79,9 +79,10 @@ public class TomadaPanel extends Tomada implements Serializable {
 
     @Override
     public int compareTo(Object o) {
+        if (o==null) return 0;
         TomadaPanel outra = (TomadaPanel) o;
+        if (this.getPanel()==null || outra.getPanel()==null) return 0;
         if (!this.getPanel().equals(outra.getPanel())) return this.getPanel().compareTo(outra.getPanel());
-        Collator col = Collator.getInstance(Locale.getDefault());
         return super.compareTo(o);
     }
 

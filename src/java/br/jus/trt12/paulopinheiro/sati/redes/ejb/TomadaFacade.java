@@ -23,11 +23,11 @@ public class TomadaFacade extends AbstractFacade<Tomada> {
 
     @Override
     public void salvar(Tomada tomada) throws SatiLogicalException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported"); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void excluir(Tomada tomada) throws SatiLogicalException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported"); //To change body of generated methods, choose Tools | Templates.
     }
 }
