@@ -43,16 +43,14 @@
                                     <f:selectItems id="sgiModulo" value="#{segmentoMB.modulos}" var="modulo" itemValue="#{modulo}" itemLabel="#{modulo}" />
                                 </p:selectOneMenu>
                                 <p:outputLabel for="tomadaRemota" value="Tomada Remota" />
-                                <p:selectOneMenu id="tomadaRemota" value="#{segmentoMB.tomadaRemota}" converter="converteTomadaRemota">
+                                <p:selectOneMenu id="tomadaRemota" value="#{segmentoMB.tomadaRemota}" converter="converteTomada">
                                     <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione a tomada ---" />
                                     <f:selectItems id="sgiTomadaRemota" value="#{segmentoMB.tomadasRemotas}" var="tomadaRemota" itemValue="#{tomadaRemota}" itemLabel="#{tomadaRemota.nome}" />
                                 </p:selectOneMenu>
                                 <f:facet name="footer">
                                     <center>
-
-                                            <p:commandButton id="btConfirmarTomadaRemota" process=":formSegmento" update=":formSegmento" value="Confirmar" action="#{segmentoMB.alteraTomadaRemota}" disabled="#{empty segmentoMB.tomadaRemota}" oncomplete="PF('dlgTomadaRemota').hide();" icon="ui-icon-check" /> 
-                                            <p:commandButton id="btCancelarTomadaRemota" value="Cancelar" onclick="PF('dlgTomadaRemota').hide();" immediate="true" icon="ui-icon-cancel" />
-
+                                        <p:commandButton id="btConfirmarTomadaRemota" process=":formSegmento" update=":formSegmento" value="Confirmar" action="#{segmentoMB.alteraTomadaRemota}" disabled="#{empty segmentoMB.tomadaRemota}" oncomplete="PF('dlgTomadaRemota').hide();" icon="ui-icon-check" /> 
+                                        <p:commandButton id="btCancelarTomadaRemota" value="Cancelar" onclick="PF('dlgTomadaRemota').hide();" immediate="true" icon="ui-icon-cancel" />
                                     </center>
                                 </f:facet>
                             </p:panelGrid>

@@ -1,6 +1,6 @@
 package br.jus.trt12.paulopinheiro.sati.redes.jsf.converter;
 
-import br.jus.trt12.paulopinheiro.sati.redes.model.TomadaRemota;
+import br.jus.trt12.paulopinheiro.sati.redes.model.Tomada;
 import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItems;
@@ -9,8 +9,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter(value = "converteTomadaRemota", forClass = TomadaRemota.class)
-public class TomadaRemotaConverter implements Converter {
+@FacesConverter(value = "converteTomada", forClass = Tomada.class)
+public class TomadaConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -26,15 +26,15 @@ public class TomadaRemotaConverter implements Converter {
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value instanceof String) return "-1";
 
-        TomadaRemota tomada = (TomadaRemota) value;
+        Tomada tomada = (Tomada) value;
 
         return String.valueOf(tomada.getCodigo());
     }
 
-    private TomadaRemota tomadaById(List<TomadaRemota> listaTomadas, int id) {
-        TomadaRemota resposta = null;
+    private Tomada tomadaById(List<Tomada> listaTomadas, int id) {
+        Tomada resposta = null;
 
-        for (TomadaRemota u : listaTomadas) {
+        for (Tomada u : listaTomadas) {
             if (u.getCodigo() == id) {
                 resposta = u;
                 break;
@@ -43,7 +43,7 @@ public class TomadaRemotaConverter implements Converter {
         return resposta;
     }
 
-    private List<TomadaRemota> listaTomadas(UISelectOne selectOne) {
+    private List<Tomada> listaTomadas(UISelectOne selectOne) {
         UISelectItems siTomada = null;
 
         for (UIComponent ui : selectOne.getChildren()) {
@@ -53,9 +53,9 @@ public class TomadaRemotaConverter implements Converter {
             }
         }
         if (siTomada == null) {
-            throw new RuntimeException("Problemas para validar objeto TomadaRemota");
+            throw new RuntimeException("Problemas para validar objeto Tomada");
         }
 
-        return (List<TomadaRemota>) siTomada.getValue();
+        return (List<Tomada>) siTomada.getValue();
     }    
 }
