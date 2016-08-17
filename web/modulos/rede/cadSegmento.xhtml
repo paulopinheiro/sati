@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <f:metadata>
+            <f:viewParam id="tomada1Cod" name="tomada1Cod" value="#{segmentoMB.tomada1}" converter="#{tomadaConverterMB}" />
+        </f:metadata>
+        <h:body>
+            <ui:composition template="./../../resources/templates/menuSuperior.xhtml">
+                <ui:define name="titulo">Segmento da tomada #{segmentoMB.tomada1}</ui:define>
+                <ui:define name="top">Segmento da tomada #{segmentoMB.tomada1}</ui:define>
+                <ui:define name="content">
+                    <h:form id="formSegmento">
+                        <p:panelGrid id="gridEscolhaTomada" columns="2">
+                            <f:facet name="header">Escolha a tomada na outra ponta do segmento</f:facet>
+                            <p:outputLabel for="tipoTomada" value="Tipo da tomada" />
+                            <p:selectOneRadio id="tipoTomada" value="#{segmentoMB.tipoTomada}">
+                                <p:ajax event="change" process="@this" update="@form" listener="#{segmentoMB.alteraTipoTomada}" />
+                                <f:selectItem itemValue="0" itemLabel="Tomada remota" />
+                                <f:selectItem itemValue="1" itemLabel="Tomada de painel" />
+                            </p:selectOneRadio>
+                            <p:button id="btTomadaRemota" onclick="PF('dlgTomadaRemota').show(); return false;" value="Tomada" rendered="#{segmentoMB.tipoTomada eq 0}" />
+                            <p:button id="btTomadaPanel" onclick="PF('dlgTomadaPanel').show(); return false;" value="Tomada" rendered="#{segmentoMB.tipoTomada eq 1}" />
+                            <h:outputText id="tomada2" value="#{segmentoMB.tomada2}" />
+                        </p:panelGrid>
+                        <br />
+                        <p:dialog header="Dados da Tomada Remota" id="dlgTomadaRemota" widgetVar="dlgTomadaRemota" resizable="false" showEffect="bounce" hideEffect="bounce">
+                            <p:panelGrid id="gridTomadaRemota" columns="2" rendered="#{segmentoMB.tipoTomada eq 0}">
+                                <p:outputLabel for="unidade" value="Unidade judiciária" />
+                                <p:selectOneMenu id="unidade" value="#{segmentoMB.unidade}" converter="converteUnidade">
+                                    <p:ajax event="change" process="@this" update=":formSegmento:modulo" listener="#{segmentoMB.alteraUnidade}" />
+                                    <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione a unidade judiciária ---" />
+                                    <f:selectItems id="sgiUnidade" value="#{segmentoMB.unidades}" var="modulo" itemValue="#{unidade}" itemLabel="#{unidade}" />
+                                </p:selectOneMenu>
+                                <p:outputLabel for="modulo" value="Módulo" />
+                                <p:selectOneMenu id="modulo" value="#{segmentoMB.modulo}" converter="converteModulo">
+                                    <p:ajax event="change" process="@this" update=":formSegmento:tomadaRemota" listener="#{segmentoMB.alteraModulo}" />
+                                    <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione o Módulo ---" />
+                                    <f:selectItems id="sgiModulo" value="#{segmentoMB.modulos}" var="modulo" itemValue="#{modulo}" itemLabel="#{modulo}" />
+                                </p:selectOneMenu>
+                                <p:outputLabel for="tomadaRemota" value="Tomada Remota" />
+                                <p:selectOneMenu id="tomadaRemota" value="#{segmentoMB.tomadaRemota}" converter="converteTomadaRemota">
+                                    <f:selectItem noSelectionOption="true" itemValue="-1" itemLabel="--- Selecione a tomada ---" />
+                                    <f:selectItems id="sgiTomadaRemota" value="#{segmentoMB.tomadasRemotas}" var="tomadaRemota" itemValue="#{tomadaRemota}" itemLabel="#{tomadaRemota.nome}" />
+                                </p:selectOneMenu>
+                                <f:facet name="footer">
+                                    <center>
+
+                                            <p:commandButton id="btConfirmarTomadaRemota" process=":formSegmento" update=":formSegmento" value="Confirmar" action="#{segmentoMB.alteraTomadaRemota}" disabled="#{empty segmentoMB.tomadaRemota}" oncomplete="PF('dlgTomadaRemota').hide();" icon="ui-icon-check" /> 
+                                            <p:commandButton id="btCancelarTomadaRemota" value="Cancelar" onclick="PF('dlgTomadaRemota').hide();" immediate="true" icon="ui-icon-cancel" />
+
+                                    </center>
+                                </f:facet>
+                            </p:panelGrid>
+                        </p:dialog>
+                        <p:dialog header="Dados da Tomada de Painel" id="dlgTomadaPanel" widgetVar="dlgTomadaPanel" resizable="false" showEffect="bounce" hideEffect="bounce">
+                            <p:panelGrid id="gridTomadaPanel" columns="2" rendered="#{segmentoMB.tipoTomada eq 1}">
+                                <h:outputText value="Grid tomada de panel" />
+                            </p:panelGrid>
+                        </p:dialog>
+                    </h:form>
+                    <p:growl id="gmensagem" globalOnly="true" />
+                    <p:messages id="msgerro" globalOnly="true" showDetail="false" showSummary="true"/>
+                </ui:define>
+            </ui:composition>
+        </h:body>
+    </f:view>
+</html>

@@ -106,7 +106,9 @@ public class Tomada implements Serializable, Comparable {
 
     @Override
     public int compareTo(Object o) {
-        Tomada t = (Tomada)o;
+        if (o==null) return 0;
+        Tomada t = (Tomada) o;
+        if (this.getNome()==null || t.getNome()==null) return 0;
         Collator col = Collator.getInstance(Locale.getDefault());
         return col.compare(this.getNome().toUpperCase(), t.getNome().toUpperCase());
     }

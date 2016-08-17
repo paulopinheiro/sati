@@ -17,9 +17,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "modulo", catalog = "sati", schema = "redes")
-@NamedQueries(
-    @NamedQuery(name="Modulo.modulosByMunicipio", query = "Select m from Modulo m where m.unidade.municipio = :municipio order by m.unidade.nome, m.identificacao")
-)
+@NamedQueries({
+    @NamedQuery(name="Modulo.modulosByMunicipio", query = "Select m from Modulo m where m.unidade.municipio = :municipio order by m.unidade.nome, m.identificacao"),
+    @NamedQuery(name="Modulo.modulosByUnidade", query = "Select m from Modulo m where m.unidade = :unidade order by m.identificacao")
+})
 public class Modulo implements Serializable, Comparable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -119,7 +120,10 @@ public class Modulo implements Serializable, Comparable {
 
     @Override
     public String toString() {
-        return getIdentificacao();
+        String resposta = getIdentificacao();
+        if (this.getTipoModulo()!=null) resposta = resposta + " (" + this.getTipoModulo() + ")";
+        if (this.getLocalizacao()!= null) resposta = resposta + " - " + this.getLocalizacao();
+        return resposta;
     }
 
     @Override

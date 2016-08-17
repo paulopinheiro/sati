@@ -63,7 +63,9 @@ public class TomadaRemota extends Tomada implements Serializable {
 
     @Override
     public int compareTo(Object o) {
+        if (o==null) return 0;
         TomadaRemota outra = (TomadaRemota) o;
+        if (this.getModulo()==null||outra.getModulo()==null) return 0;
         if (!this.getModulo().equals(outra.getModulo())) return this.getModulo().compareTo(outra.getModulo());
         return super.compareTo(o);
     }

@@ -5,6 +5,7 @@ import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
 import br.jus.trt12.paulopinheiro.sati.redes.model.Modulo;
 import br.jus.trt12.paulopinheiro.sati.redes.model.TipoModulo;
 import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
+import br.jus.trt12.paulopinheiro.sati.geral.model.Unidade;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -57,5 +58,14 @@ public class ModuloFacade extends AbstractFacade<Modulo> {
     @Override
     public void excluir(Modulo entity) throws SatiLogicalException {
         super.remove(entity);
+    }
+
+    public List<Modulo> findByUnidade(Unidade unidade) {
+        List<Modulo> resposta = null;
+        Query query = getEntityManager().createNamedQuery("Modulo.modulosByUnidade");
+        query.setParameter("unidade", unidade);
+        resposta = query.getResultList();
+        Collections.sort(resposta);
+        return resposta;
     }
 }
