@@ -30,98 +30,46 @@
                     <h:form id="formMenu">
                         <p:menubar id="menubarGeral">
                             <p:submenu id="submenuSistema" label="Sistema">
-                                <p:menuitem id="menuHome">
-                                    <h:link outcome="/home.xhtml" value="Home SATI" />
-                                </p:menuitem>
-                                <p:menuitem id="sessao">
-                                    <h:link outcome="/sessao.xhtml" value="Dados da Sessão" />
-                                </p:menuitem>
+                                <p:menuitem id="menuitemHome" value="Home SATI" outcome="/home.xhtml" />
+                                <p:menuitem id="menuitemSessao" outcome="/sessao.xhtml" value="Dados da Sessão" />
                                 <p:separator />
-                                <p:menuitem id="menuitemSair">
-                                    <p:commandLink ajax="false" id="sair" value="Sair" action="#{geralMB.desconectar}" />
-                                </p:menuitem>
+                                <p:menuitem id="menuitemSair" value="Sair" action="#{geralMB.desconectar}" />
                             </p:submenu>
                             <p:submenu id="menuGeral" label="Cadastros gerais">
-                                <p:menuitem id="cadProgint">
-                                    <h:link outcome="/modulos/geral/cadProgint.xhtml" value="Técnicos" />
-                                </p:menuitem>
-                                <p:menuitem id="cadAreaTI">
-                                    <h:link outcome="/modulos/geral/cadAreaTI.xhtml" value="Áreas de atendimento" />
-                                </p:menuitem>
-                                <p:menuitem id="cadMunicipio">
-                                    <h:link outcome="/modulos/geral/cadMunicipio.xhtml" value="Municípios/Unidades" />
-                                </p:menuitem>
-                                <p:menuitem id="cadUsuarioFinal">
-                                    <h:link outcome="/modulos/geral/cadUsuarioFinal.xhtml" value="Usuários finais" />
-                                </p:menuitem>
+                                <p:menuitem id="cadProgint" outcome="/modulos/geral/cadProgint.xhtml" value="Técnicos" />
+                                <p:menuitem id="cadAreaTI" outcome="/modulos/geral/cadAreaTI.xhtml" value="Áreas de atendimento" />
+                                <p:menuitem id="cadMunicipio" outcome="/modulos/geral/cadMunicipio.xhtml" value="Municípios/Unidades" />
+                                <p:menuitem id="cadUsuarioFinal" outcome="/modulos/geral/cadUsuarioFinal.xhtml" value="Usuários finais" />
                             </p:submenu>
                             <p:submenu id="menuModulosSistema" label="Módulos do Sistema">
                                 <p:submenu id="modRedes" label="Redes">
-                                    <p:menuitem id="menuRacks">
-                                        <h:link outcome="/modulos/rede/cadRack" value="Racks/Painéis" />
-                                    </p:menuitem>
-                                    <p:menuitem id="menuModulos">
-                                        <h:link outcome="/modulos/rede/cadModulo" value="Módulos/Tomadas" />
-                                    </p:menuitem>
+                                    <p:menuitem id="menuRacks" outcome="/modulos/rede/cadRack" value="Racks/Painéis" />
+                                    <p:menuitem id="menuModulos" outcome="/modulos/rede/cadModulo" value="Módulos/Tomadas" />
                                 </p:submenu>
-                                <p:menuitem id="modViagens">
-                                    <h:link outcome="/modulos/viagem/lisViagens" value="Viagens" />
-                                </p:menuitem>
+                                <p:menuitem id="modViagens" outcome="/modulos/viagem/lisViagens" value="Viagens" />
                                 <p:submenu id="modCalendario" label="Calendário">
-                                    <p:menuitem id="modCalendarioFeriadosMoveis">
-                                        <h:link outcome="/modulos/calendario/cadFeriadoMovel" value="Feriados Móveis" />
-                                    </p:menuitem>
-                                    <p:menuitem id="modCalendarioFeriadosFixos">
-                                        <h:link outcome="/modulos/calendario/cadFeriadoFixo" value="Feriados Fixos" />
-                                    </p:menuitem>
-                                    <p:menuitem id="modCalendarioTransferencias">
-                                        <h:link outcome="/modulos/calendario/cadTransferencia" value="Transferências" />
-                                    </p:menuitem>
+                                    <p:menuitem id="modCalendarioFeriadosMoveis" outcome="/modulos/calendario/cadFeriadoMovel" value="Feriados Móveis" />
+                                    <p:menuitem id="modCalendarioFeriadosFixos" outcome="/modulos/calendario/cadFeriadoFixo" value="Feriados Fixos" />
+                                    <p:menuitem id="modCalendarioTransferencias" outcome="/modulos/calendario/cadTransferencia" value="Transferências" />
                                 </p:submenu>
                                 <p:submenu id="moduloEquipamentos" label="Equipamentos">
-                                    <p:menuitem id="cadMicrocomputadores">
-                                        <h:link outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=1" value="Microcomputadores" />
-                                    </p:menuitem>
-                                    <p:menuitem id="cadImpressoras">
-                                        <h:link outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=2" value="Impressoras" />
-                                    </p:menuitem>
-                                    <p:menuitem id="cadRoteadores">
-                                        <h:link outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=3" value="Roteadores" />
-                                    </p:menuitem>
-                                    <p:menuitem id="cadSwitches">
-                                        <h:link outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=4" value="Switches" />
-                                    </p:menuitem>
-                                    <p:menuitem id="cadHubs">
-                                        <h:link outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=5" value="Hubs" />
-                                    </p:menuitem>
-                                    <p:menuitem id="cadMonitores">
-                                        <h:link outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=6" value="Monitores" />
-                                    </p:menuitem>
-                                    <p:menuitem id="cadNoBreaks">
-                                        <h:link outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=7" value="No-breaks" />
-                                    </p:menuitem>
-                                    <p:menuitem id="cadScanners">
-                                        <h:link outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=8" value="Scanners" />
-                                    </p:menuitem>
+                                    <p:menuitem id="cadMicrocomputadores" outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=1" value="Microcomputadores" />
+                                    <p:menuitem id="cadImpressoras" outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=2" value="Impressoras" />
+                                    <p:menuitem id="cadRoteadores" outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=3" value="Roteadores" />
+                                    <p:menuitem id="cadSwitches" outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=4" value="Switches" />
+                                    <p:menuitem id="cadHubs" outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=5" value="Hubs" />
+                                    <p:menuitem id="cadMonitores" outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=6" value="Monitores" />
+                                    <p:menuitem id="cadNoBreaks" outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=7" value="No-breaks" />
+                                    <p:menuitem id="cadScanners" outcome="/modulos/equipamentos/listaEquipamentos.xhtml?tipoEquipamentoCod=8" value="Scanners" />
                                     <p:separator />
-                                    <p:menuitem id="recuperaEquipamentos">
-                                        <h:link outcome="/modulos/equipamentos/recuperaEquipamentos" value="Recuperar baixados" />
-                                    </p:menuitem>
-                                    <p:menuitem id="movimentaEquipamentos">
-                                        <h:link outcome="/modulos/equipamentos/movimentaEquipamentos" value="Movimentar" />
-                                    </p:menuitem>
+                                    <p:menuitem id="recuperaEquipamentos" outcome="/modulos/equipamentos/recuperaEquipamentos" value="Recuperar baixados" />
+                                    <p:menuitem id="movimentaEquipamentos" outcome="/modulos/equipamentos/movimentaEquipamentos" value="Movimentar" />
                                     <p:separator />
-                                    <p:menuitem id="cadModelo">
-                                        <h:link outcome="/modulos/equipamentos/cadModelo.xhtml" value="Modelos/Lotes" />
-                                    </p:menuitem>
+                                    <p:menuitem id="cadModelo" outcome="/modulos/equipamentos/cadModelo.xhtml" value="Modelos/Lotes" />
                                 </p:submenu>
                                 <p:submenu id="moduloCertificacao" label="Certificação Digital">
-                                    <p:menuitem id="cadCertificado">
-                                        <h:link outcome="/modulos/certificacaodigital/cadCertificado" value="Certificados" />
-                                    </p:menuitem>
-                                    <p:menuitem id="buscaVencimento">
-                                        <h:link outcome="/modulos/certificacaodigital/buscaVencimento" value="Verificar Vencimento" />
-                                    </p:menuitem>
+                                    <p:menuitem id="cadCertificado" outcome="/modulos/certificacaodigital/cadCertificado" value="Certificados" />
+                                    <p:menuitem id="buscaVencimento" outcome="/modulos/certificacaodigital/buscaVencimento" value="Verificar Vencimento" />
                                 </p:submenu>
                             </p:submenu>
                             <f:facet name="options">
