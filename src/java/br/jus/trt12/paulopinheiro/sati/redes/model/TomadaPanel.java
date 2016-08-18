@@ -1,8 +1,6 @@
 package br.jus.trt12.paulopinheiro.sati.redes.model;
 
 import java.io.Serializable;
-import java.text.Collator;
-import java.util.Locale;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;

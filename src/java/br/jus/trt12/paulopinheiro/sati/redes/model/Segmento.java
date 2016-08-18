@@ -1,19 +1,22 @@
 package br.jus.trt12.paulopinheiro.sati.redes.model;
 
 import java.io.Serializable;
-import java.text.Collator;
-import java.util.List;
-import java.util.Locale;
-import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "segmento", catalog = "sati", schema = "redes")
+@NamedQueries({
+    @NamedQuery(name="Segmento.findByTomada", query = "Select s from Segmento s where s.tomada1 = :tomada or s.tomada2 = :tomada"),
+    @NamedQuery(name="Segmento.findOutraPontaTomada", query = "Select s.tomada1 from Segmento s where s.tomada2 = :tomada UNION Select s.tomada2 from Segmento s where s.tomada1 = :tomada")
+})
 public class Segmento implements Serializable, Comparable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -22,8 +25,12 @@ public class Segmento implements Serializable, Comparable {
     private Long codigo;
     private Integer extensao;
     private String observacao;
-    @OneToMany(mappedBy = "segmento")
-    private List<Tomada> tomadas;
+    @ManyToOne(optional=false)
+    @JoinColumn(name="cod_tomada1")
+    private Tomada tomada1;
+    @ManyToOne(optional=false)
+    @JoinColumn(name="cod_tomada2")
+    private Tomada tomada2;
 
     public Integer getExtensao() {
         return extensao;
@@ -41,17 +48,22 @@ public class Segmento implements Serializable, Comparable {
         this.observacao = observacao;
     }
 
-    //sinalizar quando menos de 2 tomadas
-    public List<Tomada> getTomadas() {
-        return tomadas;
+    public Tomada getTomada1() {
+        return tomada1;
     }
 
-    //impedir mais de 2 tomadas
-    //sinalizar quando menos de 2 tomadas
-    public void setTomadas(List<Tomada> tomadas) {
-        this.tomadas = tomadas;
+    public void setTomada1(Tomada tomada1) {
+        this.tomada1 = tomada1;
     }
-    
+
+    public Tomada getTomada2() {
+        return tomada2;
+    }
+
+    public void setTomada2(Tomada tomada2) {
+        this.tomada2 = tomada2;
+    }
+
     public Long getCodigo() {
         return codigo;
     }
@@ -82,7 +94,7 @@ public class Segmento implements Serializable, Comparable {
 
     @Override
     public String toString() {
-        return "Segmento tomada " + getTomadas().get(0) + " a " + getTomadas().get(1);
+        return "Segmento tomada " + getTomada1().getNome() + " a " + getTomada2().getNome();
     }
 
     @Override
