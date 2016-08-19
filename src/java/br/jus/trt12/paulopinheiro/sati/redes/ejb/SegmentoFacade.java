@@ -52,6 +52,8 @@ public class SegmentoFacade extends AbstractFacade<Segmento> {
     }
 
     private void editarSegmento(Segmento segmento) throws SatiLogicalException {
+        // Conferir se isso não traz o mesmo objeto ao invés de buscar no banco de dados novamente
+        // Ou, pior ainda, se isso não "atualiza" o objeto segmento inadvertidamente
         Segmento original = super.find(segmento.getCodigo());
         if (original == null) throw new InfraEstruturaException("Ocorreu um erro ao alterar dados do segmento. Ele pode ter sido excluído. Pesquise-o novamente.");
 

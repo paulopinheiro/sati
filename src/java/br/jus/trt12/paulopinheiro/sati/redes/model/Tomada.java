@@ -2,8 +2,10 @@ package br.jus.trt12.paulopinheiro.sati.redes.model;
 
 import java.io.Serializable;
 import java.text.Collator;
+import java.util.List;
 import java.util.Locale;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -11,9 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -31,11 +31,11 @@ public class Tomada implements Serializable, Comparable {
     private String nome;
     private String descricao;
     private String observacao;
-    @ManyToOne
-    @JoinTable(name = "redes.segmento_tomada", joinColumns = {@JoinColumn(name = "cod_tomada")},
-                                               inverseJoinColumns = {@JoinColumn(name = "cod_segmento")
-    })
-    private Segmento segmento;
+
+    @OneToOne(mappedBy = "tomada1", cascade=CascadeType.ALL)
+    private Segmento segmentoRef1;
+    @OneToOne(mappedBy = "tomada2", cascade=CascadeType.ALL)
+    private Segmento segmentoRef2;
 
     public Tomada() {}
 
@@ -63,20 +63,40 @@ public class Tomada implements Serializable, Comparable {
         this.observacao = observacao;
     }
 
-    public Segmento getSegmento() {
-        return segmento;
-    }
-
-    public void setSegmento(Segmento segmento) {
-        this.segmento = segmento;
-    }
-
     public Long getCodigo() {
         return codigo;
     }
 
     public void setCodigo(Long codigo) {
         this.codigo = codigo;
+    }
+
+    public Segmento getSegmentoRef1() {
+        return segmentoRef1;
+    }
+
+    public void setSegmentoRef1(Segmento segmentoRef1) {
+        this.segmentoRef1 = segmentoRef1;
+    }
+
+    public Segmento getSegmentoRef2() {
+        return segmentoRef2;
+    }
+
+    public void setSegmentoRef2(Segmento segmentoRef2) {
+        this.segmentoRef2 = segmentoRef2;
+    }
+
+    public boolean isDesligada() {
+        return !this.hasSegmento();
+    }
+
+    public boolean hasSegmento() {
+        return (this.getSegmentoRef1()!=null)||(this.getSegmentoRef2()!=null);
+    }
+
+    public boolean isInconsistente() {
+        return (this.getSegmentoRef1()!=null)&&(this.getSegmentoRef2()!=null);
     }
 
     @Override

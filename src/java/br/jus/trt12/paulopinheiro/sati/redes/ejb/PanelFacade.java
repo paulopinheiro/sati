@@ -133,7 +133,7 @@ public class PanelFacade extends AbstractFacade<Panel> {
             // Implementar verificação: ramal (voice) e segmento são mutuamente exclusivos
             // ou uma tomada é voice ou está ligada a outra remota (ou ainda por extensão)
             if (tomadaPanel.getRamal()!=null) tomadaPanel.setRamal(tomadaPanel.getRamal().trim());
-            if ((tomadaPanel.getSegmento()!=null)&&(tomadaPanel.getRamal()!=null)) throw new SatiLogicalException("Uma tomada de painel não pode estar ao mesmo tempo ligada a um segmento e ativada por um ramal");
+            if ((tomadaPanel.hasSegmento())&&(tomadaPanel.hasRamal())) throw new SatiLogicalException("Uma tomada de painel não pode estar ao mesmo tempo ligada a um segmento e ativada por um ramal");
 
             try {
                 getEntityManager().merge(tomadaPanel);

@@ -46,20 +46,26 @@ public class TomadaPanel extends Tomada implements Serializable {
         this.ramal = ramal;
     }
 
+    @Override
     public boolean isDesligada() {
-        return ((this.ramal==null)||(this.ramal.isEmpty())) && (super.getSegmento()==null);
+        return (!this.hasRamal()) && (!this.hasSegmento());
     }
 
     public boolean isVoice() {
-        return ((this.ramal!=null)&&(!this.ramal.isEmpty())) && (super.getSegmento()==null);
+        return (this.hasRamal()) && (!this.hasSegmento());
     }
 
     public boolean isDados() {
-        return ((this.ramal==null)||(this.ramal.isEmpty())) && (super.getSegmento()!=null);
+        return (!this.hasRamal()) && (this.hasSegmento());
     }
 
-    public boolean isIrregular() {
-        return ((this.ramal!=null)&&(!this.ramal.isEmpty())) && (super.getSegmento()!=null);
+    @Override
+    public boolean isInconsistente() {
+        return (super.isInconsistente())||((this.hasRamal()) && (this.hasSegmento()));
+    }
+
+    public boolean hasRamal() {
+        return this.ramal!=null && !this.ramal.trim().isEmpty();
     }
 
     @Override

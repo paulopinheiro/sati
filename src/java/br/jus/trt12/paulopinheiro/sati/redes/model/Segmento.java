@@ -5,9 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -25,10 +25,10 @@ public class Segmento implements Serializable, Comparable {
     private Long codigo;
     private Integer extensao;
     private String observacao;
-    @ManyToOne(optional=false)
+    @OneToOne(optional=false)
     @JoinColumn(name="cod_tomada1")
     private Tomada tomada1;
-    @ManyToOne(optional=false)
+    @OneToOne(optional=false)
     @JoinColumn(name="cod_tomada2")
     private Tomada tomada2;
 
