@@ -4,7 +4,6 @@ import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
 import br.jus.trt12.paulopinheiro.sati.exceptions.InfraEstruturaException;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.AreaTIFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
-import br.jus.trt12.paulopinheiro.sati.geral.model.AreaTI;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Municipio;
 import br.jus.trt12.paulopinheiro.sati.geral.model.Progint;
 import br.jus.trt12.paulopinheiro.sati.util.Util;

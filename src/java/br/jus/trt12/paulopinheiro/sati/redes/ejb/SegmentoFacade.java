@@ -1,6 +1,5 @@
 package br.jus.trt12.paulopinheiro.sati.redes.ejb;
 
-import br.jus.trt12.paulopinheiro.sati.exceptions.InfraEstruturaException;
 import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
 import br.jus.trt12.paulopinheiro.sati.redes.model.Segmento;
@@ -31,36 +30,38 @@ public class SegmentoFacade extends AbstractFacade<Segmento> {
         if (segmento != null) {
             validacaoPreliminarDados(segmento);
 
-            if (segmento.getCodigo()==null) criarSegmento(segmento);
-            else editarSegmento(segmento);
+            if (segmento.getCodigo()==null) {
+                validarNovoSegmento(segmento);
+                super.create(segmento);
+            }
+            else {
+                validarAlteracaoSegmento(segmento);
+                super.edit(segmento);
+            }
+            getEntityManager().getEntityManagerFactory().getCache().evict(Tomada.class);
         }
     }
 
     private void validacaoPreliminarDados(Segmento segmento) throws SatiLogicalException {
-        if (segmento.getExtensao()!=null && segmento.getExtensao() <= 0) throw new SatiLogicalException("A extensão do segmento deve ser maior do que zero");
+        if (segmento.getExtensao()!=null && segmento.getExtensao() < 0) throw new SatiLogicalException("A extensão do segmento deve ser positiva");
 
         if (segmento.getTomada1()==null||segmento.getTomada2()==null)  throw new SatiLogicalException("Informe as duas tomadas que são unidas pelo segmento");
         if (segmento.getTomada1().equals(segmento.getTomada2())) throw new SatiLogicalException("Informe tomadas diferentes para as duas pontas do segmento");
     }
 
-    private void criarSegmento(Segmento segmento) throws SatiLogicalException {
+    private void validarNovoSegmento(Segmento segmento) throws SatiLogicalException {
         for (Tomada t: tomadasSegmentoAsList(segmento)) {
             Tomada outra = findOutraPontaTomada(t);
             if (outra != null) throw new SatiLogicalException("Tomada " + t + " já se encontra em outro segmento com a tomada " + outra);
         }
-        super.create(segmento);
     }
 
-    private void editarSegmento(Segmento segmento) throws SatiLogicalException {
-        // Conferir se isso não traz o mesmo objeto ao invés de buscar no banco de dados novamente
-        // Ou, pior ainda, se isso não "atualiza" o objeto segmento inadvertidamente
-        Segmento original = super.find(segmento.getCodigo());
-        if (original == null) throw new InfraEstruturaException("Ocorreu um erro ao alterar dados do segmento. Ele pode ter sido excluído. Pesquise-o novamente.");
-
-        if (!segmento.getTomada1().equals(original.getTomada1())||!segmento.getTomada2().equals(original.getTomada2()))
-            throw new SatiLogicalException("Não é permitido alterar as tomadas de um segmento. Por favor, remova e crie outro segmento.");
-
-        super.edit(segmento);
+    private void validarAlteracaoSegmento(Segmento segmento) throws SatiLogicalException {
+        for (Tomada t:tomadasSegmentoAsList(segmento)) {
+            Segmento s = findByTomada(t);
+            if ((s!=null)&&(s.getCodigo()!=null)&&(!s.getCodigo().equals(segmento.getCodigo())))
+                throw new SatiLogicalException("Tomada " + t + " já se encontra em outro segmento com a tomada " + findOutraPontaTomada(t));
+        }
     }
 
     private List<Tomada> tomadasSegmentoAsList(Segmento segmento) {
@@ -75,12 +76,22 @@ public class SegmentoFacade extends AbstractFacade<Segmento> {
         Query query = getEntityManager().createNamedQuery("Segmento.findOutraPontaTomada");
         query.setParameter("tomada", tomada);
         resposta = query.getResultList();
-        if (resposta==null||resposta.size()==0) return null;
+        if (resposta==null||resposta.isEmpty()) return null;
+        return resposta.get(0);
+    }
+
+    public Segmento findByTomada(Tomada tomada) {
+        List<Segmento> resposta;
+        Query query = getEntityManager().createNamedQuery("Segmento.findByTomada");
+        query.setParameter("tomada", tomada);
+        resposta = query.getResultList();
+        if (resposta==null||resposta.isEmpty()) return null;
         return resposta.get(0);
     }
 
     @Override
     public void excluir(Segmento segmento) throws SatiLogicalException {
         super.remove(segmento);
+        getEntityManager().getEntityManagerFactory().getCache().evict(Tomada.class);
     }
 }

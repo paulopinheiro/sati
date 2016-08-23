@@ -57,7 +57,8 @@
                             </p:column>
                             <p:column headerText="Segmento">
                                 <p:button id="btSegmento" value="Incluir" outcome="/modulos/rede/cadSegmento">
-                                    <f:param name="tomada1Cod" value="#{tomada.codigo}" />
+                                    <f:param name="tomadaCod" value="#{tomada.codigo}" />
+                                    <f:param name="linkVoltar" value="/modulos/rede/cadTomadaPanel.xhtml?panelCod=#{tomada.panel.codigo}" />
                                 </p:button>
                             </p:column>
                         </p:dataTable>

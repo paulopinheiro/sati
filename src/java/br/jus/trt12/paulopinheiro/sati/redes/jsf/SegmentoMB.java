@@ -28,6 +28,9 @@ import javax.inject.Inject;
 @Named
 @ViewScoped
 public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
+    private final static int TOMADA_REMOTA=0;
+    private final static int TOMADA_PANEL=1;
+
     @EJB private SegmentoFacade segmentoFacade;
     @EJB private ModuloFacade moduloFacade;
     @EJB private TomadaRemotaFacade tomadaRemotaFacade;
@@ -37,11 +40,11 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     @Inject private GeralMB geralMB;
 
-    private Tomada tomada1;
+    private String linkVoltar;
 
-    private Tomada tomada2;
+    private Tomada tomada;
 
-    private Integer tipoTomada;
+    private Integer categoriaTomada;
 
     private List<Unidade> unidades;
     private Unidade unidade;
@@ -59,8 +62,13 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     public SegmentoMB() {}
 
-    public void alteraTipoTomada() {
-        setTomada2(null);
+    public Integer getCategoriaTomada() {
+        if (this.categoriaTomada==null) this.categoriaTomada = categoriaTomada(this.getSegmento().getTomada2());
+        return categoriaTomada;
+    }
+
+    public void setCategoriaTomada(Integer categoriaTomada) {
+        this.categoriaTomada = categoriaTomada;
     }
 
     public List<Unidade> getUnidades() {
@@ -101,6 +109,7 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     public void setModulo(Modulo modulo) {
         this.modulo = modulo;
+        if (modulo!=null) setUnidade(modulo.getUnidade());
     }
 
     public void alteraModulo() {
@@ -123,10 +132,11 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     public void setTomadaRemota(TomadaRemota tomadaRemota) {
         this.tomadaRemota = tomadaRemota;
+        if (tomadaRemota!=null) setModulo(tomadaRemota.getModulo());
     }
 
     public void alteraTomadaRemota() {
-        setTomada2(getTomadaRemota());
+        this.getSegmento().setTomada2(this.getTomadaRemota());
     }
 
     public List<Rack> getRacks() {
@@ -167,6 +177,7 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     public void setPanel(Panel panel) {
         this.panel = panel;
+        if (panel!=null) setRack(panel.getRack());
     }
 
     public void alteraPanel() {
@@ -189,36 +200,21 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     public void setTomadaPanel(TomadaPanel tomadaPanel) {
         this.tomadaPanel = tomadaPanel;
+        if (tomadaPanel!=null) setPanel(tomadaPanel.getPanel());
     }
 
     public void alteraTomadaPanel() {
-        this.setTomada2(this.getTomadaPanel());
+        this.getSegmento().setTomada2(this.getTomadaPanel());
     }
 
-    public Integer getTipoTomada() {
-        return tipoTomada;
+    public Tomada getTomada() {
+        if (this.tomada==null) this.tomada=new Tomada();
+        return tomada;
     }
 
-    public void setTipoTomada(Integer tipoTomada) {
-        this.tipoTomada = tipoTomada;
-    }
-
-    public Tomada getTomada1() {
-        if (this.tomada1==null) this.tomada1=new Tomada();
-        return tomada1;
-    }
-
-    public void setTomada1(Tomada tomada1) {
-        this.tomada1 = tomada1;
-    }
-
-    public Tomada getTomada2() {
-        if (this.tomada2==null) this.tomada2 = new Tomada();
-        return tomada2;
-    }
-
-    public void setTomada2(Tomada tomada2) {
-        this.tomada2 = tomada2;
+    public void setTomada(Tomada tomada) {
+        this.tomada = tomada;
+        if (this.tomada!=null) setSegmento(this.tomada.getSegmentoRef1());
     }
 
     public Segmento getSegmento() {
@@ -227,6 +223,22 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     public void setSegmento(Segmento segmento) {
         this.setElemento(segmento);
+        if (segmento!=null&&segmento.getTomada2()!=null) {
+            setCategoriaTomada(categoriaTomada(segmento.getTomada2()));
+            atualizaDialogos(segmento.getTomada2());
+        }
+    }
+
+    private void atualizaDialogos(Tomada tomada) {
+        if (tomada!=null) {
+            if (categoriaTomada(tomada)==TOMADA_REMOTA) {
+                setTomadaRemota((TomadaRemota) tomada);
+            } else {
+                if (categoriaTomada(tomada)==TOMADA_PANEL) {
+                    setTomadaPanel((TomadaPanel) tomada);
+                }
+            }
+        }
     }
 
     @Override
@@ -241,11 +253,28 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     @Override
     protected Segmento novainstanciaElemento() {
-        return new Segmento();
+        Segmento segmento = new Segmento();
+        segmento.setTomada1(tomada);
+        return segmento;
     }
 
     public Municipio getMunicipio() {
         return this.geralMB.getMunicipioSessao();
     }
 
+    public String getLinkVoltar() {
+        return linkVoltar;
+    }
+
+    public void setLinkVoltar(String linkVoltar) {
+        this.linkVoltar = linkVoltar;
+    }
+
+    private static Integer categoriaTomada(Tomada tomada) {
+        Integer resposta = null;
+        if (tomada!=null)
+            if (tomada instanceof TomadaRemota) resposta = TOMADA_REMOTA;
+            else if (tomada instanceof TomadaPanel) resposta = TOMADA_PANEL;
+        return resposta;
+    }
 }
