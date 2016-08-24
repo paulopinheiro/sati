@@ -4,7 +4,9 @@ import br.jus.trt12.paulopinheiro.sati.exceptions.SatiLogicalException;
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaRestritaMB;
 import br.jus.trt12.paulopinheiro.sati.redes.ejb.PanelFacade;
+import br.jus.trt12.paulopinheiro.sati.redes.ejb.SegmentoFacade;
 import br.jus.trt12.paulopinheiro.sati.redes.model.Panel;
+import br.jus.trt12.paulopinheiro.sati.redes.model.Tomada;
 import br.jus.trt12.paulopinheiro.sati.redes.model.TomadaPanel;
 import java.io.Serializable;
 import java.util.List;
@@ -19,6 +21,7 @@ import javax.inject.Named;
 @ViewScoped
 public class TomadaPanelMB extends AbListaRestritaMB<TomadaPanel> implements Serializable {
     @EJB private PanelFacade panelFacade;
+    @EJB private SegmentoFacade segmentoFacade;
 
     private Panel panel;
 
@@ -86,5 +89,10 @@ public class TomadaPanelMB extends AbListaRestritaMB<TomadaPanel> implements Ser
     @Override
     protected TomadaPanel novainstanciaElemento() {
         return new TomadaPanel(this.getPanel());
+    }
+
+    public Tomada tomadaOutraPonta(Tomada tomada) {
+        if (tomada==null) return null;
+        return segmentoFacade.findOutraPontaTomada(tomada); 
     }
 }

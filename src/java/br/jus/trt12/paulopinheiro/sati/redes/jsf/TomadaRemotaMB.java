@@ -2,9 +2,11 @@ package br.jus.trt12.paulopinheiro.sati.redes.jsf;
 
 import br.jus.trt12.paulopinheiro.sati.geral.ejb.comum.AbstractFacade;
 import br.jus.trt12.paulopinheiro.sati.geral.jsf.comum.AbListaRestritaMB;
+import br.jus.trt12.paulopinheiro.sati.redes.ejb.SegmentoFacade;
 import br.jus.trt12.paulopinheiro.sati.redes.ejb.TomadaRemotaFacade;
 import br.jus.trt12.paulopinheiro.sati.redes.model.Modulo;
 import br.jus.trt12.paulopinheiro.sati.redes.model.TipoConector;
+import br.jus.trt12.paulopinheiro.sati.redes.model.Tomada;
 import br.jus.trt12.paulopinheiro.sati.redes.model.TomadaRemota;
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +18,7 @@ import javax.inject.Named;
 @ViewScoped
 public class TomadaRemotaMB extends AbListaRestritaMB<TomadaRemota> implements Serializable {
     @EJB private TomadaRemotaFacade tomadaRemotaFacade;
+    @EJB private SegmentoFacade segmentoFacade;
 
     private Modulo modulo;
 
@@ -75,5 +78,10 @@ public class TomadaRemotaMB extends AbListaRestritaMB<TomadaRemota> implements S
     @Override
     protected TomadaRemota novainstanciaElemento() {
         return new TomadaRemota(this.getModulo());
+    }
+
+    public Tomada tomadaOutraPonta(Tomada tomada) {
+        if (tomada==null) return null;
+        return segmentoFacade.findOutraPontaTomada(tomada); 
     }
 }

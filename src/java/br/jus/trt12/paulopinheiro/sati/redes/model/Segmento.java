@@ -94,6 +94,7 @@ public class Segmento implements Serializable, Comparable {
 
     @Override
     public String toString() {
+        if (getTomada1()==null||getTomada2()==null) return null;
         return "Segmento tomada " + getTomada1().getNome() + " a " + getTomada2().getNome();
     }
 

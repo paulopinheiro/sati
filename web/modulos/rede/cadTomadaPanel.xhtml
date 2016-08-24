@@ -44,19 +44,34 @@
                     <h:form id="tabTomadas">
                         <p:dataTable id="tabelaTomadas" var="tomada" value="#{tomadaPanelMB.listaTomadas}">
                             <f:facet name="header"><h:outputText id="headerDtTomadas" value="Tomadas" /></f:facet>
-                            <p:column><f:facet name="header"><h:outputText value="Nome" /></f:facet>
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column rowspan="2" headerText="Nome" />
+                                    <p:column rowspan="2" headerText="Descrição" />
+                                    <p:column rowspan="2" headerText="Ramal" />
+                                    <p:column colspan="2" headerText="Segmento" />
+                                </p:row>
+                                <p:row>
+                                    <p:column headerText="Outra ponta" />
+                                    <p:column headerText="Ações" />
+                                </p:row>
+                            </p:columnGroup>
+                            <p:column>
                                 <p:commandLink value="#{tomada.nome}" update=":formTomadaPanel :msgerro :gmensagem">
                                     <f:setPropertyActionListener value="#{tomada}" target="#{tomadaPanelMB.tomadaPanel}" />
                                 </p:commandLink>
                             </p:column>
-                            <p:column><f:facet name="header"><h:outputText value="Descrição" /></f:facet>
+                            <p:column>
                                 <h:outputText  value="#{tomada.descricao}"  />
                             </p:column>
-                            <p:column><f:facet name="header"><h:outputText value="Ramal" /></f:facet>
+                            <p:column>
                                 <h:outputText  value="#{tomada.ramal}"  />
                             </p:column>
-                            <p:column headerText="Segmento">
-                                <p:button id="btSegmento" value="Incluir" outcome="/modulos/rede/cadSegmento">
+                            <p:column>
+                                <h:outputText value="#{tomadaPanelMB.tomadaOutraPonta(tomada)}" />
+                            </p:column>
+                            <p:column>
+                                <p:button id="btSegmento" value="Editar" icon="ui-icon-newwin" outcome="/modulos/rede/cadSegmento">
                                     <f:param name="tomadaCod" value="#{tomada.codigo}" />
                                     <f:param name="linkVoltar" value="/modulos/rede/cadTomadaPanel.xhtml?panelCod=#{tomada.panel.codigo}" />
                                 </p:button>

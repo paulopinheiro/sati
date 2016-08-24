@@ -31,7 +31,8 @@
                         <p:panelGrid columns="4">
                             <p:commandButton value="Salvar" process="@form" update="@form :msgerro :gmensagem :tabTomadasRemotas" actionListener="#{tomadaRemotaMB.salvar}" icon="ui-icon-disk" />
                             <p:commandButton value="Nova" update="@form :msgerro :gmensagem" actionListener="#{tomadaRemotaMB.limparElemento}" icon="ui-icon-document" />
-                            <p:commandButton value="Excluir" process="@form" update="@form :msgerro :gmensagem :tabTomadasRemotas" disabled="#{tomadaRemotaMB.novoElemento}" actionListener="#{tomadaRemotaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta tomada?')) return false;" icon="ui-icon-trash" />
+                            <p:commandButton value="Excluir" process="@form" update="@form :msgerro :gmensagem :tabTomadasRemotas" disabled="#{tomadaRemotaMB.novoElemento}" actionListener="#{tomadaRemotaMB.excluir}" onclick="if (!confirm('Tem certeza de que deseja excluir esta tomada?'))
+                                        return false;" icon="ui-icon-trash" />
                             <p:button value="Voltar" outcome="/modulos/rede/cadModulo" icon="ui-icon-arrowreturn-1-w" />
                         </p:panelGrid>
                         <br />
@@ -41,16 +42,37 @@
                     <h:form id="tabTomadasRemotas">
                         <p:dataTable id="tabelaTomadas" var="tomada" value="#{tomadaRemotaMB.listaTomadasRemotas}">
                             <f:facet name="header"><h:outputText value="Tomadas cadstradas" /></f:facet>
-                            <p:column><f:facet name="header"><h:outputText value="Identificacao" /></f:facet>
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column rowspan="2" headerText="Identificação" />
+                                    <p:column rowspan="2" headerText="Conector" />
+                                    <p:column rowspan="2" headerText="Descrição" />
+                                    <p:column colspan="2" headerText="Segmento" />
+                                </p:row>
+                                <p:row>
+                                    <p:column headerText="Outra ponta" />
+                                    <p:column headerText="Ações" />
+                                </p:row>
+                            </p:columnGroup>
+                            <p:column>
                                 <p:commandLink value="#{tomada.nome}" update=":formTomadaRemota :msgerro :gmensagem">
                                     <f:setPropertyActionListener value="#{tomada}" target="#{tomadaRemotaMB.tomadaRemota}" />
                                 </p:commandLink>
                             </p:column>
-                            <p:column><f:facet name="header"><h:outputText value="Conector" /></f:facet>
+                            <p:column>
                                 <h:outputText value="#{tomada.tipoConector}" />
                             </p:column>
-                            <p:column><f:facet name="header"><h:outputText value="Descrição" /></f:facet>
+                            <p:column>
                                 <h:outputText value="#{tomada.descricao}" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{tomadaRemotaMB.tomadaOutraPonta(tomada)}" />
+                            </p:column>
+                            <p:column>
+                                <p:button id="btSegmento" value="Editar" icon="ui-icon-newwin" outcome="/modulos/rede/cadSegmento">
+                                    <f:param name="tomadaCod" value="#{tomada.codigo}" />
+                                    <f:param name="linkVoltar" value="/modulos/rede/cadTomadaRemota.xhtml?moduloCod=#{tomada.modulo.codigo}" />
+                                </p:button>
                             </p:column>
                         </p:dataTable>
                     </h:form>

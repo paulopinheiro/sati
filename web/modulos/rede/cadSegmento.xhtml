@@ -16,19 +16,17 @@
                 <ui:define name="top">Segmento da tomada #{segmentoMB.tomada}</ui:define>
                 <ui:define name="content">
                     <h:form id="formSegmento">
-                        <p:panelGrid id="gridEscolhaTomada" columns="2">
+                        <p:panelGrid id="gridOutraTomada" columns="2">
                             <f:facet name="header">Escolha a tomada na outra ponta do segmento</f:facet>
                             <p:outputLabel for="categoriaTomada" value="Categoria da tomada" />
-                            <p:selectOneRadio id="categoriaTomada" value="#{segmentoMB.categoriaTomada}">
+                            <p:selectOneRadio id="categoriaTomada" value="#{segmentoMB.categoriaOutraTomada}">
                                 <p:ajax event="change" process=":formSegmento:categoriaTomada" update=":formSegmento" />
                                 <f:selectItem itemValue="0" itemLabel="Tomada remota" />
                                 <f:selectItem itemValue="1" itemLabel="Tomada de painel" />
                             </p:selectOneRadio>
-                        </p:panelGrid>
-                        <p:panelGrid id="gridTomada2" columns="2">
-                            <p:button id="btTomadaRemota" onclick="PF('dlgTomadaRemota').show(); return false;" value="Tomada" icon="ui-icon-circlesmall-plus" rendered="#{segmentoMB.categoriaTomada eq 0}" />
-                            <p:button id="btTomadaPanel" onclick="PF('dlgTomadaPanel').show(); return false;" value="Tomada" icon="ui-icon-circlesmall-plus" rendered="#{segmentoMB.categoriaTomada eq 1}" />
-                            <h:outputText id="tomada2" value="#{segmentoMB.segmento.tomada2}" />
+                            <p:button id="btTomadaRemota1" onclick="PF('dlgTomadaRemota').show(); return false;" value="Tomada" icon="ui-icon-circlesmall-plus" rendered="#{segmentoMB.categoriaOutraTomada eq 0}" />
+                            <p:button id="btTomadaPanel1" onclick="PF('dlgTomadaPanel').show(); return false;" value="Tomada" icon="ui-icon-circlesmall-plus" rendered="#{segmentoMB.categoriaOutraTomada eq 1}" />
+                            <h:outputText id="outraTomada" value="#{segmentoMB.outraTomada}" />
                         </p:panelGrid>
                         <br />
                         <p:panelGrid id="gridSegmento" columns="2">
@@ -44,7 +42,7 @@
                             <p:button id="btVoltar" value="Voltar" icon="ui-icon-arrowreturn-1-w" outcome="#{segmentoMB.linkVoltar}" />
                         </p:panelGrid>
                         <p:dialog header="Dados da Tomada Remota" id="dlgTomadaRemota" widgetVar="dlgTomadaRemota" resizable="false" showEffect="bounce" hideEffect="bounce">
-                            <p:panelGrid id="gridTomadaRemota" columns="2" rendered="#{segmentoMB.categoriaTomada eq 0}">
+                            <p:panelGrid id="gridTomadaRemota" columns="2" rendered="#{segmentoMB.categoriaOutraTomada eq 0}">
                                 <p:outputLabel for="unidade" value="Unidade judiciária" />
                                 <p:selectOneMenu id="unidade" value="#{segmentoMB.unidade}" converter="converteUnidade">
                                     <p:ajax event="change" process="@this" update=":formSegmento:modulo" listener="#{segmentoMB.alteraUnidade}" />
@@ -64,14 +62,14 @@
                                 </p:selectOneMenu>
                                 <f:facet name="footer">
                                     <center>
-                                        <p:commandButton id="btConfirmarTomadaRemota" process=":formSegmento:gridTomadaRemota" update=":formSegmento:tomada2" value="Confirmar" action="#{segmentoMB.alteraTomadaRemota}" disabled="#{empty segmentoMB.tomadaRemota}" oncomplete="PF('dlgTomadaRemota').hide();" icon="ui-icon-check" /> 
+                                        <p:commandButton id="btConfirmarTomadaRemota" process=":formSegmento:gridTomadaRemota" update=":formSegmento:gridOutraTomada" value="Confirmar" action="#{segmentoMB.alteraTomadaRemota}" disabled="#{empty segmentoMB.tomadaRemota}" oncomplete="PF('dlgTomadaRemota').hide();" icon="ui-icon-check" /> 
                                         <p:commandButton id="btCancelarTomadaRemota" value="Cancelar" onclick="PF('dlgTomadaRemota').hide();" immediate="true" icon="ui-icon-cancel" />
                                     </center>
                                 </f:facet>
                             </p:panelGrid>
                         </p:dialog>
                         <p:dialog header="Dados da Tomada de Painel" id="dlgTomadaPanel" widgetVar="dlgTomadaPanel" resizable="false" showEffect="bounce" hideEffect="bounce">
-                            <p:panelGrid id="gridTomadaPanel" columns="2" rendered="#{segmentoMB.categoriaTomada eq 1}">
+                            <p:panelGrid id="gridTomadaPanel" columns="2" rendered="#{segmentoMB.categoriaOutraTomada eq 1}">
                                 <p:outputLabel for="rack" value="Rack" />
                                 <p:selectOneMenu id="rack" value="#{segmentoMB.rack}" converter="converteRack">
                                     <p:ajax event="change" process="@this" update=":formSegmento:panel" listener="#{segmentoMB.alteraRack}" />
@@ -91,7 +89,7 @@
                                 </p:selectOneMenu>
                                 <f:facet name="footer">
                                     <center>
-                                        <p:commandButton id="btConfirmarTomadaPanel" process=":formSegmento:gridTomadaPanel" update=":formSegmento:tomada2 :gmensagem :msgerro" value="Confirmar" action="#{segmentoMB.alteraTomadaPanel}" disabled="#{empty segmentoMB.tomadaPanel}" oncomplete="PF('dlgTomadaPanel').hide();" icon="ui-icon-check" /> 
+                                        <p:commandButton id="btConfirmarTomadaPanel" process=":formSegmento:gridTomadaPanel" update=":formSegmento:gridOutraTomada :gmensagem :msgerro" value="Confirmar" action="#{segmentoMB.alteraTomadaPanel}" disabled="#{empty segmentoMB.tomadaPanel}" oncomplete="PF('dlgTomadaPanel').hide();" icon="ui-icon-check" /> 
                                         <p:commandButton id="btCancelarTomadaPanel" value="Cancelar" onclick="PF('dlgTomadaPanel').hide();" immediate="true" icon="ui-icon-cancel" />
                                     </center>
                                 </f:facet>

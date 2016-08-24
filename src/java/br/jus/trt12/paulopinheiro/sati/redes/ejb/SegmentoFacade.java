@@ -71,7 +71,7 @@ public class SegmentoFacade extends AbstractFacade<Segmento> {
         return resposta;
     }
 
-    private Tomada findOutraPontaTomada(Tomada tomada) {
+    public Tomada findOutraPontaTomada(Tomada tomada) {
         List<Tomada> resposta;
         Query query = getEntityManager().createNamedQuery("Segmento.findOutraPontaTomada");
         query.setParameter("tomada", tomada);

@@ -21,10 +21,13 @@ import br.jus.trt12.paulopinheiro.sati.redes.model.TomadaRemota;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
+
+// CORRIGIR BUG: Não está carregando o cadSegmento quando o segmento não é nulo
 @Named
 @ViewScoped
 public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
@@ -43,8 +46,9 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
     private String linkVoltar;
 
     private Tomada tomada;
+    private Tomada outraTomada;
 
-    private Integer categoriaTomada;
+    private Integer categoriaOutraTomada;
 
     private List<Unidade> unidades;
     private Unidade unidade;
@@ -62,13 +66,60 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     public SegmentoMB() {}
 
-    public Integer getCategoriaTomada() {
-        if (this.categoriaTomada==null) this.categoriaTomada = categoriaTomada(this.getSegmento().getTomada2());
-        return categoriaTomada;
+    public void setTomada(Tomada tomada) {
+        this.tomada = tomada;
+        if (tomada !=null) atualizarSegmento(tomada);
     }
 
-    public void setCategoriaTomada(Integer categoriaTomada) {
-        this.categoriaTomada = categoriaTomada;
+    public Tomada getTomada() {
+        if (this.tomada==null) this.tomada=new Tomada();
+        return tomada;
+    }
+
+    private void atualizarSegmento(Tomada tomada) {
+        if (getReferenciaSegmento(tomada)==1) {
+            setSegmento(tomada.getSegmentoRef1());
+            this.setOutraTomada(this.getSegmento().getTomada2());
+        } else {
+            setSegmento(tomada.getSegmentoRef2());
+            this.setOutraTomada(this.getSegmento().getTomada1());
+        }
+    }
+
+    private int getReferenciaSegmento(Tomada tomada) {
+        if (tomada.getSegmentoRef2()==null) return 1;
+        else return 2;
+    }
+
+    @Override
+    public void salvar(ActionEvent evt) {
+        if (this.isNovoElemento() || getReferenciaSegmento(getTomada())==1) {
+            this.getSegmento().setTomada1(this.getTomada());
+            this.getSegmento().setTomada2(this.getOutraTomada());
+        } else {
+            this.getSegmento().setTomada1(this.getOutraTomada());
+            this.getSegmento().setTomada2(this.getTomada());
+        }
+        super.salvar(evt);
+    }
+
+    public Tomada getOutraTomada() {
+        if (this.outraTomada==null) outraTomada = new Tomada();
+        return outraTomada;
+    }
+
+    public void setOutraTomada(Tomada outraTomada) {
+        this.outraTomada = outraTomada;
+        atualizaDialogos(outraTomada);
+    }
+
+    public Integer getCategoriaOutraTomada() {
+        if (this.categoriaOutraTomada==null) this.categoriaOutraTomada = categoriaTomada(this.getOutraTomada());
+        return categoriaOutraTomada;
+    }
+
+    public void setCategoriaOutraTomada(Integer categoriaOutraTomada) {
+        this.categoriaOutraTomada = categoriaOutraTomada;
     }
 
     public List<Unidade> getUnidades() {
@@ -136,7 +187,7 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
     }
 
     public void alteraTomadaRemota() {
-        this.getSegmento().setTomada2(this.getTomadaRemota());
+        this.setOutraTomada(this.getTomadaRemota());
     }
 
     public List<Rack> getRacks() {
@@ -204,17 +255,7 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
     }
 
     public void alteraTomadaPanel() {
-        this.getSegmento().setTomada2(this.getTomadaPanel());
-    }
-
-    public Tomada getTomada() {
-        if (this.tomada==null) this.tomada=new Tomada();
-        return tomada;
-    }
-
-    public void setTomada(Tomada tomada) {
-        this.tomada = tomada;
-        if (this.tomada!=null) setSegmento(this.tomada.getSegmentoRef1());
+        this.setOutraTomada(this.getTomadaPanel());
     }
 
     public Segmento getSegmento() {
@@ -223,19 +264,17 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
 
     public void setSegmento(Segmento segmento) {
         this.setElemento(segmento);
-        if (segmento!=null&&segmento.getTomada2()!=null) {
-            setCategoriaTomada(categoriaTomada(segmento.getTomada2()));
-            atualizaDialogos(segmento.getTomada2());
-        }
     }
 
     private void atualizaDialogos(Tomada tomada) {
         if (tomada!=null) {
             if (categoriaTomada(tomada)==TOMADA_REMOTA) {
                 setTomadaRemota((TomadaRemota) tomada);
+                System.out.println("Tomada remota!");
             } else {
                 if (categoriaTomada(tomada)==TOMADA_PANEL) {
                     setTomadaPanel((TomadaPanel) tomada);
+                    System.out.println("Tomada panel!");
                 }
             }
         }
@@ -254,7 +293,7 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
     @Override
     protected Segmento novainstanciaElemento() {
         Segmento segmento = new Segmento();
-        segmento.setTomada1(tomada);
+        segmento.setTomada1(getTomada());
         return segmento;
     }
 
