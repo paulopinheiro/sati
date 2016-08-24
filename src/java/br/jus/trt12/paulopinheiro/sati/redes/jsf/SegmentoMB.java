@@ -270,11 +270,9 @@ public class SegmentoMB extends AbBasicoMB<Segmento> implements Serializable {
         if (tomada!=null) {
             if (categoriaTomada(tomada)==TOMADA_REMOTA) {
                 setTomadaRemota((TomadaRemota) tomada);
-                System.out.println("Tomada remota!");
             } else {
                 if (categoriaTomada(tomada)==TOMADA_PANEL) {
                     setTomadaPanel((TomadaPanel) tomada);
-                    System.out.println("Tomada panel!");
                 }
             }
         }
