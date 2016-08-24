@@ -48,10 +48,10 @@
                                 <p:row>
                                     <p:column rowspan="2" headerText="Nome" />
                                     <p:column rowspan="2" headerText="Descrição" />
-                                    <p:column rowspan="2" headerText="Ramal" />
-                                    <p:column colspan="2" headerText="Segmento" />
+                                    <p:column colspan="3" headerText="Segmento" />
                                 </p:row>
                                 <p:row>
+                                    <p:column headerText="Ramal" />
                                     <p:column headerText="Outra ponta" />
                                     <p:column headerText="Ações" />
                                 </p:row>
@@ -71,7 +71,7 @@
                                 <h:outputText value="#{tomadaPanelMB.tomadaOutraPonta(tomada)}" />
                             </p:column>
                             <p:column>
-                                <p:button id="btSegmento" value="Editar" icon="ui-icon-newwin" outcome="/modulos/rede/cadSegmento">
+                                <p:button id="btSegmento" value="Editar" icon="ui-icon-newwin" outcome="/modulos/rede/cadSegmento" disabled="#{tomada.voice}">
                                     <f:param name="tomadaCod" value="#{tomada.codigo}" />
                                     <f:param name="linkVoltar" value="/modulos/rede/cadTomadaPanel.xhtml?panelCod=#{tomada.panel.codigo}" />
                                 </p:button>
